@@ -15,214 +15,63 @@
    "name": "Schools in the program",
    "unit": "schools",
    "target": 2,
-   "achieved": 2
+   "achieved": 0
   },
   {
    "comp": "Healthy Schools Program",
-   "name": "Students reached",
-   "unit": "students",
-   "target": 0,
-   "achieved": 123
+   "name": "Activities completed",
+   "unit": "Activities",
+   "target": 10,
+   "achieved": 2
   },
   {
    "comp": "Women's nutrition outreach",
    "name": "Women and adolescents reached",
    "unit": "people",
    "target": 1000,
-   "achieved": 310
+   "achieved": 381
   },
   {
    "comp": "Women's nutrition outreach",
    "name": "Community sessions held",
    "unit": "sessions",
-   "target": 40,
-   "achieved": 12
+   "target": 30,
+   "achieved": 7
   },
   {
    "comp": "Women's nutrition outreach",
    "name": "Follow-up group discussions",
    "unit": "discussions",
    "target": 15,
-   "achieved": 3
+   "achieved": 0
   },
   {
    "comp": "mDiabetes",
    "name": "People enrolled in mDiabetes",
    "unit": "people",
    "target": 5000,
-   "achieved": 1460
+   "achieved": 450
   },
   {
    "comp": "Street food vendors",
    "name": "Vendors trained",
    "unit": "vendors",
    "target": 50,
-   "achieved": 8
+   "achieved": 26
   },
   {
    "comp": "Street food vendors",
    "name": "Stall monitoring visits",
    "unit": "visits",
    "target": 50,
-   "achieved": 4
+   "achieved": 8
   }
  ],
- "updates": [
-  {
-   "date": "2026-10-01",
-   "text": "Community sessions are running in three localities, with pre and post questions answered by raised cards."
-  },
-  {
-   "date": "2026-09-15",
-   "text": "Arogya City Coordinator for Mumbai in place; community mobilisation partner on board."
-  }
- ],
- "datasets": [
-  {
-   "id": "d-sample1",
-   "title": "Knowledge before and after the session",
-   "labelName": "Session",
-   "type": "bar",
-   "labels": [
-    "GOV001",
-    "GOV002",
-    "GOV003",
-    "GOV004",
-    "GOV005",
-    "GOV006"
-   ],
-   "series": [
-    {
-     "name": "Before, % correct",
-     "values": [
-      52,
-      48,
-      57,
-      55,
-      50,
-      61
-     ]
-    },
-    {
-     "name": "After, % correct",
-     "values": [
-      81,
-      79,
-      86,
-      84,
-      77,
-      88
-     ]
-    }
-   ],
-   "show": "govandi"
-  },
-  {
-   "id": "d-sample2",
-   "title": "mDiabetes enrolments, running total",
-   "labelName": "Week",
-   "type": "line",
-   "labels": [
-    "1 Sep",
-    "8 Sep",
-    "15 Sep",
-    "22 Sep",
-    "29 Sep",
-    "6 Oct"
-   ],
-   "series": [
-    {
-     "name": "People enrolled",
-     "values": [
-      0,
-      180,
-      420,
-      760,
-      1120,
-      1460
-     ]
-    }
-   ],
-   "show": "govandi"
-  }
- ],
+ "updates": [],
+ "datasets": [],
  "tools": {
-  "schools": [
-   {
-    "name": "Govandi school 1",
-    "id": "27220100201",
-    "classes": [
-     {
-      "id": "6A",
-      "enrol": 44,
-      "acts": [
-       "v",
-       "v",
-       "v",
-       "",
-       "",
-       "",
-       "",
-       "",
-       "",
-       ""
-      ]
-     },
-     {
-      "id": "6B",
-      "enrol": 41,
-      "acts": [
-       "v",
-       "v",
-       "p",
-       "",
-       "",
-       "",
-       "",
-       "",
-       "",
-       ""
-      ]
-     }
-    ],
-    "verified": 5,
-    "reach": 85,
-    "enrol": 85
-   },
-   {
-    "name": "Govandi school 2",
-    "id": "27220100202",
-    "classes": [
-     {
-      "id": "6A",
-      "enrol": 38,
-      "acts": [
-       "v",
-       "v",
-       "",
-       "",
-       "",
-       "",
-       "",
-       "",
-       "",
-       ""
-      ]
-     }
-    ],
-    "verified": 2,
-    "reach": 38,
-    "enrol": 38
-   }
-  ],
-  "vendors": {
-   "registered": 14,
-   "attended": 8,
-   "screened": 7,
-   "trained": 8,
-   "visited": 4,
-   "visits": 4
-  }
+  "schools": [],
+  "vendors": null
  },
- "publishedAt": "2026-10-06T02:10:39.581Z"
+ "publishedAt": "2026-10-06T07:33:49.151Z"
 }
