@@ -3,540 +3,373 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Arogya SchoolTrack</title>
+<title>Arogya World India Trust: Program MIS</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#F2F6FB; --sheet:#FFFFFF; --ink:#16233F; --ink2:#52617E; --rule:#C7D5E8; --rule2:#E3EBF5;
-  --margin:#C4352B; --margin-bg:#FBE9E7; --tick:#1B7648; --tick-bg:#E3F3EA; --wait:#8A5A05; --wait-bg:#FBF0D6;
-  --accent:#1D4FC0; --accent-ink:#FFFFFF;
+  --paper:#F2F6FB; --sheet:#FFFFFF; --ink:#16233F; --ink2:#52617E; --rule:#C7D5E8; --rule2:#E6EDF6;
+  --bad:#C4352B; --bad-bg:#FBE9E7; --ok:#1B7648; --ok-bg:#E3F3EA; --wait:#8A5A05; --wait-bg:#FBF0D6;
+  --c-hsp:#1D4FC0; --c-as:#1B7648; --c-sfvt:#C26A00; --c-city:#7A3FB5; --c-mute:#9AA9C2;
   --display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
   --body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --paper:#13201B; --sheet:#1A2A24; --ink:#EEF3EC; --ink2:#A7B7AD; --rule:#35493F; --rule2:#26372F;
-    --margin:#FF9384; --margin-bg:#3B2320; --tick:#86D9A9; --tick-bg:#1F3A2C; --wait:#F1C56C; --wait-bg:#3A3018;
-    --accent:#A9C3FF; --accent-ink:#10203F;
+    --paper:#111A2B; --sheet:#18243A; --ink:#EEF2F9; --ink2:#A6B3CB; --rule:#33435F; --rule2:#22304A;
+    --bad:#FF9384; --bad-bg:#40221F; --ok:#86D9A9; --ok-bg:#1C3A2C; --wait:#F1C56C; --wait-bg:#3A3018;
+    --c-hsp:#8FB0FF; --c-as:#7FD6A4; --c-sfvt:#F2B45A; --c-city:#C9A2F2; --c-mute:#5C6C8A;
   }
 }
 :root[data-theme="dark"]{
-  --paper:#13201B; --sheet:#1A2A24; --ink:#EEF3EC; --ink2:#A7B7AD; --rule:#35493F; --rule2:#26372F;
-  --margin:#FF9384; --margin-bg:#3B2320; --tick:#86D9A9; --tick-bg:#1F3A2C; --wait:#F1C56C; --wait-bg:#3A3018;
-  --accent:#A9C3FF; --accent-ink:#10203F;
+  --paper:#111A2B; --sheet:#18243A; --ink:#EEF2F9; --ink2:#A6B3CB; --rule:#33435F; --rule2:#22304A;
+  --bad:#FF9384; --bad-bg:#40221F; --ok:#86D9A9; --ok-bg:#1C3A2C; --wait:#F1C56C; --wait-bg:#3A3018;
+  --c-hsp:#8FB0FF; --c-as:#7FD6A4; --c-sfvt:#F2B45A; --c-city:#C9A2F2; --c-mute:#5C6C8A;
 }
 *,*::before,*::after{box-sizing:inherit}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5}
 h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.15;margin:0}
-h1{font-size:1.75rem} h2{font-size:1.25rem} h3{font-size:1.05rem}
-p{margin:0}
-button,select,input{font:inherit;color:inherit}
-:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+h1{font-size:clamp(1.7rem,3.6vw,2.6rem);letter-spacing:-.015em} h2{font-size:1.05rem} h3{font-size:1rem}
+p{margin:0} a{color:inherit}
+button,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--c-hsp);outline-offset:2px}
 .muted{color:var(--ink2)} .small{font-size:.875rem} .num{font-variant-numeric:tabular-nums}
+.wrap{max-width:1280px;margin:0 auto;padding:0 1.25rem}
 
-.bar{display:flex;flex-wrap:wrap;gap:.75rem 1.5rem;align-items:center;justify-content:space-between;padding:.9rem 1.25rem;border-bottom:2px solid var(--ink)}
-.brand{font-family:var(--display);font-weight:700;font-size:1.3rem;letter-spacing:-.01em}
-.brand span{color:var(--ink2);font-weight:500}
+.bar{border-bottom:2px solid var(--ink);background:var(--sheet)}
+.bar .wrap{display:flex;flex-wrap:wrap;gap:.75rem 1.5rem;align-items:center;justify-content:space-between;padding-top:.8rem;padding-bottom:.8rem}
+.brand{font-family:var(--display);font-weight:700;font-size:1.2rem}
+.brand span{font-weight:500;color:var(--ink2)}
+.slicers{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
 .seg{display:inline-flex;border:1.5px solid var(--ink);border-radius:999px;overflow:hidden;background:var(--sheet)}
-.seg button{border:0;background:transparent;padding:.5rem 1rem;min-height:44px;cursor:pointer}
+.seg button{border:0;background:transparent;padding:.4rem .9rem;min-height:40px;cursor:pointer}
 .seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper);font-weight:700}
-
-.btn{border:1.5px solid var(--ink);background:var(--sheet);border-radius:10px;padding:.65rem 1rem;min-height:48px;cursor:pointer;font-weight:700}
-.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
-.btn.danger{border-color:var(--margin);color:var(--margin)}
-.btn.quiet{border-color:var(--rule);font-weight:400}
-.btn.block{display:block;width:100%}
-.btn:disabled{opacity:.45;cursor:not-allowed}
-.row{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
-.stack>*+*{margin-top:1rem}
-
+select{min-height:40px;border:1.5px solid var(--ink);border-radius:999px;background:var(--sheet);padding:0 .9rem}
 .pill{display:inline-block;border-radius:999px;padding:.1rem .65rem;font-size:.8125rem;font-weight:700;white-space:nowrap}
-.pill.ok{background:var(--tick-bg);color:var(--tick)} .pill.wait{background:var(--wait-bg);color:var(--wait)}
-.pill.rev{background:var(--margin-bg);color:var(--margin)} .pill.bad{background:var(--ink);color:var(--paper)}
+.pill.sample{background:var(--wait-bg);color:var(--wait)} .pill.ok{background:var(--ok-bg);color:var(--ok)} .pill.bad{background:var(--bad-bg);color:var(--bad)} .pill.wait{background:var(--wait-bg);color:var(--wait)}
 
-/* field app */
-.phone{max-width:460px;margin:0 auto;padding:1.25rem 1rem 3rem}
-.sheet{background:var(--sheet);border:1.5px solid var(--rule);border-radius:14px;padding:1rem}
-.schoolcard{display:flex;gap:.75rem;align-items:center;justify-content:space-between}
-.demo{border:1.5px dashed var(--ink2);border-radius:14px;padding:.85rem 1rem;background:transparent}
-.demo .seg button{padding:.4rem .75rem;min-height:40px;font-size:.9rem}
-.list{list-style:none;margin:0;padding:0}
-.list li{padding:.7rem 0;border-bottom:1px solid var(--rule)}
-.list li:last-child{border-bottom:0}
-.steps{display:flex;gap:6px;margin:.4rem 0 1rem}
-.steps i{flex:1;height:6px;border-radius:3px;background:var(--rule)} .steps i.on{background:var(--accent)}
-.chips{display:flex;flex-wrap:wrap;gap:.5rem}
-.chip{min-width:48px;min-height:48px;border-radius:10px;border:1.5px solid var(--ink);background:var(--sheet);cursor:pointer;font-weight:700;padding:0 .8rem}
-.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
-.chip:disabled{border-color:var(--rule);color:var(--ink2);cursor:not-allowed;text-decoration:line-through}
-.field label{display:block;font-weight:700;margin-bottom:.25rem}
-.field input,.field select{width:100%;min-height:48px;border:1.5px solid var(--ink);border-radius:10px;padding:.5rem .75rem;background:var(--sheet)}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
-.thumb{width:132px;max-width:100%;border-radius:8px;border:1.5px solid var(--rule);display:block}
-.note{border-left:4px solid var(--ink2);padding:.35rem .75rem;border-radius:0}
-.note.bad{border-color:var(--margin);color:var(--margin)} .note.ok{border-color:var(--tick);color:var(--tick)}
-.msg{background:var(--tick-bg);border-radius:14px 14px 14px 2px;padding:.8rem 1rem;max-width:22rem}
-.filebtn{position:relative;overflow:hidden;display:inline-flex;align-items:center}
-.filebtn input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.tabs{display:flex;gap:.25rem;overflow-x:auto;border-bottom:1.5px solid var(--rule);margin:1rem 0 1.25rem}
+.tabs button{border:0;background:transparent;padding:.7rem 1rem;min-height:44px;cursor:pointer;white-space:nowrap;border-bottom:4px solid transparent;margin-bottom:-1.5px;color:var(--ink2)}
+.tabs button[aria-selected="true"]{color:var(--ink);font-weight:700;border-color:var(--tc,var(--ink))}
 
-/* dashboard */
-.dash{max-width:1180px;margin:0 auto;padding:1.25rem 1.25rem 4rem}
-.tabs{display:flex;gap:.25rem;flex-wrap:wrap;border-bottom:1.5px solid var(--rule);margin-bottom:1.5rem}
-.tabs button{border:0;background:transparent;padding:.7rem 1rem;min-height:44px;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1.5px;color:var(--ink2)}
-.tabs button[aria-selected="true"]{border-color:var(--ink);color:var(--ink);font-weight:700}
-.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));border-top:2px solid var(--ink);border-bottom:1px solid var(--rule)}
-.strip div{padding:.8rem 1rem .9rem 0}
-.strip b{display:block;font-family:var(--display);font-size:1.9rem;line-height:1.1}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:1rem}
+.tile{background:var(--sheet);border:1.5px solid var(--rule);border-radius:12px;padding:1rem 1.1rem 1.1rem;grid-column:span 12;min-width:0}
+.tile>h2{margin-bottom:.15rem} .tile>.sub{color:var(--ink2);font-size:.875rem;margin-bottom:.8rem}
+@media (min-width:860px){.s3{grid-column:span 3}.s4{grid-column:span 4}.s5{grid-column:span 5}.s6{grid-column:span 6}.s7{grid-column:span 7}.s8{grid-column:span 8}}
+@media (min-width:560px) and (max-width:859px){.s3{grid-column:span 6}}
+.lead{grid-column:span 12;padding:.5rem 0 .25rem}
+.lead p{font-size:1.1rem;color:var(--ink2);margin-top:.4rem;max-width:60ch}
+
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));grid-column:span 12;border-top:2px solid var(--ink);border-bottom:1px solid var(--rule)}
+.kpis div{padding:.8rem 1rem .9rem 0}
+.kpis b{display:block;font-family:var(--display);font-size:1.9rem;line-height:1.1}
+.pcard{border-top:6px solid var(--pc);cursor:pointer;text-align:left;font:inherit;color:inherit;width:100%}
+.pcard b{display:block;font-family:var(--display);font-size:2rem;line-height:1.1;margin-top:.35rem}
+.pcard .go{display:inline-block;margin-top:.6rem;font-weight:700;color:var(--pc)}
+.pcard:hover{border-color:var(--pc)}
+
+.hb{display:grid;grid-template-columns:minmax(110px,40%) 1fr auto;gap:.3rem .7rem;align-items:center}
+.hb .lab{line-height:1.25;padding:.15rem 0}
+.hb .track{position:relative;height:16px;background:var(--rule2);border-radius:3px}
+.hb .fill{position:absolute;left:0;top:0;bottom:0;border-radius:3px}
+.hb .fill2{position:absolute;left:0;top:4px;bottom:4px;border-radius:2px;background:var(--ink);opacity:.85}
+.hb .mark{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--ink)}
+.hb .val{font-variant-numeric:tabular-nums;font-weight:700;text-align:right}
+.rank{display:inline-block;width:1.6rem;color:var(--ink2);font-variant-numeric:tabular-nums}
+.funnel .frow{display:grid;grid-template-columns:minmax(110px,30%) 1fr 4.5rem;gap:.7rem;align-items:center;margin:.3rem 0}
+.funnel .fbar{height:26px;border-radius:4px;margin:0 auto}
 .scroll{overflow-x:auto}
 table{border-collapse:collapse;width:100%}
-th,td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--rule);vertical-align:middle}
-th{font-weight:700;color:var(--ink2);font-size:.875rem}
-.reg{background:var(--sheet);border:1.5px solid var(--rule);min-width:720px}
-.reg th,.reg td{border-bottom:1px solid var(--rule);border-right:1px solid var(--rule2);text-align:center;padding:0}
-.reg th{padding:.45rem .3rem}
-.reg .cls{text-align:left;padding:.4rem .7rem;white-space:nowrap;border-right:2px solid var(--margin)}
-.reg .sch td{text-align:left;padding:.55rem .7rem;background:var(--paper);font-family:var(--display);font-weight:700}
-.reg .sch span{font-family:var(--body);font-weight:400;color:var(--ink2);font-size:.875rem;margin-left:.5rem}
-.cell{width:100%;min-width:44px;height:44px;border:0;background:transparent;cursor:pointer;font-size:1.25rem;font-weight:700;line-height:1}
-.cell.ok{color:var(--tick)} .cell.wait{color:var(--wait)} .cell.rev{color:var(--margin);background:var(--margin-bg)} .cell.bad{color:var(--ink2)}
-.cell.none{cursor:default}
-.legend{display:flex;flex-wrap:wrap;gap:.4rem 1.25rem;margin-top:.6rem}
-.qcard{background:var(--sheet);border:1.5px solid var(--rule);border-left:5px solid var(--margin);border-radius:0;padding:1rem}
-.flag{color:var(--margin);font-weight:700}
-.thumbs{display:flex;flex-wrap:wrap;gap:.75rem}
-.thumbs figure{margin:0} .thumbs figcaption{font-size:.8125rem;color:var(--ink2);max-width:132px}
-.crit{display:grid;grid-template-columns:auto 1fr auto;gap:.3rem .75rem;align-items:center;padding:.4rem 0;border-bottom:1px solid var(--rule2)}
-.crit input{width:22px;height:22px}
-.meter{height:10px;background:var(--rule2);border-radius:5px;overflow:hidden;min-width:120px}
-.meter i{display:block;height:100%;background:var(--tick)}
-dialog{border:2px solid var(--ink);border-radius:14px;background:var(--sheet);color:var(--ink);padding:0;width:min(640px,calc(100% - 2rem));max-height:calc(100% - 2rem)}
-dialog::backdrop{background:rgba(10,20,40,.55)}
-dl{display:grid;grid-template-columns:auto 1fr;gap:.3rem 1rem;margin:0}
-dt{color:var(--ink2)} dd{margin:0}
-details summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;align-items:center}
-@media (max-width:560px){.dash{padding:1rem .75rem 3rem}.strip b{font-size:1.5rem}}
+th,td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--rule2);vertical-align:middle}
+th{color:var(--ink2);font-size:.875rem;font-weight:700}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.heat td.n{border-left:1px solid var(--rule2)}
+.legend{display:flex;flex-wrap:wrap;gap:.3rem 1rem;font-size:.875rem;margin-top:.5rem}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:.35rem;vertical-align:-1px}
+.donut{display:flex;flex-wrap:wrap;gap:1rem;align-items:center}
+.donut svg{width:150px;height:150px;flex:none}
+.gantt .grow{display:grid;grid-template-columns:minmax(120px,32%) 1fr;gap:.7rem;align-items:center;margin:.35rem 0}
+.gantt .gtrack{position:relative;height:22px;background:var(--rule2);border-radius:3px}
+.gantt .gbar{position:absolute;top:0;bottom:0;border-radius:3px}
+.gantt .now{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--bad)}
+.gaxis{display:grid;grid-template-columns:minmax(120px,32%) 1fr;gap:.7rem;font-size:.8125rem;color:var(--ink2)}
+.gaxis div:last-child{display:flex;justify-content:space-between}
+.tools a{display:block;padding:.6rem 0;border-bottom:1px solid var(--rule2);font-weight:700;text-decoration:none}
+.tools a span{display:block;font-weight:400;color:var(--ink2);font-size:.875rem}
+.tools a:last-child{border-bottom:0}
+svg text{font-family:var(--body);fill:var(--ink2);font-size:11px}
+.foot{color:var(--ink2);font-size:.875rem;padding:1.5rem 0 3rem}
+.empty{color:var(--ink2);padding:1rem 0}
 </style>
 </head>
 <body>
-<div class="bar">
-  <div class="brand">Arogya SchoolTrack <span>prototype</span> <a href="../" style="font-family:var(--body);font-size:.9rem;font-weight:400;margin-left:.75rem">Back to Program MIS</a></div>
-  <div class="seg" role="group" aria-label="Choose a view">
-    <button data-a="mode" data-v="field" aria-pressed="true">Field app</button>
-    <button data-a="mode" data-v="dash" aria-pressed="false">Monitoring dashboard</button>
+<div class="bar"><div class="wrap">
+  <div class="brand">Arogya World India Trust <span>Program MIS</span> <span class="pill sample">Sample data</span></div>
+  <div class="slicers">
+    <div class="seg" role="group" aria-label="Year">
+      <button data-a="year" data-v="all" aria-pressed="true">All time</button>
+      <button data-a="year" data-v="2025" aria-pressed="false">2025</button>
+      <button data-a="year" data-v="2026" aria-pressed="false">2026</button>
+    </div>
+    <label class="small">State <select data-c="state"><option value="all">All states</option><option>Karnataka</option><option>Maharashtra</option><option>Gujarat</option></select></label>
   </div>
+</div></div>
+<div class="wrap">
+  <div class="tabs" role="tablist" id="tabs"></div>
+  <main class="grid" id="app"></main>
+  <p class="foot">Every figure on this page is illustrative sample data, built to show how the MIS will look once the program tools feed it. Arogya Schools students are also Healthy Schools students, so organisation totals count them once.</p>
 </div>
-<main id="app"></main>
-<dialog id="dlg" aria-label="Session details"></dialog>
 
 <script>
 "use strict";
-const GEOFENCE_M=150, MIN_MIN=30, DUP_BITS=4, REPLY_HRS=48, KEY="schooltrack.v1";
+/* ---------- sample data model: replace with the shared data core feed ---------- */
+const MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const MONTHS=[];for(let i=0;i<21;i++)MONTHS.push({y:2025+Math.floor(i/12),m:i%12});
+const D={blr:{name:"Bengaluru Urban",st:"Karnataka"},mys:{name:"Mysuru",st:"Karnataka"},mum:{name:"Mumbai",st:"Maharashtra"},vad:{name:"Vadodara",st:"Gujarat"},nar:{name:"Narmada",st:"Gujarat"}};
+const PR={
+  hsp:{name:"Healthy Schools",unit:"students",site:"schools",c:"var(--c-hsp)"},
+  as:{name:"Arogya Schools",unit:"students in nominee schools",site:"nominee schools",c:"var(--c-as)"},
+  sfvt:{name:"Street Food Vendor Training",unit:"vendors",site:"stalls",c:"var(--c-sfvt)"},
+  city:{name:"Arogya City",unit:"people covered by delivered pledges",site:"pledgemakers",c:"var(--c-city)"}};
+const rng=a=>()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
+const R0=rng(5102026);
+const ROWS=[
+ ["hsp","blr",52000,210,"School partner, Bengaluru",0,.90],["hsp","mys",18000,80,"School partner, Mysuru",5,.93],
+ ["hsp","mum",24000,95,"School partner, Mumbai",12,.84],["hsp","vad",61000,260,"School partner, Vadodara",0,.91],
+ ["hsp","nar",33000,150,"School partner, Narmada",2,.88],
+ ["as","blr",6100,18,"School partner, Bengaluru",6,.92],["as","mys",2300,8,"School partner, Mysuru",9,.94],
+ ["as","vad",7900,22,"School partner, Vadodara",6,.93],["as","nar",3800,12,"School partner, Narmada",8,.90],
+ ["sfvt","blr",780,780,"Vendor association, Bengaluru",2,.87],["sfvt","mum",340,340,"Vendor association, Mumbai",17,.78],
+ ["city","blr",96000,64,"Arogya City partners, Bengaluru",0,.82],["city","mum",8500,21,"Arogya City partners, Mumbai",16,.55]
+].map(([p,d,people,sites,partner,start,vr])=>{
+  const w=MONTHS.map((mo,i)=>i<start?0:((p==="hsp"||p==="as")&&(mo.m===3||mo.m===4)?.2:1)*(.65+.7*R0())*(1+i/40));
+  const tw=w.reduce((a,b)=>a+b,0);let mon=w.map(x=>Math.round(people*x/tw));mon[20]+=people-mon.reduce((a,b)=>a+b,0);
+  return{p,d,people,sites,partner,start,vr,mon};
+});
+const HSPD={blr:{c:[.97,.58],att:.91,k:[[46,72],[51,70],[60,84]]},mys:{c:[.98,.66],att:.93,k:[[44,74],[50,73],[58,85]]},
+  mum:{c:[.90,.22],att:.86,k:[[47,58],[52,60],[62,70]]},vad:{c:[.98,.71],att:.92,k:[[42,75],[49,72],[57,86]]},nar:{c:[.95,.55],att:.89,k:[[39,70],[47,69],[55,82]]}};
+const COORDS=[["Lakshmi R","blr",.96],["Manjunath K","blr",.91],["Fathima S","blr",.88],["Suresh P","mys",.94],["Anita D","mum",.83],["Rahul M","mum",.79],
+  ["Hetal P","vad",.95],["Kiran B","vad",.92],["Jignesh V","vad",.86],["Sunita T","nar",.90],["Bhavesh R","nar",.84]].map(([name,d,auto])=>({name,d,auto,share:.7+.6*R0()}));
+const FLAGS=[["Outside the school at check-in",.22],["Session too short",.18],["School disputed or did not confirm",.18],["No attendance register photo",.16],["Count above enrolment",.14],["Reused photo",.12]];
+const ASMAX=[12,15,3,10,10,10,5,10],ASLAB=["School Health Committee formed","HSP activities completed","HSP manuals in the library","KAP baseline and endline surveys","Annual sports event","Sugar and Oil boards","School demographic survey","Objective measurements"];
+const ASS=[];(()=>{const r=rng(8080);for(const row of ROWS.filter(x=>x.p==="as"))for(let i=1;i<=row.sites;i++){
+  const m=.35+.65*r(),b=x=>r()<x?1:0;let e,p;
+  if(m>=.9){e=ASMAX.slice();p=5+Math.floor(r()*18)}
+  else{e=[12*b(m+.15),1.5*Math.min(10,Math.round(10*m*(.85+.3*r()))),1.5*(b(m)+b(m)),2.5*(b(m)+b(m)+b(m)+b(m)),10*b(m-.1),5*(b(m+.1)+b(m)),5*b(m+.2),5*(b(m)+b(m-.25))];p=Math.round(25*m*(.3+.5*r()))}
+  const es=e.reduce((a,c)=>a+c,0);ASS.push({name:D[row.d].name+" school "+String(i).padStart(2,"0"),d:row.d,e,es,p,total:es+p,seal:es===75&&p>=5})}})();
+const SF={blr:{st:[1,.94,.88,.79,.71,.63,.55],beh:[[38,69],[45,66],[29,52],[51,78]],women:.58,scr:[.27,.19,.34]},
+          mum:{st:[1,.90,.72,.41,.18,0,0],beh:[[33,44],[41,49],[24,31],[46,58]],women:.64,scr:[.31,.22,.39]}};
+const SFSTAGES=["Registered at the stall","Baseline and screening","Trained","Follow-up visit 1","Follow-up visit 2","Follow-up visit 3","Endline"];
+const SFBEH=["Fresh oil, no repeated reuse","Measured salt","Healthier cooking oil","Hygiene checklist passed"];
+const WARDS=[["Shivajinagar","blr",310,.91],["KR Market","blr",290,.88],["Johnson Market","blr",180,.84],["Govandi","mum",340,.72]];
+const CITY={blr:{name:"Bengaluru",base:[54,38,41,47,33,44,68,39,42],mirror:[[250000,82000,57000],[180000,34000,22500],[150000,21000,13500],[90000,5000,3000]],close:[41,15,8],sect:[20,10,9,8,7,6,4]},
+            mum:{name:"Mumbai",base:[46,22,49,40,29,41,61,36,38],mirror:[[300000,18000,6000],[200000,7000,1500],[170000,5000,1000],[100000,1000,0]],close:[6,9,6],sect:[4,4,3,3,2,2,3]}};
+const BASELAB=["Air quality","Public open space","Walkability","Food environment","Screening coverage","Physical activity","Tobacco-free living","Diabetes burden","Hypertension burden"];
+const CAUSES=["Health screening","Physical activity","Healthy food","Tobacco-free campuses"];
+const SECT=["IT and technology","Healthcare","Education","Manufacturing","Housing societies","Food and hospitality","Government and public sector"];
+const PLEDGERS=[["IT services firm","blr",18000,16900],["Hospital group","blr",15000,12600],["Technology park","blr",12000,11400],["University","blr",9000,5200],["Apartment federation","blr",8000,6900],
+  ["Garment exporter","blr",7000,2100],["Restaurant chain","blr",6000,5700],["Public sector unit","blr",5000,1500],["Bank, regional office","mum",6000,2900],["Pharma company","mum",5000,1800],["Hotel group","mum",4000,900],["Housing society cluster","mum",3000,1400]];
+const PROJECTS=[["Healthy Schools, Gujarat","hsp","Gujarat",0,26,"Funder A"],["Healthy Schools, Karnataka","hsp","Karnataka",5,28,"Funder B"],["Healthy Schools, Mumbai","hsp","Maharashtra",12,30,"Funder C"],
+  ["Arogya Schools accreditation","as","Gujarat",6,29,"Funder A"],["Street food vendors, Bengaluru","sfvt","Karnataka",2,23,"Funder D"],["Nourishing Govandi, Mumbai","sfvt","Maharashtra",19,31,"CSR partner"],
+  ["Arogya City Bengaluru, Edition II","city","Karnataka",0,23,"City partners"],["Arogya City Mumbai","city","Maharashtra",16,35,"City partners"]];
+const TOOLS={hsp:[["Arogya SchoolTrack","Field app and review queue for school sessions","schooltrack/"]],
+  as:[["Arogya SchoolTrack","Accreditation scoreboard for each nominee school","schooltrack/"]],
+  sfvt:[["Street Food Vendor Training tool","Vendor registration, training day desks, stall visits and integrity queue","sfvt/"]],
+  city:[["Arogya City pledge closeout","Organisation-wise closeout progress","https://drnithin.github.io/arogya-city2026/admin/dashboard.html"],["Arogya City Impact Wall","Public page of pledges delivered","https://drnithin.github.io/arogya-city2026/wall.html"]]};
+
+/* ---------- helpers ---------- */
+const ui={tab:"overview",year:"all",state:"all"};
 const $=s=>document.querySelector(s);
 const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const nf=n=>Number(n).toLocaleString("en-IN");
-const fmtDay=t=>new Date(t).toLocaleDateString("en-IN",{day:"numeric",month:"short"});
-const fmtTime=t=>new Date(t).toLocaleTimeString("en-IN",{hour:"2-digit",minute:"2-digit",hour12:false});
-const fmtDist=m=>m<1000?Math.round(m)+" m":(m/1000).toFixed(1)+" km";
-const uid=()=>"s"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
-const rng=a=>()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
-function hav(a,b,c,d){const R=6371000,r=x=>x*Math.PI/180,x=Math.sin(r(c-a)/2)**2+Math.cos(r(a))*Math.cos(r(c))*Math.sin(r(d-b)/2)**2;return 2*R*Math.asin(Math.sqrt(x))}
+const nf=n=>Math.round(n).toLocaleString("en-IN");
+const pct=x=>Math.round(x*100)+"%";
+const sum=a=>a.reduce((x,y)=>x+y,0);
+const compact=n=>n>=1e5?(n/1e5).toFixed(n>=1e6?1:2).replace(/\.?0+$/,"")+" L":n>=1e3?(n/1e3).toFixed(n>=1e4?0:1).replace(/\.0$/,"")+"k":String(Math.round(n));
+const inPeriod=i=>ui.year==="all"||String(MONTHS[i].y)===ui.year;
+const inState=d=>ui.state==="all"||D[d].st===ui.state;
+const periodText=()=>(ui.year==="all"?"January 2025 to September 2026":ui.year==="2026"?"January to September 2026":"January to December 2025")+(ui.state==="all"?"":", "+ui.state);
+function sel(p){return ROWS.filter(r=>(!p||r.p===p)&&inState(r.d)).map(r=>{const mon=r.mon.map((v,i)=>inPeriod(i)?v:0),people=sum(mon),frac=people/r.people;
+  return Object.assign({},r,{monF:mon,peopleF:people,frac,sitesF:people?Math.max(1,Math.round(r.sites*frac)):0})}).filter(r=>r.peopleF>0)}
+const wavg=(rows,f)=>{const w=sum(rows.map(r=>r.peopleF));return w?sum(rows.map(r=>f(r)*r.peopleF))/w:0};
+const tile=(span,title,sub,body)=>'<section class="tile '+span+'"><h2>'+title+"</h2>"+(sub?'<p class="sub">'+sub+"</p>":"")+body+"</section>";
+const kpis=list=>'<div class="kpis">'+list.map(([v,l])=>'<div><b class="num">'+v+'</b><span class="muted">'+l+"</span></div>").join("")+"</div>";
+const lead=(h,p)=>'<div class="lead"><h1>'+h+"</h1><p>"+p+"</p></div>";
+const noWork=what=>'<div class="tile"><p class="empty">'+what+" has no work in "+esc(ui.state)+" in this period. Change the state or year above.</p></div>";
 
-const blank=()=>({coords:[],schools:{},sessions:{},as:{}});
-let S=blank();
-try{const raw=localStorage.getItem(KEY);if(raw){const p=JSON.parse(raw);if(p&&p.schools&&p.sessions)S=Object.assign(blank(),p)}}catch(e){}
-let saveWarn="";
-function save(){
-  try{localStorage.setItem(KEY,JSON.stringify(S));saveWarn=""}
-  catch(e){saveWarn="This browser could not save the data. It stays until you close this page."}
-}
-const ui={mode:"field",tab:"overview",coord:null,screen:"home",schoolId:null,draft:null,lastId:null,asOpen:null,demo:{loc:"at",len:45},msg:""};
+function hbars(items,o){o=o||{};const max=o.max||Math.max(1,...items.map(i=>i.value));
+  return '<div class="hb">'+items.map((it,k)=>'<div class="lab" title="'+esc(it.label)+'">'+(o.rank?'<span class="rank">'+(k+1)+"</span>":"")+esc(it.label)+(it.tag||"")+"</div>"+
+   '<div class="track"><div class="fill" style="width:'+Math.min(100,it.value/max*100)+"%;background:"+(it.color||o.color||"var(--c-hsp)")+'"></div>'+
+   (it.value2!=null?'<div class="fill2" style="width:'+Math.min(100,it.value2/max*100)+'%"></div>':"")+(o.mark!=null?'<div class="mark" style="left:'+(o.mark/max*100)+'%"></div>':"")+"</div>"+
+   '<div class="val">'+(it.text||(o.fmt?o.fmt(it.value):nf(it.value)))+"</div>").join("")+"</div>"}
+function axis(max,W,H,L,B,fmt){let g="";for(let t=0;t<=4;t++){const y=H-B-(H-B-10)*t/4;g+='<line x1="'+L+'" x2="'+W+'" y1="'+y+'" y2="'+y+'" stroke="var(--rule2)"/><text x="'+(L-6)+'" y="'+(y+4)+'" text-anchor="end">'+fmt(max*t/4)+"</text>"}return g}
+function stacked(series){const W=720,H=250,L=46,B=26,idx=MONTHS.map((_,i)=>i).filter(inPeriod),tot=idx.map(i=>sum(series.map(s=>s.vals[i]))),max=Math.max(1,...tot)*1.08,bw=(W-L)/idx.length;
+  let g=axis(max,W,H,L,B,compact);
+  idx.forEach((i,k)=>{let y=H-B;for(const s of series){const h=(H-B-10)*s.vals[i]/max;y-=h;g+='<rect x="'+(L+k*bw+bw*.14)+'" y="'+y+'" width="'+bw*.72+'" height="'+Math.max(0,h)+'" fill="'+s.color+'"><title>'+esc(s.name)+", "+MN[MONTHS[i].m]+" "+MONTHS[i].y+": "+nf(s.vals[i])+"</title></rect>"}
+    if(idx.length<=12||k%3===0)g+='<text x="'+(L+k*bw+bw/2)+'" y="'+(H-8)+'" text-anchor="middle">'+MN[MONTHS[i].m]+" "+String(MONTHS[i].y).slice(2)+"</text>"});
+  return '<svg viewBox="0 0 '+W+" "+H+'" width="100%" role="img" aria-label="Monthly totals by program">'+g+"</svg>"+'<div class="legend">'+series.map(s=>'<span><i style="background:'+s.color+'"></i>'+esc(s.name)+"</span>").join("")+"</div>"}
+function vbars(labels,vals,color,o){o=o||{};const W=520,H=230,L=40,B=26,max=o.max||Math.max(1,...vals)*1.1,bw=(W-L)/vals.length;let g=axis(max,W,H,L,B,o.fmt||compact);
+  vals.forEach((v,k)=>{const h=(H-B-10)*v/max;g+='<rect x="'+(L+k*bw+bw*.18)+'" y="'+(H-B-h)+'" width="'+bw*.64+'" height="'+h+'" rx="2" fill="'+color+'"><title>'+esc(labels[k])+": "+(o.fmt?o.fmt(v):nf(v))+"</title></rect>"+
+    '<text x="'+(L+k*bw+bw/2)+'" y="'+(H-B-h-4)+'" text-anchor="middle" style="fill:var(--ink);font-weight:700">'+(o.fmt?o.fmt(v):compact(v))+'</text><text x="'+(L+k*bw+bw/2)+'" y="'+(H-8)+'" text-anchor="middle">'+esc(labels[k])+"</text>"});
+  return '<svg viewBox="0 0 '+W+" "+H+'" width="100%" role="img" aria-label="'+esc(o.aria||"Bar chart")+'">'+g+"</svg>"}
+function grouped(cats,series){const W=520,H=240,L=40,B=40,max=100,gw=(W-L)/cats.length,bw=gw*.36;let g=axis(max,W,H,L,B,v=>Math.round(v)+"%");
+  cats.forEach((c,k)=>{series.forEach((s,j)=>{const v=s.vals[k],h=(H-B-10)*v/max,x=L+k*gw+gw*.12+j*(bw+3);
+    g+='<rect x="'+x+'" y="'+(H-B-h)+'" width="'+bw+'" height="'+h+'" rx="2" fill="'+s.color+'"><title>'+esc(c)+", "+esc(s.name)+": "+Math.round(v)+'%</title></rect><text x="'+(x+bw/2)+'" y="'+(H-B-h-4)+'" text-anchor="middle" style="fill:var(--ink);font-weight:700">'+Math.round(v)+"</text>"});
+    const words=c.split(" "),mid=Math.ceil(words.length/2);g+='<text x="'+(L+k*gw+gw/2)+'" y="'+(H-24)+'" text-anchor="middle">'+esc(words.slice(0,mid).join(" "))+'</text><text x="'+(L+k*gw+gw/2)+'" y="'+(H-11)+'" text-anchor="middle">'+esc(words.slice(mid).join(" "))+"</text>"});
+  return '<svg viewBox="0 0 '+W+" "+H+'" width="100%" role="img" aria-label="Baseline against latest">'+g+"</svg>"+'<div class="legend">'+series.map(s=>'<span><i style="background:'+s.color+'"></i>'+esc(s.name)+"</span>").join("")+"</div>"}
+function area(vals,color){const W=720,H=220,L=46,B=26,idx=MONTHS.map((_,i)=>i).filter(inPeriod),v=idx.map(i=>vals[i]),max=Math.max(1,...v)*1.12,st=(W-L-10)/Math.max(1,idx.length-1);
+  const pts=v.map((x,k)=>[L+5+k*st,H-B-(H-B-10)*x/max]);let g=axis(max,W,H,L,B,compact);
+  g+='<path d="M'+pts[0][0]+" "+(H-B)+" "+pts.map(p=>"L"+p[0]+" "+p[1]).join(" ")+" L"+pts[pts.length-1][0]+" "+(H-B)+'Z" fill="'+color+'" opacity=".16"/><polyline points="'+pts.map(p=>p.join(",")).join(" ")+'" fill="none" stroke="'+color+'" stroke-width="2.5"/>';
+  pts.forEach((p,k)=>{g+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="3.5" fill="'+color+'"><title>'+MN[MONTHS[idx[k]].m]+" "+MONTHS[idx[k]].y+": "+nf(v[k])+"</title></circle>";
+    if(idx.length<=12||k%3===0)g+='<text x="'+p[0]+'" y="'+(H-8)+'" text-anchor="middle">'+MN[MONTHS[idx[k]].m]+" "+String(MONTHS[idx[k]].y).slice(2)+"</text>"});
+  return '<svg viewBox="0 0 '+W+" "+H+'" width="100%" role="img" aria-label="Monthly trend">'+g+"</svg>"}
+function spark(vals,color){const idx=MONTHS.map((_,i)=>i).filter(inPeriod),v=idx.map(i=>vals[i]),max=Math.max(1,...v),st=120/Math.max(1,v.length-1);
+  return '<svg viewBox="0 0 120 34" width="100%" height="34" preserveAspectRatio="none" aria-hidden="true"><polyline points="'+v.map((x,k)=>(k*st).toFixed(1)+","+(31-28*x/max).toFixed(1)).join(" ")+'" fill="none" stroke="'+color+'" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>'}
+function donut(parts,centre,centreLab){const tot=sum(parts.map(p=>p.value))||1;let off=25,g="";
+  for(const p of parts){const f=p.value/tot*100;g+='<circle cx="21" cy="21" r="15.915" fill="none" stroke="'+p.color+'" stroke-width="6" stroke-dasharray="'+f+" "+(100-f)+'" stroke-dashoffset="'+off+'"><title>'+esc(p.label)+": "+nf(p.value)+"</title></circle>";off-=f}
+  return '<div class="donut"><svg viewBox="0 0 42 42" role="img" aria-label="'+esc(centreLab)+'">'+g+'<text x="21" y="21.5" text-anchor="middle" style="font-size:6.5px;font-weight:700;fill:var(--ink);font-family:var(--display)">'+centre+'</text><text x="21" y="26.5" text-anchor="middle" style="font-size:2.6px">'+esc(centreLab)+"</text></svg>"+
+    '<div class="legend" style="flex-direction:column;margin:0">'+parts.map(p=>'<span><i style="background:'+p.color+'"></i>'+esc(p.label)+' <b class="num">'+pct(p.value/tot)+"</b></span>").join("")+"</div></div>"}
+function funnel(steps,color){const max=Math.max(1,steps[0].value);return '<div class="funnel">'+steps.map((s,k)=>'<div class="frow"><div>'+esc(s.label)+'</div><div><div class="fbar" style="width:'+Math.max(1.5,s.value/max*100)+"%;background:"+color+";opacity:"+(1-k*.09)+'"></div></div><div class="num" style="text-align:right"><b>'+nf(s.value)+'</b> <span class="muted small">'+pct(s.value/max)+"</span></div></div>").join("")+"</div>"}
+const STAT=[["Verified","var(--ok)"],["Waiting for confirmation","var(--wait)"],["Under review","var(--bad)"],["Not counted","var(--c-mute)"]];
+const statusParts=(n,vr)=>[n*vr,n*(1-vr)*.35,n*(1-vr)*.45,n*(1-vr)*.2];
+const records=r=>r.p==="hsp"?r.peopleF/38*6.2:r.p==="sfvt"?r.peopleF*4.6:r.p==="city"?r.sitesF*1.6:0;
+function statusDonut(rows,lab){const t=[0,0,0,0];for(const r of rows){const s=statusParts(records(r),r.vr);s.forEach((v,i)=>t[i]+=v)}
+  return donut(STAT.map(([l,c],i)=>({label:l,color:c,value:t[i]})),pct(t[0]/(sum(t)||1)),lab)}
+const toolsTile=(span,keys)=>tile(span,"Open the working tools","The MIS reads from these. Each one is where the data is entered and checked.",'<div class="tools">'+keys.flatMap(k=>TOOLS[k]).filter((t,i,a)=>a.findIndex(x=>x[0]===t[0])===i).map(([n,d,u])=>'<a href="'+u+'" target="_blank" rel="noopener">'+esc(n)+"<span>"+esc(d)+"</span></a>").join("")+"</div>");
 
-/* ---------- photos and fingerprints ---------- */
-function dhash(src){
-  const c=document.createElement("canvas");c.width=9;c.height=8;
-  const x=c.getContext("2d",{willReadFrequently:true});if(!x)return null;
-  x.drawImage(src,0,0,9,8);const d=x.getImageData(0,0,9,8).data;let bits="";
-  for(let y=0;y<8;y++)for(let i=0;i<8;i++){const a=(y*9+i)*4,b=a+4;
-    bits+=(d[a]*.299+d[a+1]*.587+d[a+2]*.114)>(d[b]*.299+d[b+1]*.587+d[b+2]*.114)?"1":"0"}
-  let h="";for(let i=0;i<64;i+=4)h+=parseInt(bits.slice(i,i+4),2).toString(16);return h;
-}
-function ham(a,b){let n=0;for(let i=0;i<16;i++){let v=parseInt(a[i],16)^parseInt(b[i],16);while(v){n+=v&1;v>>=1}}return n}
-function randHash(r){let h="";for(let i=0;i<16;i++)h+=Math.floor(r()*16).toString(16);return h}
-function samplePhoto(seed){
-  const r=rng(seed),c=document.createElement("canvas");c.width=160;c.height=120;
-  const x=c.getContext("2d");if(!x)return{thumb:null,hash:randHash(r)};
-  const hue=Math.floor(r()*360);
-  x.fillStyle="hsl("+hue+" 28% "+(62+r()*20)+"%)";x.fillRect(0,0,160,120);
-  x.fillStyle="hsl("+((hue+40)%360)+" 18% "+(34+r()*16)+"%)";x.fillRect(0,68+r()*18,160,60);
-  x.fillStyle="#1f3b2d";x.fillRect(r()*90,8+r()*10,40+r()*50,24+r()*10);
-  for(let gy=0;gy<8;gy++)for(let gx=0;gx<9;gx++){x.fillStyle=(r()>.5?"rgba(255,255,255,":"rgba(0,0,0,")+(.08+r()*.2)+")";x.fillRect(gx*160/9,gy*15,160/9+1,16)}
-  const n=14+Math.floor(r()*18);
-  for(let i=0;i<n;i++){const px=8+r()*144,py=58+r()*54,s=4+(py-50)/9;
-    x.fillStyle="hsl("+(20+r()*20)+" 40% "+(18+r()*22)+"%)";x.beginPath();x.arc(px,py,s,0,7);x.fill();
-    x.fillStyle=["#f2f2ee","#c9d8f0","#f0d9a8"][Math.floor(r()*3)];x.fillRect(px-s,py+s,2*s,s*1.5)}
-  return{thumb:c.toDataURL("image/jpeg",.6),hash:dhash(c)||randHash(r)};
-}
-function fileToPhoto(file){return new Promise((res,rej)=>{
-  const fr=new FileReader();fr.onerror=()=>rej(new Error("read"));
-  fr.onload=()=>{const im=new Image();im.onerror=()=>rej(new Error("image"));
-    im.onload=()=>{const c=document.createElement("canvas"),w=200,h=Math.max(1,Math.round(im.height/im.width*w));c.width=w;c.height=h;
-      const x=c.getContext("2d");if(!x)return rej(new Error("canvas"));x.drawImage(im,0,0,w,h);
-      res({thumb:c.toDataURL("image/jpeg",.6),hash:dhash(c)})};
-    im.src=fr.result};
-  fr.readAsDataURL(file)})}
-function findDup(hash,selfId){
-  if(!hash)return null;let best=null;
-  for(const s of Object.values(S.sessions)){if(s.id===selfId)continue;
-    for(const p of s.photos){if(p.kind!=="class"||!p.hash)continue;const d=ham(hash,p.hash);
-      if(d<=DUP_BITS&&(!best||d<best.dist))best={sid:s.id,dist:d}}}
-  return best;
-}
 
-/* ---------- verification ---------- */
-const STATUS={verified:{sym:"\u2713",label:"Verified",cls:"ok"},waiting:{sym:"\u2026",label:"Waiting for school",cls:"wait"},
-  review:{sym:"?",label:"Under review",cls:"rev"},rejected:{sym:"\u2715",label:"Not counted",cls:"bad"}};
-const coordName=id=>(S.coords.find(c=>c.id===id)||{}).name||"Unknown";
-function evaluate(s){
-  const sc=S.schools[s.schoolId],cl=sc.classes.find(c=>c.id===s.classId),f=[];
-  if(s.newAnchor)f.push("First visit. The school's location was recorded on this check-in and needs approval.");
-  else{
-    if(s.distIn>GEOFENCE_M)f.push("Checked in "+fmtDist(s.distIn)+" from the school. The limit is "+GEOFENCE_M+" m.");
-    if(s.distOut!=null&&s.distOut>GEOFENCE_M)f.push("Checked out "+fmtDist(s.distOut)+" from the school.");
-  }
-  const mins=Math.round((s.endTs-s.startTs)/60000);
-  if(mins<MIN_MIN)f.push("Lasted "+mins+" minutes. The minimum is "+MIN_MIN+".");
-  for(const p of s.photos)if(p.kind==="class"&&p.dup){const o=S.sessions[p.dup.sid];
-    f.push(o?"Class photo matches one from "+S.schools[o.schoolId].name+", "+fmtDay(o.startTs)+", logged by "+coordName(o.coordId)+".":"Class photo matches an earlier photo.")}
-  if(!s.photos.some(p=>p.kind==="class"))f.push("No class photo.");
-  if(!s.photos.some(p=>p.kind==="register"))f.push("No attendance register photo.");
-  const tot=s.boys+s.girls;
-  if(cl&&tot>cl.enrol)f.push("Reported "+tot+" students. Class "+cl.id+" has "+cl.enrol+" enrolled.");
-  if(s.teacher==="disputed")f.push("The school says this record is wrong.");
-  if(s.teacher==="pending"&&Date.now()-s.endTs>REPLY_HRS*36e5)f.push("The school has not confirmed in "+REPLY_HRS+" hours.");
-  s.flags=f;
-  s.status=s.review==="accepted"?"verified":s.review==="rejected"?"rejected":f.length?"review":s.teacher==="pending"?"waiting":"verified";
-  return s;
+/* ---------- live numbers from the tools on this device ---------- */
+function liveGet(k){try{const r=localStorage.getItem(k);return r?JSON.parse(r):null}catch(e){return null}}
+const LIVE_T=n=>n+' <span class="pill ok">Live</span>',LIVE_NONE="The tool has no records on this device yet, or this page is not on the same site as the tool. Open the tool below, add a record, and come back.";
+function liveSfvt(){
+  const d=liveGet("sfvt.v2");if(!d||!d.vendors||!Object.keys(d.vendors).length)return tile("",LIVE_T("Live from the vendor training tool"),"",'<p class="muted">'+LIVE_NONE+"</p>");
+  const vs=Object.values(d.vendors).filter(v=>v.review!=="rejected"),xs=Object.values(d.visits||{}).filter(x=>x.status==="verified"),has=t=>new Set(xs.filter(x=>x.type===t).map(x=>x.vid)).size;
+  const tr=Object.values(d.trainings||{}),inv=sum(tr.map(t=>(t.invited||[]).length)),att=vs.filter(v=>v.att).length;
+  return tile("",LIVE_T("Live from the vendor training tool"),"Real records from the field tool on this device, not sample data. It updates when you come back to this page.",
+    kpis([[vs.length,"vendors registered"],[att,"came to a training"+(inv?", of "+inv+" invited":"")],[vs.filter(v=>v.scr&&!v.scr.declined).length,"screened"],[vs.filter(v=>v.kit&&v.kit.trained).length,"trained"],[vs.filter(v=>v.kit&&v.kit.apron).length,"aprons given"]])+
+    '<div style="margin-top:1rem">'+funnel([["Registered",vs.length],["Came to training",att],["Trained",vs.filter(v=>v.kit&&v.kit.trained).length],["Visit 1",has("tp1")],["Visit 2",has("tp2")],["Visit 3",has("tp3")],["Endline",has("endline")]].map(([label,value])=>({label,value})),"var(--c-sfvt)")+"</div>");
 }
-const sessions=()=>Object.values(S.sessions).sort((a,b)=>b.startTs-a.startTs);
-function cellSession(schoolId,classId,act){
-  let live=null,dead=null;
-  for(const s of Object.values(S.sessions)){if(s.schoolId!==schoolId||s.classId!==classId||s.activity!==act)continue;
-    if(s.status==="rejected"){if(!dead||s.startTs>dead.startTs)dead=s}else if(!live||s.startTs>live.startTs)live=s}
-  return live||dead;
-}
-const activityTaken=(schoolId,classId,act)=>Object.values(S.sessions).some(s=>s.schoolId===schoolId&&s.classId===classId&&s.activity===act&&s.status!=="rejected");
-function schoolProgress(sc){let done=0;for(const c of sc.classes)for(let a=1;a<=10;a++){const s=cellSession(sc.id,c.id,a);if(s&&s.status==="verified")done++}return{done,total:sc.classes.length*10}}
-
-/* ---------- Arogya Schools scoring ---------- */
-const CRIT=[
- ["E","shc",12,"School Health Committee formed with students, teachers and parents"],
- ["E","hsp",15,"HSP activities completed for every section, 1.5 points each","auto"],
- ["E","man1",1.5,"First HSP manual available in the library"],["E","man2",1.5,"Second HSP manual available in the library"],
- ["E","kb1",2.5,"KAP baseline survey, year 1"],["E","ke1",2.5,"KAP endline survey, year 1"],
- ["E","kb2",2.5,"KAP baseline survey, year 2"],["E","ke2",2.5,"KAP endline survey, year 2"],
- ["E","sport",10,"Annual sports event with 80% of grade 6 and 7 students"],
- ["E","sugar",5,"Sugar board displayed"],["E","oil",5,"Oil board displayed"],
- ["E","demo",5,"School demographic survey completed"],
- ["E","omb",5,"Objective measurements at baseline"],["E","ome",5,"Objective measurements at endline"],
- ["P","hp1",2,"Health promotion activity with 80% of students, year 1"],["P","hp2",2,"Health promotion activity with 80% of students, year 2"],
- ["P","fu",5,"Follow-up survey with grade 8"],
- ["P","aw1",2,"Awareness event for staff and community, year 1"],["P","aw2",2,"Awareness event for staff and community, year 2"],
- ["P","water",2,"Potable drinking water available"],["P","wash",2,"Clean washrooms, separate for teachers and students"],
- ["P","tre",1,"25% of staff enrolled in NCD Prevention training"],["P","tra",1,"Enrolled staff attended the training"],
- ["P","gov",1,"A government scheme implemented"],["P","story",5,"Written impact story"]
-];
-function hspDone(sc){let n=0;for(let a=1;a<=10;a++){if(sc.classes.length&&sc.classes.every(c=>{const s=cellSession(sc.id,c.id,a);return s&&s.status==="verified"}))n++}return n}
-function asScore(sc){
-  const t=S.as[sc.id]||{};let e=0,p=0;
-  for(const[g,k,pts,,auto]of CRIT){const got=auto?hspDone(sc)*1.5:(t[k]?pts:0);if(g==="E")e+=got;else p+=got}
-  return{e,p,total:e+p,eligible:e>=75&&p>=5};
+function liveHsp(){
+  const d=liveGet("schooltrack.v1");if(!d||!d.sessions||!Object.keys(d.sessions).length)return tile("",LIVE_T("Live from SchoolTrack"),"",'<p class="muted">'+LIVE_NONE+"</p>");
+  const ss=Object.values(d.sessions),ver=ss.filter(s=>s.status==="verified");let reach=0,schools=0;
+  for(const sc of Object.values(d.schools||{})){let any=false;for(const c of sc.classes||[])if(ver.some(s=>s.schoolId===sc.id&&s.classId===c.id)){reach+=c.enrol;any=true}if(any)schools++}
+  return tile("",LIVE_T("Live from SchoolTrack"),"Real records from the field tool on this device, not sample data. It updates when you come back to this page.",
+    kpis([[schools,"schools with verified sessions"],[nf(reach),"students reached"],[ver.length,"verified sessions"],[ss.filter(s=>s.status==="waiting").length,"waiting for the school"],[ss.filter(s=>s.status==="review").length,"in the review queue"]]));
 }
 
-/* ---------- sample data ---------- */
-function loadSample(){
-  S=blank();const now=Date.now(),day=864e5,r=rng(20261005);
-  S.coords=[{id:"c1",name:"Lakshmi R"},{id:"c2",name:"Manjunath K"},{id:"c3",name:"Fathima S"}];
-  const list=[
-   ["29280100101","GHPS Hebbal","Bengaluru North",13.0358,77.5970,"c1",true,[["6A",42],["6B",39]],6],
-   ["29280100102","GHPS Yelahanka Old Town","Bengaluru North",13.1005,77.5963,"c1",true,[["6A",46],["6B",44],["6C",41]],5],
-   ["29280100103","GHPS Jakkur","Bengaluru North",13.0784,77.6068,"c2",false,[["6A",35],["6B",33]],3],
-   ["29280100104","GHPS Thanisandra","Bengaluru East",13.0580,77.6330,"c2",true,[["6A",48],["6B",45]],4],
-   ["29280100105","GHPS Kodigehalli","Bengaluru North",13.0606,77.5788,"c3",false,[["6A",38],["6B",36]],2],
-   ["29280100106","GHPS Vidyaranyapura","Bengaluru North",13.0767,77.5574,"c3",false,[["6A",40],["6B",43]],4]];
-  let seed=100;const byKey={};
-  for(const[id,name,block,lat,lng,coordId,isAS,classes,k]of list){
-    S.schools[id]={id,name,block,lat,lng,coordId,isAS,teacher:"Head teacher",phone:"Sample number",classes:classes.map(([cid,enrol])=>({id:cid,enrol}))};
-    for(const[cid,enrol]of classes)for(let a=1;a<=k;a++){
-      const start=now-(k-a+1)*7*day-Math.floor(r()*3)*day,st=new Date(start);st.setHours(10+Math.floor(r()*4),Math.floor(r()*50),0,0);
-      const mins=35+Math.floor(r()*16),tot=Math.round(enrol*(.85+r()*.12)),boys=Math.round(tot*(.45+r()*.1));
-      const s={id:"seed"+(seed++),schoolId:id,classId:cid,activity:a,coordId,startTs:st.getTime(),endTs:st.getTime()+mins*6e4,
-        distIn:15+r()*80,distOut:15+r()*80,boys,girls:tot-boys,teacher:"confirmed",
-        photos:[Object.assign({kind:"class"},samplePhoto(seed*7)),{kind:"register",thumb:null,hash:null}]};
-      S.sessions[s.id]=s;byKey[id+"|"+cid+"|"+a]=s;
-    }
-  }
-  const g=(i,c,a)=>byKey[list[i][0]+"|"+c+"|"+a];
-  g(2,"6A",3).distIn=2840;g(2,"6A",3).distOut=2790;
-  const dupOf=g(5,"6A",1),dup=g(4,"6B",2);dup.photos[0]=Object.assign({},dupOf.photos[0],{dup:{sid:dupOf.id,dist:0}});
-  const sh=g(3,"6B",4);sh.endTs=sh.startTs+9*6e4;
-  const ov=g(5,"6B",4);ov.boys=27;ov.girls=24;
-  g(1,"6C",5).teacher="disputed";
-  const w=g(0,"6B",6);w.teacher="pending";w.startTs=now-4*36e5;w.endTs=now-3*36e5;
-  const nr=g(2,"6B",3);nr.teacher="pending";nr.startTs=now-3*day-36e5;nr.endTs=now-3*day;
-  Object.values(S.sessions).forEach(evaluate);
-  S.as={"29280100101":{shc:1,man1:1,man2:1,kb1:1,ke1:1,sport:1,sugar:1,oil:1,demo:1,omb:1,hp1:1,water:1,wash:1,story:1},
-        "29280100102":{shc:1,man1:1,kb1:1,sugar:1,demo:1,omb:1,water:1},"29280100104":{shc:1,kb1:1,demo:1}};
-  ui.coord="c1";ui.screen="home";save();render();
-}
-
-/* ---------- location ---------- */
-function demoPos(sc,where){const lat=sc.lat??13.05,lng=sc.lng??77.6;return where==="away"?{lat:lat+.021,lng:lng+.016}:{lat:lat+.0003,lng:lng+.0002}}
-function getPos(sc){
-  if(ui.demo.loc!=="real")return Promise.resolve(demoPos(sc,ui.demo.loc));
-  return new Promise(res=>{
-    const fail=()=>{ui.msg="This device did not share its location, so the demo location was used.";res(demoPos(sc,"at"))};
-    if(!navigator.geolocation)return fail();
-    navigator.geolocation.getCurrentPosition(p=>res({lat:p.coords.latitude,lng:p.coords.longitude}),fail,{enableHighAccuracy:true,timeout:9000,maximumAge:0});
-  });
-}
-
-/* ---------- field app ---------- */
-const pill=st=>'<span class="pill '+STATUS[st].cls+'">'+STATUS[st].label+"</span>";
-function emptyState(){return '<div class="phone stack"><h1>No schools yet</h1><p>Load the sample schools to try a session, or add your own schools in the monitoring dashboard.</p><button class="btn primary block" data-a="sample">Load sample data</button></div>'}
-function demoPanel(){
-  const b=(k,v,l)=>'<button data-a="demo" data-k="'+k+'" data-v="'+v+'" aria-pressed="'+(String(ui.demo[k])===String(v))+'">'+l+"</button>";
-  return '<section class="demo stack"><div><strong>Demo controls</strong><p class="small muted">Choose what the phone reports, to see how each check reacts.</p></div>'+
-   '<div><p class="small">Location at check-in</p><div class="seg">'+b("loc","at","At the school")+b("loc","away","3 km away")+b("loc","real","Real GPS")+"</div></div>"+
-   (ui.demo.loc==="real"?'<p class="small muted">Real GPS uses the clock too: the session lasts as long as you take.</p>':
-   '<div><p class="small">Session length</p><div class="seg">'+b("len",45,"45 minutes")+b("len",8,"8 minutes")+"</div></div>")+"</section>";
-}
-function home(){
-  const mine=Object.values(S.schools).filter(s=>s.coordId===ui.coord),rec=sessions().filter(s=>s.coordId===ui.coord).slice(0,6);
-  return '<div class="phone stack"><div class="row" style="justify-content:space-between"><h1>Today</h1>'+
-   '<label class="small">Signed in as <select data-c="coord" style="min-height:44px;border:1.5px solid var(--ink);border-radius:10px;background:var(--sheet);padding:0 .5rem">'+
-   S.coords.map(c=>'<option value="'+esc(c.id)+'"'+(c.id===ui.coord?" selected":"")+">"+esc(c.name)+"</option>").join("")+"</select></label></div>"+
-   demoPanel()+"<h2>Your schools</h2>"+
-   (mine.length?mine.map(sc=>{const p=schoolProgress(sc);return '<div class="sheet schoolcard"><div><h3>'+esc(sc.name)+'</h3><p class="small muted num">'+p.done+" of "+p.total+" activities verified</p></div>"+
-     '<button class="btn primary" data-a="open" data-id="'+esc(sc.id)+'">Open</button></div>'}).join(""):'<p class="muted">No schools are assigned to this coordinator.</p>')+
-   "<h2>Your recent sessions</h2>"+(rec.length?'<ul class="list">'+rec.map(s=>'<li class="row" style="justify-content:space-between"><button class="btn quiet" style="text-align:left;flex:1" data-a="detail" data-id="'+esc(s.id)+'">Activity '+s.activity+", class "+esc(s.classId)+'<br><span class="small muted">'+esc(S.schools[s.schoolId].name)+", "+fmtDay(s.startTs)+"</span></button>"+pill(s.status)+"</li>").join("")+"</ul>":'<p class="muted">Sessions you log appear here with their status.</p>')+
-   (saveWarn?'<p class="note bad small">'+esc(saveWarn)+"</p>":"")+"</div>";
-}
-function schoolScreen(){
-  const sc=S.schools[ui.schoolId];
-  return '<div class="phone stack"><button class="btn quiet" data-a="home">Back to today</button><div><h1>'+esc(sc.name)+'</h1><p class="muted small">UDISE '+esc(sc.id)+", "+esc(sc.block)+"</p></div>"+
-   sc.classes.map(c=>{let dots="";for(let a=1;a<=10;a++){const s=cellSession(sc.id,c.id,a);dots+='<span class="pill '+(s?STATUS[s.status].cls:"")+'" style="'+(s?"":"border:1px solid var(--rule);color:var(--ink2)")+'" title="Activity '+a+(s?": "+STATUS[s.status].label:": not done")+'">'+a+"</span> "}
-     return '<div class="sheet"><h3>Class '+esc(c.id)+' <span class="muted small num" style="font-family:var(--body);font-weight:400">'+c.enrol+' enrolled</span></h3><p style="margin-top:.5rem;line-height:2">'+dots+"</p></div>"}).join("")+
-   '<button class="btn primary block" data-a="start">Start a session here</button></div>';
-}
-function photoBlock(kind,label){
-  const d=ui.draft,p=d.photos.find(x=>x.kind===kind);
-  let h='<div class="stack"><div class="row"><span class="btn filebtn">Take photo<input type="file" accept="image/*" capture="environment" data-c="photo" data-kind="'+kind+'" aria-label="Take the '+label+'"></span>'+
-    '<button class="btn quiet" data-a="samplephoto" data-kind="'+kind+'">Use a sample photo</button>'+
-    (kind==="class"&&Object.keys(S.sessions).length?'<button class="btn quiet" data-a="oldphoto">Resend an old photo</button>':"")+"</div>";
-  if(p){h+=(p.thumb?'<img class="thumb" src="'+p.thumb+'" alt="'+label+' preview">':'<p class="small muted">Photo attached.</p>');
-    if(kind==="class")h+=p.dup?'<p class="note bad small">This photo was used before. The session will go to review.</p>':'<p class="note ok small">New photo. No match with earlier photos.</p>'}
-  return h+"</div>";
-}
-function wizard(){
-  const d=ui.draft,sc=S.schools[d.schoolId],cl=sc.classes.find(c=>c.id===d.classId);
-  let steps="";for(let i=1;i<=6;i++)steps+='<i class="'+(i<=d.step?"on":"")+'"></i>';
-  let body="";
-  if(d.step===1)body="<h1>Check in</h1><p>"+esc(sc.name)+"</p>"+(sc.lat==null?'<p class="note small">This school has no recorded location yet. Checking in records it, and AWIT approves it.</p>':"")+demoPanel()+
-    '<button class="btn primary block" data-a="checkin">Check in at this school</button>';
-  if(d.step===2){
-    body="<h1>Class and activity</h1>"+(d.newAnchor?'<p class="note small">School location recorded.</p>':'<p class="note '+(d.distIn>GEOFENCE_M?"bad":"ok")+' small">You are '+fmtDist(d.distIn)+" from the school"+(d.distIn>GEOFENCE_M?", outside the "+GEOFENCE_M+" m limit.":".")+"</p>")+
-     '<div><p><strong>Class</strong></p><div class="chips">'+sc.classes.map(c=>'<button class="chip" data-a="pickclass" data-v="'+esc(c.id)+'" aria-pressed="'+(c.id===d.classId)+'">'+esc(c.id)+"</button>").join("")+"</div></div>";
-    if(d.classId){body+='<div><p><strong>Activity</strong></p><div class="chips">';
-      for(let a=1;a<=10;a++){const taken=activityTaken(sc.id,d.classId,a);body+='<button class="chip" data-a="pickact" data-v="'+a+'" aria-pressed="'+(a===d.activity)+'"'+(taken?' disabled aria-label="Activity '+a+', already logged"':"")+">"+a+"</button>"}
-      body+='</div><p class="small muted" style="margin-top:.4rem">Activities already logged for this class cannot be logged again.</p></div>'}
-    body+='<button class="btn primary block" data-a="next"'+(d.classId&&d.activity?"":" disabled")+">Continue</button>";
-  }
-  if(d.step===3)body="<h1>Class photo</h1><p>Take one wide photo of the whole class at the start.</p>"+photoBlock("class","class photo")+
-    '<button class="btn primary block" data-a="next">Continue</button>';
-  if(d.step===4)body="<h1>Register and count</h1><p>Photograph today's page of the attendance register, then enter who is present.</p>"+photoBlock("register","register photo")+
-    '<div class="two"><div class="field"><label for="boys">Boys present</label><input id="boys" inputmode="numeric" data-c="count" data-k="boys" value="'+esc(d.boys)+'"></div>'+
-    '<div class="field"><label for="girls">Girls present</label><input id="girls" inputmode="numeric" data-c="count" data-k="girls" value="'+esc(d.girls)+'"></div></div>'+
-    '<p class="small muted">Class '+esc(cl.id)+" has "+cl.enrol+" students enrolled.</p>"+
-    '<button class="btn primary block" data-a="next">Continue</button>';
-  if(d.step===5)body="<h1>Check out</h1><p>Check out when the activity ends. The app records the time and your location again.</p>"+demoPanel()+
-    '<button class="btn primary block" data-a="checkout">Check out</button>';
-  if(d.step===6){const s=S.sessions[d.id];
-    body="<h1>School confirmation</h1><p class=\"small muted\">In the live system this message goes to the teacher's own phone. Here, you answer for the teacher.</p>"+
-     '<div class="msg">Arogya World: '+esc(coordName(s.coordId))+" reports Activity "+s.activity+" for class "+esc(s.classId)+" today, with "+(s.boys+s.girls)+" students ("+s.boys+" boys, "+s.girls+" girls). Is this correct?</div>"+
-     '<div class="stack"><button class="btn primary block" data-a="teacher" data-v="confirmed">Yes, this is correct</button>'+
-     '<button class="btn danger block" data-a="teacher" data-v="disputed">No, this is wrong</button>'+
-     '<button class="btn quiet block" data-a="teacher" data-v="pending">The teacher has not replied yet</button></div>';
-  }
-  return '<div class="phone stack"><div><p class="small muted">Step '+d.step+" of 6</p><div class=\"steps\">"+steps+"</div></div>"+
-    (ui.msg?'<p class="note small">'+esc(ui.msg)+"</p>":"")+body+(d.step<5?'<button class="btn quiet block" data-a="cancel">Cancel this session</button>':"")+"</div>";
-}
-function resultScreen(){
-  const s=S.sessions[ui.lastId];
-  return '<div class="phone stack"><h1>Session saved</h1><p>'+pill(s.status)+"</p>"+
-    (s.status==="verified"?"<p>All checks passed. This session counts.</p>":s.status==="waiting"?"<p>Everything else passed. It counts once the school confirms.</p>":
-     "<p>This session goes to the review queue for these reasons:</p><ul>"+s.flags.map(f=>'<li class="flag">'+esc(f)+"</li>").join("")+"</ul>")+
-    '<button class="btn primary block" data-a="home">Back to today</button><button class="btn block" data-a="mode" data-v="dash">See it on the dashboard</button></div>';
-}
-function fieldView(){
-  if(!S.coords.length||!Object.keys(S.schools).length)return emptyState();
-  if(!S.coords.some(c=>c.id===ui.coord))ui.coord=S.coords[0].id;
-  if(ui.screen==="session"&&ui.draft)return wizard();
-  if(ui.screen==="school"&&S.schools[ui.schoolId])return schoolScreen();
-  if(ui.screen==="result"&&S.sessions[ui.lastId])return resultScreen();
-  return home();
-}
-
-/* ---------- dashboard ---------- */
+/* ---------- views ---------- */
 function overview(){
-  const all=Object.values(S.sessions),ver=all.filter(s=>s.status==="verified"),auto=ver.filter(s=>!s.review),rev=all.filter(s=>s.status==="review");
-  let reach=0,schoolsActive=0;
-  for(const sc of Object.values(S.schools)){let any=false;for(const c of sc.classes){if(ver.some(s=>s.schoolId===sc.id&&s.classId===c.id)){reach+=c.enrol;any=true}}if(any)schoolsActive++}
-  const att=ver.reduce((n,s)=>n+s.boys+s.girls,0);
-  let h='<div class="strip"><div><b class="num">'+nf(ver.length)+'</b><span class="muted">verified sessions</span></div>'+
-   '<div><b class="num">'+nf(reach)+'</b><span class="muted">students reached, counted once</span></div>'+
-   '<div><b class="num">'+nf(att)+'</b><span class="muted">session attendances</span></div>'+
-   '<div><b class="num">'+(all.length?Math.round(auto.length/all.length*100):0)+'%</b><span class="muted">verified without review</span></div>'+
-   '<div><b class="num">'+rev.length+'</b><span class="muted">waiting in the review queue</span></div></div>';
-  h+='<div><h2>Activity register</h2><p class="muted small" style="margin:.25rem 0 .75rem">One row per class, one column per HSP activity. Select a mark to see the evidence behind it.</p><div class="scroll"><table class="reg"><thead><tr><th class="cls">Class</th>';
-  for(let a=1;a<=10;a++)h+='<th scope="col">'+a+"</th>";h+="</tr></thead><tbody>";
-  for(const sc of Object.values(S.schools)){
-    h+='<tr class="sch"><td colspan="11">'+esc(sc.name)+"<span>"+esc(coordName(sc.coordId))+(sc.isAS?", Arogya School nominee":"")+"</span></td></tr>";
-    for(const c of sc.classes){h+='<tr><th scope="row" class="cls">'+esc(c.id)+' <span class="muted small num" style="font-weight:400">'+c.enrol+"</span></th>";
-      for(let a=1;a<=10;a++){const s=cellSession(sc.id,c.id,a);
-        h+="<td>"+(s?'<button class="cell '+STATUS[s.status].cls+'" data-a="detail" data-id="'+esc(s.id)+'" aria-label="'+esc(sc.name)+", class "+esc(c.id)+", activity "+a+": "+STATUS[s.status].label+'">'+STATUS[s.status].sym+"</button>":'<span class="cell none" aria-label="Not done"></span>')+"</td>"}
-      h+="</tr>"}
-  }
-  h+='</tbody></table></div><div class="legend small">'+Object.values(STATUS).map(m=>'<span><b class="cell '+m.cls+'" style="display:inline;background:none;font-size:1rem">'+m.sym+"</b> "+m.label+"</span>").join("")+"</div></div>";
-  h+='<div><h2>Coordinators</h2><div class="scroll"><table style="margin-top:.5rem"><thead><tr><th>Coordinator</th><th>Sessions</th><th>Verified without review</th><th>Flagged</th><th>Not counted</th></tr></thead><tbody>'+
-   S.coords.map(c=>{const m=all.filter(s=>s.coordId===c.id),a=m.filter(s=>s.status==="verified"&&!s.review).length,fl=m.filter(s=>s.flags.length).length,rj=m.filter(s=>s.status==="rejected").length;
-    return "<tr><td>"+esc(c.name)+'</td><td class="num">'+m.length+'</td><td class="num">'+(m.length?Math.round(a/m.length*100):0)+'%</td><td class="num">'+fl+'</td><td class="num">'+rj+"</td></tr>"}).join("")+"</tbody></table></div></div>";
+  const rows=sel(),direct=rows.filter(r=>r.p!=="as"),total=sum(direct.map(r=>r.peopleF));
+  if(!rows.length)return noWork("The organisation");
+  const dists=[...new Set(rows.map(r=>r.d))],partners=[...new Set(rows.map(r=>r.partner))],progs=Object.keys(PR).filter(p=>rows.some(r=>r.p===p));
+  let h=lead(nf(total)+" people reached","Across "+progs.length+" programs, "+dists.length+" districts and "+partners.length+" partners, "+periodText()+".");
+  for(const p of Object.keys(PR)){const pr=rows.filter(r=>r.p===p),people=sum(pr.map(r=>r.peopleF)),sites=sum(pr.map(r=>r.sitesF)),mon=MONTHS.map((_,i)=>sum(pr.map(r=>r.monF[i])));
+    h+='<button class="tile s3 pcard" style="--pc:'+PR[p].c+'" data-a="tab" data-v="'+p+'"><h2>'+PR[p].name+'</h2><b class="num">'+nf(people)+'</b><span class="muted small">'+PR[p].unit+"</span>"+spark(mon,PR[p].c)+
+      '<span class="small num">'+nf(sites)+" "+PR[p].site+(pr.length?", "+pct(wavg(pr,r=>r.vr))+" of records verified":"")+'</span><br><span class="go">Open dashboard</span></button>'}
+  h+=tile("s8","People reached each month","New people reached, by program. Arogya Schools is inside Healthy Schools.",stacked(["hsp","sfvt","city"].map(p=>({name:PR[p].name,color:PR[p].c,vals:MONTHS.map((_,i)=>sum(direct.filter(r=>r.p===p).map(r=>r.monF[i])))}))));
+  h+=tile("s4","Can we trust the numbers?","Every record is checked before it counts.",statusDonut(direct,"verified"));
+  let t='<div class="scroll"><table class="heat"><thead><tr><th>District</th>'+Object.keys(PR).map(p=>'<th class="n">'+PR[p].name+"</th>").join("")+"</tr></thead><tbody>";
+  const colMax={};for(const p of Object.keys(PR))colMax[p]=Math.max(1,...rows.filter(r=>r.p===p).map(r=>r.peopleF));
+  for(const d of dists){t+="<tr><td>"+D[d].name+'<br><span class="small muted">'+D[d].st+"</span></td>";
+    for(const p of Object.keys(PR)){const r=rows.find(x=>x.p===p&&x.d===d);t+=r?'<td class="n" style="background:color-mix(in srgb,'+PR[p].c+" "+Math.round(8+30*r.peopleF/colMax[p])+'%,transparent)">'+nf(r.peopleF)+"</td>":'<td class="n muted">none</td>'}t+="</tr>"}
+  h+=tile("s7","Where we work","People reached in each district, by program. Darker cells are that program's larger sites.",t+"</tbody></table></div>");
+  const pl=partners.map(n=>{const pr=direct.filter(r=>r.partner===n);return pr.length?{label:n,value:wavg(pr,r=>r.vr)*100,text:pct(wavg(pr,r=>r.vr)),color:PR[pr[0].p].c,people:sum(pr.map(r=>r.peopleF))}:null}).filter(Boolean).sort((a,b)=>b.value-a.value);
+  h+=tile("s5","Partner leaderboard","Ranked by the share of their records verified without review.",hbars(pl,{max:100,rank:true})+'<div class="legend">'+progs.filter(p=>p!=="as").map(p=>'<span><i style="background:'+PR[p].c+'"></i>'+PR[p].name+"</span>").join("")+"</div>");
+  const pj=PROJECTS.filter(p=>ui.state==="all"||p[2]===ui.state);
+  h+=tile("s8","Project timeline","Active grants and their periods. The red line is today.",'<div class="gantt">'+pj.map(([n,p,,a,b,f])=>'<div class="grow"><div>'+esc(n)+'<br><span class="small muted">'+esc(f)+'</span></div><div class="gtrack"><div class="gbar" style="left:'+a/36*100+"%;width:"+(b-a+1)/36*100+"%;background:"+PR[p].c+'" title="'+esc(n)+'"></div><div class="now" style="left:'+21/36*100+'%"></div></div></div>').join("")+
+    '</div><div class="gaxis"><div></div><div><span>Jan 2025</span><span>Jan 2026</span><span>Jan 2027</span><span>Dec 2027</span></div></div>');
+  h+=toolsTile("s4",["hsp","sfvt","city"]);
   return h;
 }
-function evidence(s){
-  let h='<div class="thumbs">';
-  for(const p of s.photos){if(!p.thumb)continue;h+='<figure><img class="thumb" src="'+p.thumb+'" alt="'+(p.kind==="class"?"Class":"Register")+' photo"><figcaption>'+(p.kind==="class"?"Class photo":"Register photo")+", this session</figcaption></figure>";
-    if(p.dup&&S.sessions[p.dup.sid]){const o=S.sessions[p.dup.sid],op=o.photos.find(x=>x.kind==="class");
-      if(op&&op.thumb)h+='<figure><img class="thumb" src="'+op.thumb+'" alt="Earlier matching photo"><figcaption>Earlier photo: '+esc(S.schools[o.schoolId].name)+", "+fmtDay(o.startTs)+"</figcaption></figure>"}}
-  return h+"</div>";
-}
-function reviewButtons(s){return '<div class="row"><button class="btn primary" data-a="review" data-v="accepted" data-id="'+esc(s.id)+'">Count this session</button><button class="btn danger" data-a="review" data-v="rejected" data-id="'+esc(s.id)+'">Do not count</button></div>'}
-function queue(){
-  const q=sessions().filter(s=>s.status==="review");
-  if(!q.length)return '<h2>Review queue</h2><p class="muted">Nothing needs a decision. Sessions that fail a check appear here.</p>';
-  return "<h2>Review queue</h2><p class=\"muted small\">"+q.length+" sessions failed at least one check. Decide whether each one counts.</p>"+q.map(s=>{const sc=S.schools[s.schoolId];
-    return '<div class="qcard stack"><div><h3>'+esc(sc.name)+", class "+esc(s.classId)+", activity "+s.activity+'</h3><p class="small muted">'+esc(coordName(s.coordId))+", "+fmtDay(s.startTs)+" at "+fmtTime(s.startTs)+"</p></div>"+
-     "<ul style=\"margin:0;padding-left:1.2rem\">"+s.flags.map(f=>'<li class="flag">'+esc(f)+"</li>").join("")+"</ul>"+evidence(s)+
-     '<div class="row">'+reviewButtons(s)+'<button class="btn quiet" data-a="detail" data-id="'+esc(s.id)+'">See all details</button></div></div>'}).join("");
-}
-function asTab(){
-  const list=Object.values(S.schools).filter(s=>s.isAS);
-  if(!list.length)return '<h2>Arogya Schools</h2><p class="muted">No school is nominated yet. Mark a school as a nominee in the Schools tab.</p>';
-  let h='<h2>Arogya Schools</h2><p class="muted small">The Seal needs 80 points: all 75 essential points and at least 5 preferred points.</p>';
-  for(const sc of list){const r=asScore(sc),open=ui.asOpen===sc.id,t=S.as[sc.id]||{};
-    h+='<div class="sheet stack"><div class="row" style="justify-content:space-between"><div><h3>'+esc(sc.name)+'</h3><p class="small muted num">Essential '+r.e+" of 75, preferred "+r.p+" of 25</p></div>"+
-     '<div class="row"><b class="num" style="font-family:var(--display);font-size:1.5rem">'+r.total+'</b><div class="meter" aria-hidden="true"><i style="width:'+r.total+'%"></i></div>'+
-     '<span class="pill '+(r.eligible?"ok":"wait")+'">'+(r.eligible?"Eligible for the Seal":r.e<75?(75-r.e)+" essential points open":"Needs "+(5-r.p)+" preferred points")+"</span>"+
-     '<button class="btn quiet" data-a="asopen" data-id="'+esc(sc.id)+'" aria-expanded="'+open+'">'+(open?"Hide criteria":"Show criteria")+"</button></div></div>";
-    if(open){for(const g of["E","P"]){h+="<div><h3>"+(g==="E"?"Essential criteria":"Preferred criteria")+"</h3>";
-      for(const[gg,k,pts,label,auto]of CRIT){if(gg!==g)continue;const got=auto?hspDone(sc)*1.5:(t[k]?pts:0);
-        h+='<label class="crit">'+(auto?'<span class="pill ok" title="Scored from verified sessions">auto</span>':'<input type="checkbox" data-c="crit" data-id="'+esc(sc.id)+'" data-k="'+k+'"'+(t[k]?" checked":"")+">")+
-         "<span>"+label+(auto?' <span class="muted small">('+hspDone(sc)+" of 10 activities verified for every section)</span>":"")+'</span><span class="num muted">'+got+" / "+pts+"</span></label>"}
-      h+="</div>"}}
-    h+="</div>"}
+function hsp(){
+  const rows=sel("hsp");if(!rows.length)return noWork("Healthy Schools");
+  const students=sum(rows.map(r=>r.peopleF)),schools=sum(rows.map(r=>r.sitesF)),sess=sum(rows.map(r=>records(r))),ver=sum(rows.map(r=>records(r)*r.vr));
+  const comp=[];for(let a=0;a<10;a++)comp.push(wavg(rows,r=>{const c=HSPD[r.d].c;return c[0]+(c[1]-c[0])*a/9})*100);
+  const k=[0,1,2].map(j=>[wavg(rows,r=>HSPD[r.d].k[j][0]),wavg(rows,r=>HSPD[r.d].k[j][1])]),gain=sum(k.map(x=>x[1]-x[0]))/3;
+  let h=lead(nf(students)+" students in "+nf(schools)+" schools","Healthy Schools Program, "+periodText()+". Sessions count only after place, time, photo, headcount and school confirmation agree.");
+  h+=kpis([[nf(ver),"verified sessions"],[pct(comp[9]/100),"of classes finished all 10 activities"],[pct(wavg(rows,r=>HSPD[r.d].att)),"average attendance"],["+"+Math.round(gain),"points gained in KAP scores"],[pct(ver/sess),"of sessions verified"]]);
+  h+=liveHsp();
+  h+=tile("s8","Verified sessions each month","School holidays in April and May show as the dip.",area(MONTHS.map((_,i)=>sum(rows.map(r=>r.monF[i]/38*6.2*r.vr))),PR.hsp.c));
+  h+=tile("s4","Session records by status","",statusDonut(rows,"verified"));
+  h+=tile("s6","Activity completion","Share of class-sections that completed each of the 10 activities.",vbars(["1","2","3","4","5","6","7","8","9","10"],comp,PR.hsp.c,{max:100,fmt:v=>Math.round(v)+"%",aria:"Completion by activity"}));
+  h+=tile("s6","What students know and do","KAP survey scores at baseline and endline.",grouped(["Healthy eating","Physical activity","Tobacco avoidance"],[{name:"Baseline",color:"var(--c-mute)",vals:k.map(x=>x[0])},{name:"Endline",color:PR.hsp.c,vals:k.map(x=>x[1])}]));
+  const cs=COORDS.filter(c=>inState(c.d)).map(c=>{const r=rows.find(x=>x.d===c.d);if(!r)return null;const tw=sum(COORDS.filter(x=>x.d===c.d).map(x=>x.share));const n=records(r)*c.share/tw;
+    return{label:c.name,value:n*c.auto,value2:null,text:nf(n*c.auto)+", "+pct(c.auto),tag:' <span class="small muted">'+D[c.d].name+"</span>"}}).filter(Boolean).sort((a,b)=>b.value-a.value);
+  h+=tile("s6","Coordinator leaderboard","Verified sessions, with each coordinator's share verified without review.",hbars(cs,{rank:true,color:PR.hsp.c}));
+  let t='<div class="scroll"><table><thead><tr><th>District</th><th class="n">Schools</th><th class="n">Students</th><th class="n">Attendance</th><th class="n">All 10 done</th><th class="n">Verified</th></tr></thead><tbody>'+
+    rows.slice().sort((a,b)=>b.peopleF-a.peopleF).map(r=>"<tr><td>"+D[r.d].name+'</td><td class="n">'+nf(r.sitesF)+'</td><td class="n">'+nf(r.peopleF)+'</td><td class="n">'+pct(HSPD[r.d].att)+'</td><td class="n">'+pct(HSPD[r.d].c[1])+'</td><td class="n"><span class="pill '+(r.vr>=.9?"ok":r.vr>=.86?"wait":"bad")+'">'+pct(r.vr)+"</span></td></tr>").join("")+"</tbody></table></div>";
+  h+=tile("s6","District comparison","",t);
+  const fl=sess-ver;h+=tile("s6","Why sessions were held back","Sessions that failed a check, by reason.",hbars(FLAGS.map(([l,s])=>({label:l,value:fl*s})),{color:"var(--bad)"}));
+  h+=toolsTile("s6",["hsp"]);
   return h;
 }
-function schoolsTab(){
-  let h='<h2>School master</h2><p class="muted small">Coordinators can log sessions only against schools listed here.</p><div class="scroll"><table><thead><tr><th>School</th><th>UDISE</th><th>Coordinator</th><th>Classes and enrolment</th><th>Location</th><th>Arogya School nominee</th></tr></thead><tbody>'+
-   Object.values(S.schools).map(sc=>"<tr><td>"+esc(sc.name)+'<br><span class="small muted">'+esc(sc.block)+'</span></td><td class="num">'+esc(sc.id)+"</td><td>"+esc(coordName(sc.coordId))+'</td><td class="num">'+sc.classes.map(c=>esc(c.id)+": "+c.enrol).join(", ")+"</td><td>"+(sc.lat==null?'<span class="pill wait">Set on first visit</span>':'<span class="pill ok">Recorded</span>')+
-    '</td><td><input type="checkbox" style="width:22px;height:22px" data-c="isas" data-id="'+esc(sc.id)+'"'+(sc.isAS?" checked":"")+' aria-label="Nominate '+esc(sc.name)+'"></td></tr>').join("")+"</tbody></table></div>";
-  h+='<details class="sheet"><summary>Add a school</summary><div class="stack" style="margin-top:.5rem"><div class="two"><div class="field"><label for="n-name">School name</label><input id="n-name"></div><div class="field"><label for="n-udise">UDISE code</label><input id="n-udise" inputmode="numeric"></div></div>'+
-   '<div class="two"><div class="field"><label for="n-block">Block</label><input id="n-block"></div><div class="field"><label for="n-coord">Coordinator</label><select id="n-coord">'+S.coords.map(c=>'<option value="'+esc(c.id)+'">'+esc(c.name)+"</option>").join("")+"</select></div></div>"+
-   '<div class="field"><label for="n-classes">Classes and enrolment</label><input id="n-classes" placeholder="6A: 42, 6B: 39"><p class="small muted">Write each class, a colon, then its enrolment. Separate classes with commas.</p></div>'+
-   '<p class="small muted">The location is recorded at the coordinator\'s first check-in and then needs your approval.</p>'+(ui.msg?'<p class="note bad small">'+esc(ui.msg)+"</p>":"")+
-   '<button class="btn primary" data-a="addschool">Add school</button></div></details>';
-  h+='<div class="sheet stack"><h3>Rules in this prototype</h3><p class="small">Geofence: '+GEOFENCE_M+" m from the school. Minimum session: "+MIN_MIN+" minutes. School confirmation: within "+REPLY_HRS+" hours. A class photo counts as reused when its fingerprint differs from an earlier one by "+DUP_BITS+" bits or fewer out of 64.</p>"+
-   '<div class="row"><button class="btn" data-a="sample">Load sample data</button><button class="btn danger" data-a="reset">Erase all data</button></div><p class="small muted">Data is kept in this browser only. Both buttons replace what is here.</p></div>';
+function as(){
+  const list=ASS.filter(s=>inState(s.d)).sort((a,b)=>b.total-a.total);if(!list.length)return noWork("Arogya Schools");
+  const seal=list.filter(s=>s.seal).length,avg=sum(list.map(s=>s.total))/list.length;
+  let h=lead(seal+" of "+list.length+" nominee schools have earned the Seal","Arogya Schools accreditation, current status"+(ui.state==="all"?"":" in "+ui.state)+". The Seal needs 80 points: all 75 essential and at least 5 preferred.");
+  h+=kpis([[list.length,"nominee schools"],[seal,"eligible for the Seal"],[Math.round(avg),"average score out of 100"],[list.filter(s=>!s.seal&&s.total>=65).length,"schools within reach, 65 points or more"],[pct(sum(list.map(s=>s.es))/(75*list.length)),"of essential points earned"]]);
+  h+=tile("s7","School leaderboard","Top 12 schools by score. The line marks the 80 points the Seal needs.",hbars(list.slice(0,12).map(s=>({label:s.name,value:s.total,text:String(s.total),color:s.seal?"var(--c-as)":"var(--c-mute)",tag:s.seal?' <span class="pill ok">Seal</span>':""})),{max:100,mark:80,rank:true}));
+  h+=tile("s5","From nomination to the Seal","",funnel([{label:"Nominated",value:list.length},{label:"Health committee formed",value:list.filter(s=>s.e[0]>0).length},{label:"All 10 activities done",value:list.filter(s=>s.e[1]===15).length},{label:"All essential points",value:list.filter(s=>s.es===75).length},{label:"Seal earned",value:seal}],"var(--c-as)"));
+  h+=tile("s7","Where schools lose points","Share of available points earned on each essential criterion, all schools together.",hbars(ASLAB.map((l,i)=>({label:l,value:sum(list.map(s=>s.e[i]))/(ASMAX[i]*list.length)*100})).sort((a,b)=>a.value-b.value).map(x=>Object.assign(x,{text:Math.round(x.value)+"%",color:x.value<60?"var(--bad)":"var(--c-as)"})),{max:100}));
+  const bk=[["80 and above",s=>s.total>=80],["60 to 79",s=>s.total>=60&&s.total<80],["40 to 59",s=>s.total>=40&&s.total<60],["Below 40",s=>s.total<40]];
+  h+=tile("s5","Score spread","Number of schools in each score band.",vbars(bk.map(b=>b[0]),bk.map(b=>list.filter(b[1]).length),"var(--c-as)",{fmt:v=>String(Math.round(v)),aria:"Schools by score band"}));
+  const byD=Object.keys(D).filter(d=>list.some(s=>s.d===d)).map(d=>{const l=list.filter(s=>s.d===d);return"<tr><td>"+D[d].name+'</td><td class="n">'+l.length+'</td><td class="n">'+l.filter(s=>s.seal).length+'</td><td class="n">'+Math.round(sum(l.map(s=>s.total))/l.length)+"</td></tr>"}).join("");
+  h+=tile("s6","District comparison","",'<div class="scroll"><table><thead><tr><th>District</th><th class="n">Nominees</th><th class="n">Seal</th><th class="n">Average score</th></tr></thead><tbody>'+byD+"</tbody></table></div>");
+  h+=toolsTile("s6",["as"]);
   return h;
 }
-function dashView(){
-  if(!Object.keys(S.schools).length&&ui.tab!=="schools")ui.tab="schools";
-  const tabs=[["overview","Overview"],["queue","Review queue ("+Object.values(S.sessions).filter(s=>s.status==="review").length+")"],["as","Arogya Schools"],["schools","Schools"]];
-  if(!S.coords.length)return '<div class="dash stack"><h1>No data yet</h1><p>Load the sample schools and sessions to see the dashboard working.</p><div><button class="btn primary" data-a="sample">Load sample data</button></div></div>';
-  return '<div class="dash"><div class="tabs" role="tablist">'+tabs.map(([k,l])=>'<button role="tab" data-a="tab" data-v="'+k+'" aria-selected="'+(ui.tab===k)+'">'+l+"</button>").join("")+'</div><div class="stack" style="--gap:1.75rem">'+
-    (ui.tab==="overview"?overview():ui.tab==="queue"?queue():ui.tab==="as"?asTab():schoolsTab())+"</div></div>";
+function sfvt(){
+  const rows=sel("sfvt");if(!rows.length)return noWork("Street Food Vendor Training");
+  const vendors=sum(rows.map(r=>r.peopleF)),st=SFSTAGES.map((_,i)=>sum(rows.map(r=>r.peopleF*SF[r.d].st[i]))),trained=st[2];
+  let h=lead(nf(vendors)+" vendors registered at their stalls","Street Food Vendor Training, "+periodText()+". A vendor counts as fully reached only when every step is recorded at the same stall.");
+  h+=kpis([[nf(trained),"vendors trained"],[nf(st[6]),"completed every step to endline"],[pct(wavg(rows,r=>SF[r.d].women)),"of vendors are women"],[nf(trained*90),"customers served a day, estimated"],[pct(wavg(rows,r=>r.vr)),"of visits verified at the stall"]]);
+  h+=liveSfvt();
+  h+=tile("s7","Verification chain","Each step is location-stamped at the vendor's registered stall.",funnel(SFSTAGES.map((l,i)=>({label:l,value:st[i]})),"var(--c-sfvt)"));
+  h+=tile("s5","Visit records by status","",statusDonut(rows,"verified"));
+  const bh=[0,1,2,3].map(j=>[wavg(rows,r=>SF[r.d].beh[j][0]),wavg(rows,r=>SF[r.d].beh[j][1])]);
+  h+=tile("s7","Cooking practices","Share of vendors following each practice, at baseline and at the latest visit.",grouped(SFBEH,[{name:"Baseline",color:"var(--c-mute)",vals:bh.map(x=>x[0])},{name:"Latest visit",color:"var(--c-sfvt)",vals:bh.map(x=>x[1])}]));
+  const wl=WARDS.filter(w=>rows.some(r=>r.d===w[1])).map(([n,d,v,tr])=>{const r=rows.find(x=>x.d===d),val=v*r.frac;return{label:n,value:val,value2:val*tr,text:nf(val)+", "+pct(tr)+" trained",tag:' <span class="small muted">'+CITYNAME(d)+"</span>"}}).sort((a,b)=>b.value-a.value);
+  h+=tile("s5","Ward leaderboard","Vendors registered, with the dark bar showing those trained.",hbars(wl,{rank:true,color:"var(--c-sfvt)"}));
+  h+=tile("s6","Vendors registered each month","",area(MONTHS.map((_,i)=>sum(rows.map(r=>r.monF[i]))),"var(--c-sfvt)"));
+  const sc=[0,1,2].map(j=>wavg(rows,r=>SF[r.d].scr[j])*100);
+  h+=tile("s6","Health screening at baseline","Share of the "+nf(st[1])+" screened vendors who were referred, by finding.",hbars([["High blood pressure",sc[0]],["High blood sugar",sc[1]],["Anaemia",sc[2]]].map(([l,v])=>({label:l,value:v,text:Math.round(v)+"%"})),{max:100,color:"var(--bad)"}));
+  h+=toolsTile("s6",["sfvt"]);
+  return h;
 }
-function detailHtml(s){
-  const sc=S.schools[s.schoolId],cl=sc.classes.find(c=>c.id===s.classId),mins=Math.round((s.endTs-s.startTs)/60000);
-  return '<div class="stack"><div class="row" style="justify-content:space-between"><h2>Activity '+s.activity+", class "+esc(s.classId)+"</h2>"+pill(s.status)+"</div>"+
-   "<dl><dt>School</dt><dd>"+esc(sc.name)+"</dd><dt>Coordinator</dt><dd>"+esc(coordName(s.coordId))+"</dd><dt>When</dt><dd>"+fmtDay(s.startTs)+", "+fmtTime(s.startTs)+" to "+fmtTime(s.endTs)+" ("+mins+" minutes)</dd>"+
-   "<dt>Check-in</dt><dd>"+(s.newAnchor?"Recorded as the school's location":fmtDist(s.distIn)+" from the school")+"</dd><dt>Check-out</dt><dd>"+(s.distOut==null?"Not recorded":fmtDist(s.distOut)+" from the school")+"</dd>"+
-   "<dt>Students</dt><dd>"+(s.boys+s.girls)+" present ("+s.boys+" boys, "+s.girls+" girls) of "+(cl?cl.enrol:"?")+" enrolled</dd>"+
-   "<dt>School</dt><dd>"+(s.teacher==="confirmed"?"Confirmed by the teacher":s.teacher==="disputed"?"Disputed by the teacher":"No reply yet")+"</dd>"+
-   (s.review?"<dt>Review</dt><dd>"+(s.review==="accepted"?"Counted by a reviewer":"Rejected by a reviewer")+"</dd>":"")+"</dl>"+
-   (s.flags.length?"<ul style=\"margin:0;padding-left:1.2rem\">"+s.flags.map(f=>'<li class="flag">'+esc(f)+"</li>").join("")+"</ul>":"")+evidence(s)+
-   (s.teacher==="pending"&&!s.review?'<div class="demo stack"><p class="small">Demo: answer for the teacher</p><div class="row"><button class="btn" data-a="lateteacher" data-v="confirmed" data-id="'+esc(s.id)+'">Teacher confirms</button><button class="btn" data-a="lateteacher" data-v="disputed" data-id="'+esc(s.id)+'">Teacher disputes</button></div></div>':"")+
-   (s.status==="review"?reviewButtons(s):"")+'<button class="btn quiet" data-a="close">Close</button></div>';
+const CITYNAME=d=>d==="blr"?"Bengaluru":d==="mum"?"Mumbai":D[d].name;
+function city(){
+  const rows=sel("city");if(!rows.length)return noWork("Arogya City");
+  const cs=rows.map(r=>r.d),makers=sum(rows.map(r=>r.sites)),mir=CAUSES.map((_,i)=>[0,1,2].map(j=>sum(cs.map(c=>CITY[c].mirror[i][j])))),pledged=sum(mir.map(m=>m[1])),delivered=sum(mir.map(m=>m[2])),cl=[0,1,2].map(j=>sum(cs.map(c=>CITY[c].close[j])));
+  let h=lead(nf(delivered)+" people covered by pledges delivered","Arogya City in "+cs.map(c=>CITY[c].name).join(" and ")+", current status. Each pledge is tied to one measurable cause from the city's NCD baseline.");
+  h+=kpis([[makers,"pledgemakers"],[nf(pledged),"people pledged"],[nf(delivered),"people delivered"],[pct(delivered/pledged),"of pledges delivered"],[pct(cl[0]/sum(cl)),"of organisations closed out"]]);
+  h+=tile("s7","The mirror: city need, pledged and delivered","For each cause, the light bar is people pledged and the dark bar is people delivered. The percentage is how much of the city's gap the pledges cover.",
+    hbars(CAUSES.map((l,i)=>({label:l,value:mir[i][1],value2:mir[i][2],text:compact(mir[i][2])+" of "+compact(mir[i][1])+", "+pct(mir[i][1]/mir[i][0])+" of gap",color:"color-mix(in srgb,var(--c-city) 45%,transparent)"})),{})+
+    '<div class="legend"><span><i style="background:color-mix(in srgb,var(--c-city) 45%,transparent)"></i>Pledged</span><span><i style="background:var(--ink)"></i>Delivered</span></div>');
+  h+=tile("s5","Closeout progress","Organisations by closeout status.",donut([["Submitted","var(--ok)"],["In progress","var(--wait)"],["Not opened","var(--c-mute)"]].map(([l,c],i)=>({label:l,color:c,value:cl[i]})),String(sum(cl)),"organisations"));
+  for(const c of cs)h+=tile(cs.length>1?"s6":"s7",CITY[c].name+" NCD baseline","Score out of 100 on each measurable cause. Higher is healthier, and the line marks the target of 70.",
+    hbars(BASELAB.map((l,i)=>({label:l,value:CITY[c].base[i],text:String(CITY[c].base[i]),color:CITY[c].base[i]<40?"var(--bad)":CITY[c].base[i]<55?"var(--c-sfvt)":"var(--c-as)"})),{max:100,mark:70}));
+  const pm=PLEDGERS.filter(p=>cs.includes(p[1])).map(([n,d,pl,dl])=>({label:n,value:pl,value2:dl,text:pct(dl/pl)+" of "+compact(pl),tag:' <span class="small muted">'+CITY[d].name+"</span>",r:dl/pl})).sort((a,b)=>b.r-a.r);
+  h+=tile(cs.length>1?"s7":"s5","Pledgemaker leaderboard","Ranked by share of the pledge delivered. Light bar is pledged, dark bar is delivered.",hbars(pm,{rank:true,color:"color-mix(in srgb,var(--c-city) 45%,transparent)"}));
+  const sec=SECT.map((l,i)=>({label:l,value:sum(cs.map(c=>CITY[c].sect[i]))})).sort((a,b)=>b.value-a.value);
+  h+=tile("s5","Who is pledging","Pledgemakers by sector.",hbars(sec,{color:"var(--c-city)"}));
+  h+=tile("s7","People covered each month","People covered by pledges as organisations report delivery.",area(MONTHS.map((_,i)=>sum(rows.map(r=>r.monF[i]))),"var(--c-city)"));
+  h+=toolsTile("s5",["city"]);
+  return h;
 }
-
-/* ---------- actions ---------- */
+const TABS=[["overview","Organisation overview","var(--ink)"],["hsp","Healthy Schools",PR.hsp.c],["as","Arogya Schools",PR.as.c],["sfvt","Street Food Vendor Training",PR.sfvt.c],["city","Arogya City",PR.city.c]];
+const VIEWS={overview,hsp,as,sfvt,city};
 function render(){
-  document.querySelectorAll(".bar .seg button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.v===ui.mode));
-  $("#app").innerHTML=ui.mode==="field"?fieldView():dashView();
+  $("#tabs").innerHTML=TABS.map(([k,l,c])=>'<button role="tab" data-a="tab" data-v="'+k+'" aria-selected="'+(ui.tab===k)+'" style="--tc:'+c+'">'+l+"</button>").join("");
+  document.querySelectorAll('[data-a="year"]').forEach(b=>b.setAttribute("aria-pressed",b.dataset.v===ui.year));
+  $("#app").innerHTML=VIEWS[ui.tab]();
 }
-function openDetail(id){const s=S.sessions[id];if(!s)return;const d=$("#dlg");d.innerHTML='<div style="padding:1.25rem">'+detailHtml(s)+'</div>';if(!d.open){if(d.showModal)d.showModal();else d.setAttribute("open","")}}
-function closeDetail(){const d=$("#dlg");if(d.open){if(d.close)d.close();else d.removeAttribute("open")}}
-function setPhoto(kind,p){const d=ui.draft;if(!d)return;d.photos=d.photos.filter(x=>x.kind!==kind);const o={kind,thumb:p.thumb,hash:p.hash};
-  if(kind==="class"){const dup=p.dup||findDup(p.hash,null);if(dup)o.dup=dup}d.photos.push(o);render()}
-const A={
-  mode(d){ui.mode=d.v;ui.msg="";render()},
-  tab(d){ui.tab=d.v;ui.msg="";render()},
-  sample(){loadSample()},
-  reset(){S=blank();ui.screen="home";ui.draft=null;save();render()},
-  home(){ui.screen="home";ui.draft=null;ui.msg="";render()},
-  open(d){ui.schoolId=d.id;ui.screen="school";render()},
-  demo(d){ui.demo[d.k]=d.k==="len"?Number(d.v):d.v;render()},
-  start(){ui.draft={schoolId:ui.schoolId,classId:null,activity:null,photos:[],boys:"",girls:"",step:1};ui.msg="";ui.screen="session";render()},
-  cancel(){ui.draft=null;ui.screen="school";render()},
-  async checkin(){const d=ui.draft,sc=S.schools[d.schoolId];ui.msg="";const p=await getPos(sc);if(ui.draft!==d)return;
-    if(sc.lat==null){sc.lat=p.lat;sc.lng=p.lng;d.newAnchor=true;d.distIn=0;save()}else d.distIn=hav(sc.lat,sc.lng,p.lat,p.lng);
-    d.startTs=Date.now();d.step=2;render()},
-  pickclass(d){ui.draft.classId=d.v;ui.draft.activity=null;render()},
-  pickact(d){ui.draft.activity=Number(d.v);render()},
-  next(){ui.msg="";ui.draft.step++;render()},
-  samplephoto(d){setPhoto(d.kind,samplePhoto(Math.floor(Math.random()*1e9)))},
-  oldphoto(){const pool=[];for(const s of Object.values(S.sessions))for(const p of s.photos)if(p.kind==="class"&&p.hash)pool.push({p,sid:s.id});
-    if(!pool.length)return;const pick=pool[Math.floor(Math.random()*pool.length)];setPhoto("class",{thumb:pick.p.thumb,hash:pick.p.hash,dup:{sid:pick.sid,dist:0}})},
-  async checkout(){const d=ui.draft,sc=S.schools[d.schoolId];const p=await getPos(sc);if(ui.draft!==d)return;const now=Date.now();
-    const s={id:uid(),schoolId:d.schoolId,classId:d.classId,activity:d.activity,coordId:ui.coord,
-      startTs:ui.demo.loc==="real"?d.startTs:now-ui.demo.len*6e4,endTs:now,distIn:d.distIn,distOut:hav(sc.lat,sc.lng,p.lat,p.lng),newAnchor:!!d.newAnchor,
-      boys:Math.max(0,parseInt(d.boys,10)||0),girls:Math.max(0,parseInt(d.girls,10)||0),teacher:"pending",photos:d.photos};
-    S.sessions[s.id]=evaluate(s);d.id=s.id;d.step=6;save();render()},
-  teacher(d){const s=S.sessions[ui.draft.id];s.teacher=d.v;evaluate(s);save();ui.lastId=s.id;ui.draft=null;ui.screen="result";render()},
-  lateteacher(d){const s=S.sessions[d.id];s.teacher=d.v;evaluate(s);save();render();openDetail(s.id)},
-  detail(d){openDetail(d.id)},
-  close(){closeDetail()},
-  review(d){const s=S.sessions[d.id];s.review=d.v;evaluate(s);save();closeDetail();render()},
-  asopen(d){ui.asOpen=ui.asOpen===d.id?null:d.id;render()},
-  addschool(){const name=$("#n-name").value.trim(),id=$("#n-udise").value.trim(),block=$("#n-block").value.trim(),coordId=$("#n-coord").value;
-    const classes=$("#n-classes").value.split(",").map(x=>x.split(":")).filter(x=>x.length===2).map(([c,n])=>({id:c.trim().slice(0,6),enrol:parseInt(n,10)})).filter(c=>c.id&&c.enrol>0);
-    ui.msg=!name?"Enter the school name.":!/^\d{11}$/.test(id)?"A UDISE code has 11 digits.":S.schools[id]?"A school with this UDISE code is already listed.":!classes.length?"Add at least one class with its enrolment, like 6A: 42.":"";
-    if(!ui.msg){S.schools[id]={id,name,block,lat:null,lng:null,coordId,isAS:false,teacher:"",phone:"",classes};save()}
-    render();if(ui.msg){const dt=document.querySelector("details");if(dt)dt.open=true}}
-};
-document.addEventListener("click",e=>{const t=e.target.closest("[data-a]");if(!t||t.disabled)return;const fn=A[t.dataset.a];if(fn)fn(t.dataset,t)});
-document.addEventListener("input",e=>{const t=e.target;if(t.dataset.c==="count"&&ui.draft)ui.draft[t.dataset.k]=t.value.replace(/[^\d]/g,"").slice(0,3)});
-document.addEventListener("change",async e=>{const t=e.target,c=t.dataset.c;
-  if(c==="coord"){ui.coord=t.value;render()}
-  if(c==="photo"&&t.files&&t.files[0]){const kind=t.dataset.kind;try{setPhoto(kind,await fileToPhoto(t.files[0]))}catch(err){ui.msg="That file could not be read as a photo. Try again.";render()}}
-  if(c==="crit"){S.as[t.dataset.id]=S.as[t.dataset.id]||{};S.as[t.dataset.id][t.dataset.k]=t.checked?1:0;save();render()}
-  if(c==="isas"){S.schools[t.dataset.id].isAS=t.checked;save();render()}
-});
-$("#dlg").addEventListener("click",e=>{if(e.target===e.currentTarget)closeDetail()});
-Object.values(S.sessions).forEach(evaluate);
+document.addEventListener("click",e=>{const t=e.target.closest("[data-a]");if(!t)return;
+  if(t.dataset.a==="tab"){ui.tab=t.dataset.v;render();window.scrollTo(0,0)}
+  if(t.dataset.a==="year"){ui.year=t.dataset.v;render()}});
+document.addEventListener("change",e=>{if(e.target.dataset.c==="state"){ui.state=e.target.value;render()}});
+window.addEventListener("storage",render);document.addEventListener("visibilitychange",()=>{if(!document.hidden)render()});
 render();
 </script>
 </body>
