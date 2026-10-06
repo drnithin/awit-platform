@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nourishing Govandi: project progress</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F2F6FB; --sheet:#FFFFFF; --ink:#16233F; --ink2:#52617E; --rule:#C7D5E8; --rule2:#E6EDF6;
+  --bad:#C4352B; --ok:#1B7648; --ok-bg:#E3F3EA; --wait:#8A5A05; --wait-bg:#FBF0D6;
+  --c-hsp:#1D4FC0; --c-as:#1B7648; --c-sfvt:#C26A00; --c-city:#7A3FB5; --c-mute:#9AA9C2;
+  --display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#111A2B; --sheet:#18243A; --ink:#EEF2F9; --ink2:#A6B3CB; --rule:#33435F; --rule2:#22304A;
+    --bad:#FF9384; --ok:#86D9A9; --ok-bg:#1C3A2C; --wait:#F1C56C; --wait-bg:#3A3018;
+    --c-hsp:#8FB0FF; --c-as:#7FD6A4; --c-sfvt:#F2B45A; --c-city:#C9A2F2; --c-mute:#5C6C8A;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#111A2B; --sheet:#18243A; --ink:#EEF2F9; --ink2:#A6B3CB; --rule:#33435F; --rule2:#22304A;
+  --bad:#FF9384; --ok:#86D9A9; --ok-bg:#1C3A2C; --wait:#F1C56C; --wait-bg:#3A3018;
+  --c-hsp:#8FB0FF; --c-as:#7FD6A4; --c-sfvt:#F2B45A; --c-city:#C9A2F2; --c-mute:#5C6C8A;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5}
+h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.15;margin:0}
+h1{font-size:clamp(2rem,5vw,3.2rem);letter-spacing:-.02em} h2{font-size:1.1rem} h3{font-size:1rem}
+p{margin:0}
+.muted{color:var(--ink2)} .small{font-size:.875rem} .num{font-variant-numeric:tabular-nums}
+.wrap{max-width:1180px;margin:0 auto;padding:0 1.25rem}
+.bar{border-bottom:2px solid var(--ink);background:var(--sheet)}
+.bar .wrap{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;justify-content:space-between;align-items:center;padding-top:.8rem;padding-bottom:.8rem}
+.brand{font-family:var(--display);font-weight:700;font-size:1.1rem} .brand span{font-weight:500;color:var(--ink2)}
+.hero{padding:2rem 0 1.25rem}
+.hero .tag{font-family:var(--display);font-size:1.35rem;font-weight:500;color:var(--ink2);margin-top:.3rem}
+.meta{display:flex;flex-wrap:wrap;gap:.3rem 1.5rem;margin-top:.9rem}
+.period{margin-top:1.2rem}
+.period .track{position:relative;height:12px;background:var(--rule2);border-radius:6px}
+.period .fill{position:absolute;left:0;top:0;bottom:0;border-radius:6px;background:var(--ink)}
+.period .ends{display:flex;justify-content:space-between;margin-top:.35rem}
+.banner{border-left:5px solid var(--wait);background:var(--wait-bg);color:var(--wait);padding:.6rem .9rem;margin-top:.8rem;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:1rem;margin-top:1rem}
+.tile{background:var(--sheet);border:1.5px solid var(--rule);border-radius:12px;padding:1.1rem 1.2rem 1.2rem;grid-column:span 12;min-width:0}
+.tile>h2{margin-bottom:.15rem} .tile>.sub{color:var(--ink2);font-size:.875rem;margin-bottom:.8rem}
+@media (min-width:860px){.s3{grid-column:span 3}.s6{grid-column:span 6}}
+@media (min-width:560px) and (max-width:859px){.s3{grid-column:span 6}}
+.ring{text-align:center;border-top:6px solid var(--pc)}
+.ring svg{width:150px;height:150px;display:block;margin:.6rem auto .4rem}
+.ring b{display:block;font-family:var(--display);font-size:1.5rem;line-height:1.1}
+.comp{border-top:6px solid var(--pc)}
+.ind{margin-top:.9rem}
+.ind .top{display:flex;justify-content:space-between;gap:1rem;align-items:baseline}
+.ind .track{height:14px;background:var(--rule2);border-radius:4px;margin-top:.3rem;overflow:hidden}
+.ind .fill{height:100%;background:var(--pc);border-radius:4px}
+.ind .big{font-family:var(--display);font-size:1.6rem;font-weight:700}
+.scroll{overflow-x:auto}
+.reg{border-collapse:collapse;width:100%;min-width:480px}
+.reg th,.reg td{border:1px solid var(--rule2);text-align:center;padding:.4rem .2rem;font-size:.95rem}
+.reg th{color:var(--ink2);font-weight:700;font-size:.8125rem}
+.reg td.c{text-align:left;padding-left:.6rem;white-space:nowrap}
+.reg .v{color:var(--ok);font-weight:700} .reg .p{color:var(--wait);font-weight:700}
+.upd{display:grid;grid-template-columns:6.5rem 1fr;gap:.4rem 1rem;padding:.6rem 0;border-bottom:1px solid var(--rule2)}
+.upd:last-child{border-bottom:0}
+svg text{font-family:var(--body);fill:var(--ink2);font-size:11px}
+.foot{color:var(--ink2);font-size:.875rem;padding:1.5rem 0 3rem}
+</style>
+</head>
+<body>
+<div class="bar"><div class="wrap"><div class="brand">Arogya World India Trust <span>Project progress</span></div><div class="small muted" id="asof"></div></div></div>
+<main class="wrap" id="app"></main>
+<script src="../../access.js"></script>
+<script src="../../lib/awit.js"></script>
+<script>
+"use strict";
+const PID="govandi",esc=AWIT.esc,nf=AWIT.nf,PAL=["var(--c-hsp)","var(--c-sfvt)","var(--c-as)","var(--c-city)"];
+const fmtDate=t=>new Date(t).toLocaleDateString("en-IN",{day:"numeric",month:"long",year:"numeric"});
+const fmtMonth=t=>new Date(t).toLocaleDateString("en-IN",{month:"short",year:"numeric"});
+let DATA=null,local=false,pubAt=null;
+async function load(){
+  let pub=null;try{const r=await fetch("../../data/"+PID+".json",{cache:"no-store"});if(r.ok)pub=await r.json()}catch(e){}
+  const H=AWIT.get(AWIT.HUB_KEY);pubAt=pub&&pub.publishedAt;
+  if(H&&H[PID]){DATA=JSON.parse(JSON.stringify(H[PID]));DATA.datasets=(H.datasets||[]).filter(d=>d.show===PID);DATA.tools=AWIT.snapshot();local=true}
+  else{DATA=pub;local=false}
+  render();
+}
+function ring(pc,color){const f=Math.max(0,Math.min(100,pc));
+  return'<svg viewBox="0 0 42 42" role="img" aria-label="'+Math.round(pc)+' percent of target"><circle cx="21" cy="21" r="15.915" fill="none" stroke="var(--rule2)" stroke-width="5"/><circle cx="21" cy="21" r="15.915" fill="none" stroke="'+color+'" stroke-width="5" stroke-linecap="round" stroke-dasharray="'+f+" "+(100-f)+'" stroke-dashoffset="25"/><text x="21" y="23.6" text-anchor="middle" style="font-size:8px;font-weight:700;fill:var(--ink);font-family:var(--display)">'+Math.round(pc)+"%</text></svg>"}
+function render(){
+  const app=document.getElementById("app");
+  if(!DATA){app.innerHTML='<div class="hero"><h1>Project progress</h1><p class="tag">No progress has been published for this project yet.</p></div>';return}
+  const p=DATA.project,inds=(DATA.indicators||[]).filter(r=>r.name),comps=[...new Set(inds.map(r=>r.comp||"Other"))],col=c=>PAL[comps.indexOf(c)%PAL.length];
+  const s=new Date(p.start).getTime(),e=new Date(p.end).getTime(),now=Date.now(),el=Math.max(0,Math.min(1,(now-s)/(e-s)));
+  const months=Math.round((e-s)/2629800000),mNow=Math.min(months,Math.max(1,Math.ceil((now-s)/2629800000)));
+  document.getElementById("asof").textContent=local?"Preview on this device":pubAt?"Data as of "+fmtDate(pubAt):"";
+  let h='<div class="hero"><h1>'+esc(p.name)+'</h1><p class="tag">'+esc(p.tagline)+'</p><div class="meta"><span>'+esc(p.place)+"</span><span>Supported by "+esc(p.funder)+"</span><span>"+fmtMonth(s)+" to "+fmtMonth(e)+"</span></div>"+
+   '<div class="period"><div class="track"><div class="fill" style="width:'+el*100+'%"></div></div><div class="ends small muted"><span>'+(now<s?"Starts "+fmtDate(s):now>e?"Project period complete":"Month "+mNow+" of "+months)+"</span><span>"+Math.round(el*100)+"% of the project period has passed</span></div></div>"+
+   (local?'<p class="banner">You are seeing your unpublished edits from this device. '+(pubAt?"The funder sees the file published on "+fmtDate(pubAt)+".":"Nothing is published for the funder yet.")+"</p>":"")+
+   (DATA.sample?'<p class="banner">These figures are samples for demonstration. They are not actual project progress.</p>':"")+"</div>";
+  h+='<div class="grid">';
+  for(const c of comps){const r=inds.find(x=>(x.comp||"Other")===c&&x.target>0)||inds.find(x=>(x.comp||"Other")===c);
+    h+='<section class="tile s3 ring" style="--pc:'+col(c)+'"><h2>'+esc(c)+"</h2>"+(r.target>0?ring(r.achieved/r.target*100,col(c))+'<b class="num">'+nf(r.achieved)+" of "+nf(r.target)+"</b>":'<b class="num" style="margin:2.2rem 0 .4rem;font-size:2.4rem">'+nf(r.achieved)+"</b>")+'<span class="muted">'+esc(r.name)+"</span></section>"}
+  for(const c of comps){const list=inds.filter(x=>(x.comp||"Other")===c);
+    h+='<section class="tile s6 comp" style="--pc:'+col(c)+'"><h2>'+esc(c)+"</h2>"+list.map(r=>r.target>0?
+      '<div class="ind"><div class="top"><span>'+esc(r.name)+'</span><strong class="num">'+nf(r.achieved)+" of "+nf(r.target)+" "+esc(r.unit||"")+'</strong></div><div class="track"><div class="fill" style="width:'+Math.min(100,r.achieved/r.target*100)+'%"></div></div><p class="small muted num">'+Math.round(r.achieved/r.target*100)+"% of target</p></div>":
+      '<div class="ind"><div class="top"><span>'+esc(r.name)+'</span><span class="big num">'+nf(r.achieved)+' <span class="small muted" style="font-family:var(--body);font-weight:400">'+esc(r.unit||"")+"</span></span></div></div>").join("")+"</section>"}
+  const t=DATA.tools||{};
+  if(t.schools&&t.schools.length){h+='<section class="tile"><h2>Healthy Schools: activity by activity</h2><p class="sub">Each tick is one of the 10 program activities delivered to a class and verified by location, photo and the school\'s own confirmation.</p><div class="scroll"><table class="reg"><thead><tr><th style="text-align:left;padding-left:.6rem">School and class</th>'+[1,2,3,4,5,6,7,8,9,10].map(a=>"<th>"+a+"</th>").join("")+"</tr></thead><tbody>"+
+    t.schools.map(sc=>sc.classes.map(c=>'<tr><td class="c">'+esc(sc.name)+", "+esc(c.id)+' <span class="muted small num">'+c.enrol+" students</span></td>"+c.acts.map(a=>'<td class="'+a+'">'+(a==="v"?"\u2713":a==="p"?"\u2026":"")+"</td>").join("")+"</tr>").join("")).join("")+
+    '</tbody></table></div><p class="small muted" style="margin-top:.6rem">\u2713 verified, \u2026 recorded and being checked. '+t.schools.reduce((n,x)=>n+x.verified,0)+" verified sessions so far, reaching "+nf(t.schools.reduce((n,x)=>n+x.reach,0))+" of "+nf(t.schools.reduce((n,x)=>n+x.enrol,0))+" enrolled students.</p></section>"}
+  if(t.vendors){const v=t.vendors,steps=[["Registered at their stall",v.registered],["Came to the training",v.attended],["Screened for blood pressure and sugar",v.screened],["Completed training",v.trained],["Stall visited after training",v.visited]];
+    h+='<section class="tile s6" style="--pc:'+PAL[1]+'"><h2>Street food vendors: step by step</h2><p class="sub">Each vendor is registered at their own stall and followed through every step.</p>'+AWIT.render({type:"bar",horizontal:true,color:PAL[1],labels:steps.map(x=>x[0]),series:[{name:"Vendors",values:steps.map(x=>x[1])}]})+"</section>"}
+  for(const d of DATA.datasets||[])h+='<section class="tile s6"><h2>'+esc(d.title)+"</h2>"+(d.labelName?'<p class="sub">By '+esc(String(d.labelName).toLowerCase())+".</p>":"")+AWIT.render(d)+"</section>";
+  const ups=(DATA.updates||[]).filter(u=>u.text).sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+  if(ups.length)h+='<section class="tile"><h2>Progress updates</h2>'+ups.map(u=>'<div class="upd"><span class="muted num">'+(u.date?new Date(u.date).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"}):"")+"</span><span>"+esc(u.text)+"</span></div>").join("")+"</section>";
+  h+='</div><p class="foot">Prepared by Arogya World India Trust for '+esc(p.funder)+". "+(pubAt?"Last published on "+fmtDate(pubAt)+".":"")+"</p>";
+  app.innerHTML=h;
+}
+awitGate("funder:"+PID,"Nourishing Govandi: project progress").then(load);
+window.addEventListener("storage",()=>{if(DATA!==null||local)load()});
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&(DATA!==null))load()});
+</script>
+</body>
+</html>

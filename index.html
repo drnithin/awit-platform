@@ -103,6 +103,16 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
 svg text{font-family:var(--body);fill:var(--ink2);font-size:11px}
 .foot{color:var(--ink2);font-size:.875rem;padding:1.5rem 0 3rem}
 .empty{color:var(--ink2);padding:1rem 0}
+.btn{border:1.5px solid var(--ink);background:var(--sheet);border-radius:10px;padding:.5rem .95rem;min-height:44px;cursor:pointer;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--paper)} .btn.danger{border-color:var(--bad);color:var(--bad)} .btn.quiet{border-color:var(--rule);font-weight:400}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center} .stack>*+*{margin-top:.9rem}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.75rem}
+.field label{display:block;font-weight:700;margin-bottom:.25rem}
+.field input,.field select,.cellin{min-height:44px;border:1.5px solid var(--ink);border-radius:10px;padding:.4rem .6rem;background:var(--sheet);color:var(--ink);font:inherit;width:100%}
+.note{border-left:4px solid var(--ink2);padding:.4rem .75rem;margin-top:.6rem} .note.ok{border-color:var(--ok);color:var(--ok)} .note.bad{border-color:var(--bad);color:var(--bad)}
+.filebtn{position:relative;overflow:hidden} .filebtn input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.seg button+button{border-left:1px solid var(--rule)}
 </style>
 </head>
 <body>
@@ -120,9 +130,12 @@ svg text{font-family:var(--body);fill:var(--ink2);font-size:11px}
 <div class="wrap">
   <div class="tabs" role="tablist" id="tabs"></div>
   <main class="grid" id="app"></main>
-  <p class="foot">Every figure on this page is illustrative sample data, built to show how the MIS will look once the program tools feed it. Arogya Schools students are also Healthy Schools students, so organisation totals count them once.</p>
+  <p class="foot">The charts on the program tabs use illustrative sample data, to show how the MIS will look once the tools feed it. Panels marked Live and everything in the Data hub are real records from this device. Arogya Schools students are also Healthy Schools students, so organisation totals count them once.</p>
 </div>
 
+<script src="access.js"></script>
+<script src="lib/xlsx.mini.min.js"></script>
+<script src="lib/awit.js"></script>
 <script>
 "use strict";
 /* ---------- sample data model: replace with the shared data core feed ---------- */
@@ -175,9 +188,10 @@ const PLEDGERS=[["IT services firm","blr",18000,16900],["Hospital group","blr",1
 const PROJECTS=[["Healthy Schools, Gujarat","hsp","Gujarat",0,26,"Funder A"],["Healthy Schools, Karnataka","hsp","Karnataka",5,28,"Funder B"],["Healthy Schools, Mumbai","hsp","Maharashtra",12,30,"Funder C"],
   ["Arogya Schools accreditation","as","Gujarat",6,29,"Funder A"],["Street food vendors, Bengaluru","sfvt","Karnataka",2,23,"Funder D"],["Nourishing Govandi, Mumbai","sfvt","Maharashtra",19,31,"CSR partner"],
   ["Arogya City Bengaluru, Edition II","city","Karnataka",0,23,"City partners"],["Arogya City Mumbai","city","Maharashtra",16,35,"City partners"]];
-const TOOLS={hsp:[["Arogya SchoolTrack","Field app and review queue for school sessions","schooltrack/"]],
-  as:[["Arogya SchoolTrack","Accreditation scoreboard for each nominee school","schooltrack/"]],
-  sfvt:[["Street Food Vendor Training tool","Vendor registration, training day desks, stall visits and integrity queue","sfvt/"]],
+const TOOLS={hsp:[["Arogya SchoolTrack dashboard","Review queue, activity register and school master","schooltrack/dashboard/"]],
+  as:[["Arogya SchoolTrack dashboard","Accreditation scoreboard for each nominee school","schooltrack/dashboard/"]],
+  sfvt:[["Street Food Vendor Training dashboard","Training days, screening, verification chain and integrity queue","sfvt/dashboard/"]],
+  funder:[["Nourishing Govandi funder dashboard","What the funding team sees for this project","funders/govandi/"]],
   city:[["Arogya City pledge closeout","Organisation-wise closeout progress","https://drnithin.github.io/arogya-city2026/admin/dashboard.html"],["Arogya City Impact Wall","Public page of pledges delivered","https://drnithin.github.io/arogya-city2026/wall.html"]]};
 
 /* ---------- helpers ---------- */
@@ -242,7 +256,7 @@ const toolsTile=(span,keys)=>tile(span,"Open the working tools","The MIS reads f
 
 /* ---------- live numbers from the tools on this device ---------- */
 function liveGet(k){try{const r=localStorage.getItem(k);return r?JSON.parse(r):null}catch(e){return null}}
-const LIVE_T=n=>n+' <span class="pill ok">Live</span>',LIVE_NONE="The tool has no records on this device yet, or this page is not on the same site as the tool. Open the tool below, add a record, and come back.";
+const LIVE_T=n=>n+' <span class="pill ok">Live</span>',LIVE_NONE="The tool has no records on this device yet, or this page is not on the same site as the tool. Add a record in the field app on this device, then come back.";
 function liveSfvt(){
   const d=liveGet("sfvt.v2");if(!d||!d.vendors||!Object.keys(d.vendors).length)return tile("",LIVE_T("Live from the vendor training tool"),"",'<p class="muted">'+LIVE_NONE+"</p>");
   const vs=Object.values(d.vendors).filter(v=>v.review!=="rejected"),xs=Object.values(d.visits||{}).filter(x=>x.status==="verified"),has=t=>new Set(xs.filter(x=>x.type===t).map(x=>x.vid)).size;
@@ -280,7 +294,8 @@ function overview(){
   const pj=PROJECTS.filter(p=>ui.state==="all"||p[2]===ui.state);
   h+=tile("s8","Project timeline","Active grants and their periods. The red line is today.",'<div class="gantt">'+pj.map(([n,p,,a,b,f])=>'<div class="grow"><div>'+esc(n)+'<br><span class="small muted">'+esc(f)+'</span></div><div class="gtrack"><div class="gbar" style="left:'+a/36*100+"%;width:"+(b-a+1)/36*100+"%;background:"+PR[p].c+'" title="'+esc(n)+'"></div><div class="now" style="left:'+21/36*100+'%"></div></div></div>').join("")+
     '</div><div class="gaxis"><div></div><div><span>Jan 2025</span><span>Jan 2026</span><span>Jan 2027</span><span>Dec 2027</span></div></div>');
-  h+=toolsTile("s4",["hsp","sfvt","city"]);
+  h+=toolsTile("s4",["hsp","sfvt","city","funder"]);
+  h+=linksTile("");
   return h;
 }
 function hsp(){
@@ -358,8 +373,145 @@ function city(){
   h+=toolsTile("s5",["city"]);
   return h;
 }
-const TABS=[["overview","Organisation overview","var(--ink)"],["hsp","Healthy Schools",PR.hsp.c],["as","Arogya Schools",PR.as.c],["sfvt","Street Food Vendor Training",PR.sfvt.c],["city","Arogya City",PR.city.c]];
-const VIEWS={overview,hsp,as,sfvt,city};
+
+/* ---------- data hub: schools from Excel, infographics from any sheet, funder publishing ---------- */
+const hubLoad=()=>AWIT.get(AWIT.HUB_KEY)||{govandi:null,datasets:[]};
+let H=hubLoad();
+const saveH=()=>{if(!AWIT.set(AWIT.HUB_KEY,H))hubS.msg="This browser could not save the change."};
+const hubS={schools:null,ds:null,msg:"",ok:"",at:""};
+const hmsg=at=>hubS.at!==at?"":(hubS.msg?'<p class="note bad small" role="alert">'+esc(hubS.msg)+"</p>":"")+(hubS.ok?'<p class="note ok small" role="status">'+esc(hubS.ok)+"</p>":"");
+const say=(at,ok,msg)=>{hubS.at=at;hubS.ok=ok||"";hubS.msg=msg||""};
+const TEMPLATE='UDISE,School,Block,Coordinator,Project,Classes\n27220100301,Example Municipal School,Mumbai M East,Priya M,Nourishing Govandi,"6A:44, 6B:41"\n';
+const siteBase=()=>location.origin+location.pathname.replace(/index\.html$/,"");
+function linksTile(span){
+  const L=[["Healthy Schools field app","schooltrack/field/"],["Street Food Vendor Training field app","sfvt/field/"]];
+  return tile(span,"Field app links to share","Send these to coordinators. They open the field app only. Dashboards and this MIS ask for the team passcode.",
+    L.map(([n,p])=>'<div class="row" style="justify-content:space-between;padding:.6rem 0;border-bottom:1px solid var(--rule2)"><div style="min-width:0"><strong>'+n+'</strong><br><span class="small muted" style="word-break:break-all">'+esc(siteBase()+p)+'</span></div><div class="row"><button class="btn quiet" data-a="copy" data-v="'+esc(siteBase()+p)+'">Copy link</button><a class="btn" target="_blank" rel="noopener" href="https://wa.me/?text='+encodeURIComponent(n+": "+siteBase()+p)+'">Send on WhatsApp</a></div></div>').join(""));
+}
+async function readBook(file){
+  if(!window.XLSX)throw new Error("The Excel reader did not load. Check that the lib folder was uploaded.");
+  const wb=XLSX.read(await file.arrayBuffer(),{type:"array",cellDates:true}),sheets={};
+  for(const n of wb.SheetNames)sheets[n]=XLSX.utils.sheet_to_json(wb.Sheets[n],{header:1,defval:"",raw:false}).filter(r=>r.some(c=>String(c).trim()!==""));
+  return sheets;
+}
+const toNum=v=>{const t=String(v).replace(/[,\s%₹]/g,"");return t!==""&&isFinite(t)?parseFloat(t):null};
+function mapSchools(rows){
+  const head=rows[0].map(h=>String(h).trim().toLowerCase()),at=f=>head.findIndex(f);
+  const iU=at(h=>h.includes("udise")),iN=at(h=>h.includes("school")||h==="name"),iB=at(h=>h.includes("block")||h.includes("ward")),iC=at(h=>h.includes("coordinator")),iP=at(h=>h.includes("project")||h.includes("funder")),iK=at(h=>h.includes("classes"));
+  const cc=head.map((h,i)=>/^(class|grade)?\s*\d{1,2}\s*[a-z]?$/.test(h)&&i!==iU?[i,h.replace(/class|grade|\s/g,"").toUpperCase()]:null).filter(Boolean);
+  if(iU<0||iN<0)return{error:"The sheet needs a UDISE column and a School column in its first row."};
+  const st=AWIT.get("schooltrack.v1")||{schools:{}};
+  return{list:rows.slice(1).map(r=>{
+    const id=String(r[iU]).replace(/\D/g,""),name=String(r[iN]).trim();let classes=[];
+    if(iK>=0)classes=String(r[iK]).split(",").map(x=>x.split(":")).filter(x=>x.length===2).map(([c,n])=>({id:c.trim().slice(0,6),enrol:parseInt(n,10)})).filter(c=>c.id&&c.enrol>0);
+    for(const[i,cid]of cc){const n=toNum(r[i]);if(n>0&&!classes.some(c=>c.id===cid))classes.push({id:cid,enrol:Math.round(n)})}
+    const skip=id.length!==11?"UDISE code is not 11 digits":!name?"no school name":!classes.length?"no classes with enrolment":"";
+    return{id,name,block:iB>=0?String(r[iB]).trim():"",coord:iC>=0?String(r[iC]).trim():"",project:iP>=0?String(r[iP]).trim():"",classes,skip,isNew:!st.schools[id]}})};
+}
+function importSchools(){
+  const st=AWIT.get("schooltrack.v1")||{coords:[],schools:{},sessions:{},as:{}};st.coords=st.coords||[];st.sessions=st.sessions||{};st.as=st.as||{};let added=0,updated=0;
+  for(const r of hubS.schools.list){if(r.skip)continue;const old=st.schools[r.id];
+    let c=r.coord?st.coords.find(x=>x.name.toLowerCase()===r.coord.toLowerCase()):null;
+    if(r.coord&&!c){c={id:"c"+Date.now().toString(36)+st.coords.length,name:r.coord};st.coords.push(c)}
+    if(!c&&!old){c=st.coords.find(x=>x.name==="Unassigned");if(!c){c={id:"c-unassigned",name:"Unassigned"};st.coords.push(c)}}
+    if(old){const keep=old.classes.filter(k=>!r.classes.some(x=>x.id===k.id)&&Object.values(st.sessions).some(s=>s.schoolId===r.id&&s.classId===k.id));
+      Object.assign(old,{name:r.name,block:r.block||old.block,project:r.project||old.project||"",coordId:c?c.id:old.coordId,classes:r.classes.concat(keep)});updated++}
+    else{st.schools[r.id]={id:r.id,name:r.name,block:r.block,project:r.project,lat:null,lng:null,coordId:c.id,isAS:false,teacher:"",phone:"",classes:r.classes};added++}}
+  if(!AWIT.set("schooltrack.v1",st))return say("schools","","This browser could not save the schools.");
+  hubS.schools=null;say("schools",added+" schools added and "+updated+" updated. Coordinators see them in the field app straight away on this device.");
+}
+function schoolsTile(){
+  const st=AWIT.get("schooltrack.v1"),n=st&&st.schools?Object.keys(st.schools).length:0;
+  let b="<p>"+n+' schools are in the school master on this device.</p><div class="row"><span class="btn primary filebtn">Choose an Excel or CSV file<input type="file" accept=".xlsx,.csv" data-c="schoolfile" aria-label="Choose a file of schools"></span><a class="btn quiet" download="schools-template.csv" href="data:text/csv;charset=utf-8,'+encodeURIComponent(TEMPLATE)+'">Download the template</a><a class="btn quiet" href="schooltrack/dashboard/">Edit schools one by one</a></div>'+
+    '<p class="small muted">First row: UDISE, School, Block, Coordinator, Project, Classes. Write classes as 6A:42, 6B:39, or give each class its own column with the enrolment under it.</p>'+hmsg("schools");
+  if(hubS.schools&&hubS.schools.list){const l=hubS.schools.list,ok=l.filter(r=>!r.skip);
+    b+='<div class="scroll"><table><thead><tr><th>UDISE</th><th>School</th><th>Coordinator</th><th>Project</th><th>Classes</th><th>Result</th></tr></thead><tbody>'+l.slice(0,12).map(r=>'<tr><td class="num">'+esc(r.id)+"</td><td>"+esc(r.name)+"</td><td>"+esc(r.coord)+"</td><td>"+esc(r.project)+'</td><td class="num">'+r.classes.map(c=>esc(c.id)+": "+c.enrol).join(", ")+"</td><td>"+(r.skip?'<span class="pill bad">Skipped: '+esc(r.skip)+"</span>":'<span class="pill ok">'+(r.isNew?"New":"Update")+"</span>")+"</td></tr>").join("")+"</tbody></table></div>"+
+      (l.length>12?'<p class="small muted">Showing the first 12 of '+l.length+" rows.</p>":"")+'<div class="row"><button class="btn primary" data-a="importschools"'+(ok.length?"":" disabled")+">Add or update "+ok.length+' schools</button><button class="btn quiet" data-a="cancelschools">Cancel</button></div>'}
+  return tile("","Schools: add from Excel","A school already in the list is matched by its UDISE code and updated. Its recorded sessions and location are kept.",b);
+}
+function dsBuild(){
+  const d=hubS.ds,rows=d.sheets[d.sheet].slice(1);let labels=[],series=d.values.map(i=>({name:String(d.head[i]),values:[]}));
+  if(d.agg!=="none"){const idx=new Map(),cnt=[];for(const r of rows){const l=String(r[d.label]).trim();if(!l)continue;if(!idx.has(l)){idx.set(l,labels.length);labels.push(l);cnt.push(0);series.forEach(s=>s.values.push(0))}cnt[idx.get(l)]++;d.values.forEach((c,j)=>series[j].values[idx.get(l)]+=toNum(r[c])||0)}
+    if(d.agg==="avg")series.forEach(s=>s.values=s.values.map((v,i)=>Math.round(v/cnt[i]*10)/10))}
+  else for(const r of rows){const l=String(r[d.label]).trim();if(!l)continue;labels.push(l);d.values.forEach((c,j)=>series[j].values.push(toNum(r[c])||0))}
+  labels=labels.slice(0,60);series.forEach(s=>s.values=s.values.slice(0,60));
+  return{id:"d"+Date.now().toString(36),title:d.title.trim()||"Untitled",labelName:String(d.head[d.label]),type:d.type,labels,series,show:d.show,source:d.file};
+}
+function dsSheet(d,name){d.sheet=name;const rows=d.sheets[name];d.head=rows[0]||[];const body=rows.slice(1);
+  d.numeric=d.head.map((_,i)=>{const vals=body.map(r=>r[i]).filter(v=>String(v).trim()!=="");return vals.length>0&&vals.filter(v=>toNum(v)!==null).length/vals.length>=.7});
+  d.label=Math.max(0,d.numeric.findIndex(x=>!x));d.values=d.numeric.map((x,i)=>x&&i!==d.label?i:-1).filter(i=>i>=0).slice(0,2);
+  d.agg=d.values.some(i=>/%|percent|rate|score|average/i.test(String(d.head[i])))?"avg":"sum"}
+function builderTile(){
+  const d=hubS.ds;let b='<div class="row"><span class="btn primary filebtn">Choose an Excel or CSV file<input type="file" accept=".xlsx,.csv" data-c="dsfile" aria-label="Choose a data file"></span></div>'+hmsg("ds");
+  if(d){const names=Object.keys(d.sheets),seg=(k,opts)=>'<div class="seg">'+opts.map(([v,l])=>'<button data-a="dsset" data-k="'+k+'" data-v="'+v+'" aria-pressed="'+(d[k]===v)+'">'+l+"</button>").join("")+"</div>";
+    b+='<div class="stack" style="margin-top:1rem"><div class="field"><label for="ds-title">Title of the infographic</label><input id="ds-title" data-c="dstitle" value="'+esc(d.title)+'"></div>'+
+     '<div class="two">'+(names.length>1?'<div class="field"><label for="ds-sheet">Sheet</label><select id="ds-sheet" data-c="dssheet">'+names.map(n=>"<option"+(n===d.sheet?" selected":"")+">"+esc(n)+"</option>").join("")+"</select></div>":"")+
+     '<div class="field"><label for="ds-label">Labels come from this column</label><select id="ds-label" data-c="dslabel">'+d.head.map((h,i)=>'<option value="'+i+'"'+(i===d.label?" selected":"")+">"+esc(h||"Column "+(i+1))+"</option>").join("")+"</select></div></div>"+
+     '<fieldset style="border:0;padding:0;margin:0"><legend style="font-weight:700;padding:0">Numbers come from these columns</legend>'+(d.numeric.some(x=>x)?d.head.map((h,i)=>d.numeric[i]&&i!==d.label?'<label class="row" style="gap:.5rem;padding:.2rem 0"><input type="checkbox" style="width:22px;height:22px" data-c="dsval" data-i="'+i+'"'+(d.values.includes(i)?" checked":"")+">"+esc(h||"Column "+(i+1))+"</label>":"").join(""):'<p class="note bad small">No column in this sheet holds numbers.</p>')+"</fieldset>"+
+     '<div class="row"><div><p style="font-weight:700">Draw it as</p>'+seg("type",[["bar","Bars"],["line","Line"],["table","Table"]])+'</div><div><p style="font-weight:700">Show it on</p>'+seg("show",[["mis","This MIS only"],["govandi","Govandi funder dashboard"]])+"</div></div>"+
+     '<div><p style="font-weight:700">When several rows share a label</p>'+seg("agg",[["sum","Add them up"],["avg","Average them"],["none","Keep every row"]])+"</div>"+
+     '<div style="border:1.5px dashed var(--rule);border-radius:12px;padding:1rem"><p class="small muted" style="margin-bottom:.5rem">Preview</p><h3 id="ds-ptitle" style="margin-bottom:.6rem">'+esc(d.title||"Untitled")+"</h3>"+(d.values.length?AWIT.render(dsBuild()):'<p class="muted">Tick at least one column of numbers.</p>')+"</div>"+
+     '<div class="row"><button class="btn primary" data-a="dssave"'+(d.values.length?"":" disabled")+'>Save this infographic</button><button class="btn quiet" data-a="dscancel">Cancel</button></div></div>'}
+  return tile("","Turn any Excel sheet into an infographic","Upload a sheet, pick the columns, and the chart is drawn at once. Save it to keep it on the MIS or add it to a funder dashboard.",b);
+}
+function govandiTile(){
+  const g=H.govandi;
+  if(!g)return tile("","Nourishing Govandi: what the funder sees","",'<p>Start from the file that is published on the website now, or from the project targets with nothing achieved yet.</p><div class="row" style="margin-top:.8rem"><button class="btn primary" data-a="govload">Load the published file</button><button class="btn" data-a="govnew">Start with targets only</button></div>'+hmsg("gov"));
+  const snap=AWIT.snapshot(),inp=(i,k,v,w,num)=>'<input class="cellin" style="min-width:'+w+'" data-c="ind" data-i="'+i+'" data-k="'+k+'" value="'+esc(v)+'"'+(num?' inputmode="decimal"':"")+' aria-label="'+k+'">';
+  let b='<div class="row"><a class="btn primary" href="funders/govandi/" target="_blank" rel="noopener">Open the funder dashboard</a><button class="btn quiet" data-a="copy" data-v="'+esc(siteBase()+"funders/govandi/")+'">Copy its link</button></div><p class="small muted">On this device the funder dashboard shows your edits below at once. The funder sees them only after you publish.</p>';
+  b+='<h3 style="margin-top:1.2rem">Targets and progress</h3><div class="scroll"><table><thead><tr><th>Component</th><th>Indicator</th><th>Unit</th><th>Target</th><th>Achieved</th><th></th></tr></thead><tbody>'+
+    g.indicators.map((r,i)=>"<tr><td>"+inp(i,"comp",r.comp,"170px")+"</td><td>"+inp(i,"name",r.name,"220px")+"</td><td>"+inp(i,"unit",r.unit,"90px")+"</td><td>"+inp(i,"target",r.target,"80px",1)+"</td><td>"+inp(i,"achieved",r.achieved,"80px",1)+'</td><td><button class="btn quiet" data-a="inddel" data-i="'+i+'" aria-label="Remove '+esc(r.name)+'">Remove</button></td></tr>').join("")+'</tbody></table></div><button class="btn quiet" data-a="indadd">Add an indicator</button><p class="small muted">Leave the target at 0 for a figure that has no target.</p>';
+  b+='<h3 style="margin-top:1.2rem">Progress updates</h3>'+g.updates.map((u,i)=>'<div class="row" style="align-items:flex-start;margin:.4rem 0"><input class="cellin" type="date" style="width:170px" data-c="upd" data-i="'+i+'" data-k="date" value="'+esc(u.date)+'" aria-label="Date"><input class="cellin" style="flex:1;min-width:200px" data-c="upd" data-i="'+i+'" data-k="text" value="'+esc(u.text)+'" aria-label="Update"><button class="btn quiet" data-a="upddel" data-i="'+i+'">Remove</button></div>').join("")+'<button class="btn quiet" data-a="updadd">Add an update</button>';
+  b+='<h3 style="margin-top:1.2rem">Taken straight from the tools</h3><p class="small">'+(snap.schools.length?snap.schools.length+" schools tagged Nourishing Govandi in SchoolTrack, with "+snap.schools.reduce((n,s)=>n+s.verified,0)+" verified sessions.":"No school is tagged Nourishing Govandi in SchoolTrack yet.")+" "+(snap.vendors?snap.vendors.registered+" vendors registered in Govandi, "+snap.vendors.trained+" trained.":"No Govandi vendors are in the vendor training tool yet.")+"</p>";
+  b+='<h3 style="margin-top:1.2rem">Publish</h3><label class="row" style="gap:.5rem"><input type="checkbox" style="width:22px;height:22px" data-c="govsample"'+(g.sample?" checked":"")+'>These are sample figures. Show a notice saying so.</label><div class="row" style="margin-top:.6rem"><button class="btn primary" data-a="govdownload">Download govandi.json</button><button class="btn quiet danger" data-a="govdiscard">Discard my edits on this device</button></div>'+
+    '<p class="small muted">To publish: on GitHub, open the data folder, choose Add file, then Upload files, and upload govandi.json so it replaces the old one. The funder sees the new figures a minute or two later.</p>'+hmsg("gov");
+  return tile("","Nourishing Govandi: what the funder sees","Edit targets, progress and updates here. Infographics you saved for the Govandi dashboard are included when you publish.",b);
+}
+function hub(){
+  H=hubLoad();
+  let h=lead("Data hub","Add schools from Excel, turn any sheet into an infographic, and prepare what funders see. Everything here is saved on this device until you publish it.");
+  h+=linksTile("")+schoolsTile()+builderTile();
+  for(const d of H.datasets)h+=tile("s6",esc(d.title),(d.show==="govandi"?"Shown on the Govandi funder dashboard.":"Shown on this MIS only.")+(d.source?" From "+esc(d.source)+".":""),AWIT.render(d)+'<div class="row" style="margin-top:.8rem"><button class="btn quiet" data-a="dsmove" data-id="'+esc(d.id)+'">'+(d.show==="govandi"?"Keep on this MIS only":"Add to the Govandi dashboard")+'</button><button class="btn quiet danger" data-a="dsdel" data-id="'+esc(d.id)+'">Delete</button></div>');
+  return h+govandiTile();
+}
+const HA={
+  copy(d,t){const done=()=>{const o=t.textContent;t.textContent="Copied";setTimeout(()=>t.textContent=o,1500)};if(navigator.clipboard)navigator.clipboard.writeText(d.v).then(done,()=>{});},
+  importschools(){importSchools();render()},
+  cancelschools(){hubS.schools=null;say("");render()},
+  dsset(d){hubS.ds[d.k]=d.v;render()},
+  dscancel(){hubS.ds=null;say("");render()},
+  dssave(){const ds=dsBuild();H.datasets.unshift(ds);saveH();hubS.ds=null;say("ds",'"'+ds.title+'" is saved'+(ds.show==="govandi"?" and will go to the funder dashboard when you publish.":"."));render()},
+  dsdel(d){H.datasets=H.datasets.filter(x=>x.id!==d.id);saveH();render()},
+  dsmove(d){const x=H.datasets.find(x=>x.id===d.id);if(x){x.show=x.show==="govandi"?"mis":"govandi";saveH();render()}},
+  async govload(){say("gov");try{const r=await fetch("data/govandi.json",{cache:"no-store"});if(!r.ok)throw 0;const j=await r.json();const ds=(j.datasets||[]).map(x=>Object.assign({},x,{show:"govandi"}));
+      H.datasets=H.datasets.filter(x=>!ds.some(y=>y.id===x.id)).concat(ds);delete j.datasets;delete j.tools;delete j.publishedAt;H.govandi=j;saveH();say("gov","The published file is loaded. Edit it below.")}
+    catch(e){say("gov","","The published file could not be read. Start with targets only, or check that data/govandi.json is on the website.")}render()},
+  govnew(){H.govandi=AWIT.govandiDefault(false);saveH();say("gov","Started with the project targets.");render()},
+  govdiscard(){H.govandi=null;H.datasets=H.datasets.filter(x=>x.show!=="govandi");saveH();say("gov","Your edits on this device are discarded. The published file is unchanged.");render()},
+  indadd(){H.govandi.indicators.push({comp:"",name:"",unit:"",target:0,achieved:0});saveH();render()},
+  inddel(d){H.govandi.indicators.splice(+d.i,1);saveH();render()},
+  updadd(){H.govandi.updates.unshift({date:new Date().toISOString().slice(0,10),text:""});saveH();render()},
+  upddel(d){H.govandi.updates.splice(+d.i,1);saveH();render()},
+  govdownload(){const g=JSON.parse(JSON.stringify(H.govandi));g.indicators=g.indicators.filter(r=>r.name.trim());g.updates=g.updates.filter(u=>u.text.trim());g.datasets=H.datasets.filter(x=>x.show==="govandi");g.tools=AWIT.snapshot();g.publishedAt=new Date().toISOString();
+    const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(g,null,1)],{type:"application/json"}));a.download="govandi.json";document.body.appendChild(a);a.click();a.remove();say("gov","govandi.json is downloaded. Upload it to the data folder on GitHub to publish.");render()}
+};
+document.addEventListener("input",e=>{const t=e.target,c=t.dataset.c;
+  if(c==="dstitle"){hubS.ds.title=t.value;const p=$("#ds-ptitle");if(p)p.textContent=t.value||"Untitled"}
+  if(c==="ind"){const r=H.govandi.indicators[+t.dataset.i],k=t.dataset.k;r[k]=k==="target"||k==="achieved"?(toNum(t.value)||0):t.value;saveH()}
+  if(c==="upd"){H.govandi.updates[+t.dataset.i][t.dataset.k]=t.value;saveH()}});
+document.addEventListener("change",async e=>{const t=e.target,c=t.dataset.c;
+  if(c==="schoolfile"&&t.files[0]){say("schools");try{const sh=await readBook(t.files[0]),rows=Object.values(sh)[0]||[];const m=rows.length>1?mapSchools(rows):{error:"The sheet has no rows under its first row."};if(m.error){hubS.schools=null;say("schools","",m.error)}else hubS.schools=m}catch(err){hubS.schools=null;say("schools","",err.message||"That file could not be read.")}render()}
+  if(c==="dsfile"&&t.files[0]){say("ds");try{const sheets=await readBook(t.files[0]),names=Object.keys(sheets).filter(n=>sheets[n].length>1);if(!names.length)throw new Error("The file has no sheet with rows under a header row.");
+      const d={file:t.files[0].name,sheets,title:t.files[0].name.replace(/\.[^.]+$/,""),type:"bar",show:"mis",agg:"sum"};for(const n of Object.keys(sheets))if(!names.includes(n))delete sheets[n];dsSheet(d,names[0]);hubS.ds=d}
+    catch(err){hubS.ds=null;say("ds","",err.message||"That file could not be read.")}render()}
+  if(c==="dssheet"){dsSheet(hubS.ds,t.value);render()}
+  if(c==="dslabel"){const d=hubS.ds;d.label=+t.value;d.values=d.values.filter(i=>i!==d.label);render()}
+  if(c==="dsval"){const d=hubS.ds,i=+t.dataset.i;d.values=t.checked?d.values.concat(i).sort((a,b)=>a-b):d.values.filter(x=>x!==i);render()}
+  if(c==="govsample"){H.govandi.sample=t.checked;saveH()}});
+
+const TABS=[["overview","Organisation overview","var(--ink)"],["hsp","Healthy Schools",PR.hsp.c],["as","Arogya Schools",PR.as.c],["sfvt","Street Food Vendor Training",PR.sfvt.c],["city","Arogya City",PR.city.c],["hub","Data hub","var(--ink)"]];
+const VIEWS={overview,hsp,as,sfvt,city,hub};
+let unlocked=false;
 function render(){
   $("#tabs").innerHTML=TABS.map(([k,l,c])=>'<button role="tab" data-a="tab" data-v="'+k+'" aria-selected="'+(ui.tab===k)+'" style="--tc:'+c+'">'+l+"</button>").join("");
   document.querySelectorAll('[data-a="year"]').forEach(b=>b.setAttribute("aria-pressed",b.dataset.v===ui.year));
@@ -367,10 +519,12 @@ function render(){
 }
 document.addEventListener("click",e=>{const t=e.target.closest("[data-a]");if(!t)return;
   if(t.dataset.a==="tab"){ui.tab=t.dataset.v;render();window.scrollTo(0,0)}
-  if(t.dataset.a==="year"){ui.year=t.dataset.v;render()}});
+  if(t.dataset.a==="year"){ui.year=t.dataset.v;render()}
+  if(HA[t.dataset.a]&&!t.disabled)HA[t.dataset.a](t.dataset,t)});
 document.addEventListener("change",e=>{if(e.target.dataset.c==="state"){ui.state=e.target.value;render()}});
-window.addEventListener("storage",render);document.addEventListener("visibilitychange",()=>{if(!document.hidden)render()});
-render();
+const quiet=()=>unlocked&&!hubS.ds&&!hubS.schools&&!["INPUT","SELECT","TEXTAREA"].includes(document.activeElement.tagName);
+window.addEventListener("storage",()=>{if(quiet())render()});document.addEventListener("visibilitychange",()=>{if(!document.hidden&&quiet())render()});
+awitGate("team","Program MIS").then(()=>{unlocked=true;render()});
 </script>
 </body>
 </html>

@@ -1,0 +1,228 @@
+{
+ "project": {
+  "id": "govandi",
+  "name": "Nourishing Govandi",
+  "tagline": "Sehat Ki Baat, Saath Saath",
+  "place": "Govandi, Mumbai",
+  "funder": "Godrej",
+  "start": "2026-09-01",
+  "end": "2027-03-31"
+ },
+ "sample": true,
+ "indicators": [
+  {
+   "comp": "Healthy Schools Program",
+   "name": "Schools in the program",
+   "unit": "schools",
+   "target": 2,
+   "achieved": 2
+  },
+  {
+   "comp": "Healthy Schools Program",
+   "name": "Students reached",
+   "unit": "students",
+   "target": 0,
+   "achieved": 123
+  },
+  {
+   "comp": "Women's nutrition outreach",
+   "name": "Women and adolescents reached",
+   "unit": "people",
+   "target": 1000,
+   "achieved": 310
+  },
+  {
+   "comp": "Women's nutrition outreach",
+   "name": "Community sessions held",
+   "unit": "sessions",
+   "target": 40,
+   "achieved": 12
+  },
+  {
+   "comp": "Women's nutrition outreach",
+   "name": "Follow-up group discussions",
+   "unit": "discussions",
+   "target": 15,
+   "achieved": 3
+  },
+  {
+   "comp": "mDiabetes",
+   "name": "People enrolled in mDiabetes",
+   "unit": "people",
+   "target": 5000,
+   "achieved": 1460
+  },
+  {
+   "comp": "Street food vendors",
+   "name": "Vendors trained",
+   "unit": "vendors",
+   "target": 50,
+   "achieved": 8
+  },
+  {
+   "comp": "Street food vendors",
+   "name": "Stall monitoring visits",
+   "unit": "visits",
+   "target": 50,
+   "achieved": 4
+  }
+ ],
+ "updates": [
+  {
+   "date": "2026-10-01",
+   "text": "Community sessions are running in three localities, with pre and post questions answered by raised cards."
+  },
+  {
+   "date": "2026-09-15",
+   "text": "Arogya City Coordinator for Mumbai in place; community mobilisation partner on board."
+  }
+ ],
+ "datasets": [
+  {
+   "id": "d-sample1",
+   "title": "Knowledge before and after the session",
+   "labelName": "Session",
+   "type": "bar",
+   "labels": [
+    "GOV001",
+    "GOV002",
+    "GOV003",
+    "GOV004",
+    "GOV005",
+    "GOV006"
+   ],
+   "series": [
+    {
+     "name": "Before, % correct",
+     "values": [
+      52,
+      48,
+      57,
+      55,
+      50,
+      61
+     ]
+    },
+    {
+     "name": "After, % correct",
+     "values": [
+      81,
+      79,
+      86,
+      84,
+      77,
+      88
+     ]
+    }
+   ],
+   "show": "govandi"
+  },
+  {
+   "id": "d-sample2",
+   "title": "mDiabetes enrolments, running total",
+   "labelName": "Week",
+   "type": "line",
+   "labels": [
+    "1 Sep",
+    "8 Sep",
+    "15 Sep",
+    "22 Sep",
+    "29 Sep",
+    "6 Oct"
+   ],
+   "series": [
+    {
+     "name": "People enrolled",
+     "values": [
+      0,
+      180,
+      420,
+      760,
+      1120,
+      1460
+     ]
+    }
+   ],
+   "show": "govandi"
+  }
+ ],
+ "tools": {
+  "schools": [
+   {
+    "name": "Govandi school 1",
+    "id": "27220100201",
+    "classes": [
+     {
+      "id": "6A",
+      "enrol": 44,
+      "acts": [
+       "v",
+       "v",
+       "v",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       ""
+      ]
+     },
+     {
+      "id": "6B",
+      "enrol": 41,
+      "acts": [
+       "v",
+       "v",
+       "p",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       ""
+      ]
+     }
+    ],
+    "verified": 5,
+    "reach": 85,
+    "enrol": 85
+   },
+   {
+    "name": "Govandi school 2",
+    "id": "27220100202",
+    "classes": [
+     {
+      "id": "6A",
+      "enrol": 38,
+      "acts": [
+       "v",
+       "v",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       ""
+      ]
+     }
+    ],
+    "verified": 2,
+    "reach": 38,
+    "enrol": 38
+   }
+  ],
+  "vendors": {
+   "registered": 14,
+   "attended": 8,
+   "screened": 7,
+   "trained": 8,
+   "visited": 4,
+   "visits": 4
+  }
+ },
+ "publishedAt": "2026-10-06T02:10:39.581Z"
+}

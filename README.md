@@ -1,18 +1,22 @@
 # AWIT Program Platform (prototype)
 
-Static prototype of the Arogya World India Trust program tools.
-
-| Page | Path | What it is |
+| Page | Path | Who it is for |
 | --- | --- | --- |
-| Program MIS | `/` | Central dashboard: organisation overview plus Healthy Schools, Arogya Schools, Street Food Vendor Training and Arogya City |
-| Arogya SchoolTrack | `/schooltrack/` | Field app and monitoring dashboard for HSP sessions and Arogya Schools accreditation |
-| Street Food Vendor Training | `/sfvt/` | Vendor registration with QR code, training day desks (attendance, screening, certificate and apron), stall visits, dashboard |
+| Program MIS and Data hub | `/` | Managers and heads (team passcode) |
+| SchoolTrack dashboard | `/schooltrack/dashboard/` | Managers and heads (team passcode) |
+| Vendor training dashboard | `/sfvt/dashboard/` | Managers and heads (team passcode) |
+| SchoolTrack field app | `/schooltrack/field/` | Field coordinators (no passcode) |
+| Vendor training field app | `/sfvt/field/` | Field coordinators (no passcode) |
+| Nourishing Govandi progress | `/funders/govandi/` | The funding team (funder passcode) |
+| Change a passcode | `/admin/passcodes.html` | Whoever maintains the site |
 
-Arogya City runs from its own repository and is linked from the MIS.
+Other files
+
+- `access.js` holds the passcode fingerprints. See `/admin/passcodes.html` to change one.
+- `data/govandi.json` is what the funder dashboard shows. Replace it with the file downloaded from the Data hub to publish new figures.
+- `lib/` holds the Excel reader and shared chart code.
 
 Notes
 
-- The MIS charts show sample data. Its "Live" panels read the real records that the two tools have saved in the same browser.
-- SchoolTrack and the vendor training tool keep their data in the browser of the device they are opened on. Two phones do not share data yet.
-- A vendor's QR pass opens at `/sfvt/?v=VENDOR-ID`.
-- No build step: every page is a single HTML file.
+- The passcode screens are a lock for a prototype, not real security. Do not enter real personal or health data until logins and a shared database are added.
+- The tools keep their data in the browser of the device they are opened on. Two devices do not share data yet.
