@@ -9,227 +9,232 @@
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#F2F6FB; --sheet:#FFFFFF; --ink:#16233F; --ink2:#52617E; --rule:#C7D5E8; --rule2:#E3EBF5;
-  --margin:#C4352B; --margin-bg:#FBE9E7; --tick:#1B7648; --tick-bg:#E3F3EA; --wait:#8A5A05; --wait-bg:#FBF0D6;
-  --accent:#1D4FC0; --accent-ink:#FFFFFF;
+  --paper:#F3F6F4; --sheet:#FFFFFF; --ink:#12302E; --ink2:#55706C; --rule:#C9D8D4; --rule2:#E4EDEA;
+  --band:#0D5C56; --band-ink:#FFFFFF; --accent:#0E7C6B; --accent-ink:#FFFFFF; --link:#0B6078; --focus:#E0A100;
+  --ok:#1B7A47; --ok-bg:#E1F2E8; --bad:#C4352B; --bad-bg:#FBE9E7; --wait:#8A5A05; --wait-bg:#FBF0D6; --warn:#D99A00; --mute:#A3B5B1;
+  --series:#0E9C86; --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4;
   --display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
   --body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --paper:#13201B; --sheet:#1A2A24; --ink:#EEF3EC; --ink2:#A7B7AD; --rule:#35493F; --rule2:#26372F;
-    --margin:#FF9384; --margin-bg:#3B2320; --tick:#86D9A9; --tick-bg:#1F3A2C; --wait:#F1C56C; --wait-bg:#3A3018;
-    --accent:#A9C3FF; --accent-ink:#10203F;
+    --paper:#0F1B1A; --sheet:#162624; --ink:#E9F3F1; --ink2:#9DB5B0; --rule:#2C4340; --rule2:#20322F;
+    --band:#0A3F3B; --band-ink:#FFFFFF; --accent:#4FD1B5; --accent-ink:#06221E; --link:#8FD3E8; --focus:#F1C56C;
+    --ok:#86D9A9; --ok-bg:#1C3A2C; --bad:#FF9384; --bad-bg:#40221F; --wait:#F1C56C; --wait-bg:#3A3018; --warn:#F1C56C; --mute:#5F7572;
+    --series:#35B8A0; --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181;
   }
 }
 :root[data-theme="dark"]{
-  --paper:#13201B; --sheet:#1A2A24; --ink:#EEF3EC; --ink2:#A7B7AD; --rule:#35493F; --rule2:#26372F;
-  --margin:#FF9384; --margin-bg:#3B2320; --tick:#86D9A9; --tick-bg:#1F3A2C; --wait:#F1C56C; --wait-bg:#3A3018;
-  --accent:#A9C3FF; --accent-ink:#10203F;
+  --paper:#0F1B1A; --sheet:#162624; --ink:#E9F3F1; --ink2:#9DB5B0; --rule:#2C4340; --rule2:#20322F;
+  --band:#0A3F3B; --band-ink:#FFFFFF; --accent:#4FD1B5; --accent-ink:#06221E; --link:#8FD3E8; --focus:#F1C56C;
+  --ok:#86D9A9; --ok-bg:#1C3A2C; --bad:#FF9384; --bad-bg:#40221F; --wait:#F1C56C; --wait-bg:#3A3018; --warn:#F1C56C; --mute:#5F7572;
+  --series:#35B8A0; --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181;
 }
 *,*::before,*::after{box-sizing:inherit}
+[hidden]{display:none!important}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5}
 h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.15;margin:0}
-h1{font-size:1.75rem} h2{font-size:1.25rem} h3{font-size:1.05rem}
-p{margin:0}
-button,select,input{font:inherit;color:inherit}
-:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+h1{font-size:1.6rem} h2{font-size:1.15rem} h3{font-size:1.02rem}
+p{margin:0} a{color:var(--link)}
+button,select,input,textarea{font:inherit;color:inherit}
+textarea{resize:vertical}
+:focus-visible{outline:3px solid var(--focus,var(--accent));outline-offset:2px}
 .muted{color:var(--ink2)} .small{font-size:.875rem} .num{font-variant-numeric:tabular-nums}
-
-.bar{display:flex;flex-wrap:wrap;gap:.75rem 1.5rem;align-items:center;justify-content:space-between;padding:.9rem 1.25rem;border-bottom:2px solid var(--ink)}
-.brand{font-family:var(--display);font-weight:700;font-size:1.3rem;letter-spacing:-.01em}
-.brand span{color:var(--ink2);font-weight:500}
-.seg{display:inline-flex;border:1.5px solid var(--ink);border-radius:999px;overflow:hidden;background:var(--sheet)}
-.seg button{border:0;background:transparent;padding:.5rem 1rem;min-height:44px;cursor:pointer}
-.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper);font-weight:700}
-
-.btn{border:1.5px solid var(--ink);background:var(--sheet);border-radius:10px;padding:.65rem 1rem;min-height:48px;cursor:pointer;font-weight:700}
-.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
-.btn.danger{border-color:var(--margin);color:var(--margin)}
-.btn.quiet{border-color:var(--rule);font-weight:400}
-.btn.block{display:block;width:100%}
-.btn:disabled{opacity:.45;cursor:not-allowed}
 .row{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
+.between{justify-content:space-between}
 .stack>*+*{margin-top:1rem}
+.tight>*+*{margin-top:.5rem}
+
+.band{background:var(--band);color:var(--band-ink)}
+.band .in{max-width:1180px;margin:0 auto;display:flex;flex-wrap:wrap;gap:.5rem 1.25rem;align-items:center;justify-content:space-between;padding:.75rem 1rem}
+.brand{font-family:var(--display);font-weight:700;font-size:1.2rem;line-height:1.15}
+.brand small{display:block;font-family:var(--body);font-weight:400;font-size:.8125rem;opacity:.85}
+.band a,.band .linkbtn{color:var(--band-ink)}
+.linkbtn{background:none;border:0;padding:.4rem .2rem;min-height:44px;text-decoration:underline;cursor:pointer;color:var(--link)}
+
+.seg{display:inline-flex;flex-wrap:wrap;border:1.5px solid var(--ink);border-radius:12px;overflow:hidden;background:var(--sheet)}
+.seg button{border:0;background:transparent;padding:.45rem .8rem;min-height:44px;cursor:pointer;flex:1 1 auto}
+.seg button+button{border-left:1px solid var(--rule)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper);font-weight:700}
+.seg.full{display:flex}
+
+.btn{border:1.5px solid var(--ink);background:var(--sheet);border-radius:12px;padding:.6rem 1rem;min-height:48px;cursor:pointer;font-weight:700;text-decoration:none;color:var(--ink);display:inline-flex;align-items:center;justify-content:center;text-align:center}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.wa{background:#128C4B;border-color:#128C4B;color:#fff}
+.btn.danger{border-color:var(--bad);color:var(--bad)}
+.btn.quiet{border-color:var(--rule);font-weight:400}
+.btn.sm{min-height:40px;padding:.35rem .75rem;font-size:.9rem}
+.btn.block{display:flex;width:100%}
+.btn:disabled{opacity:.45;cursor:not-allowed}
 
 .pill{display:inline-block;border-radius:999px;padding:.1rem .65rem;font-size:.8125rem;font-weight:700;white-space:nowrap}
-.pill.ok{background:var(--tick-bg);color:var(--tick)} .pill.wait{background:var(--wait-bg);color:var(--wait)}
-.pill.rev{background:var(--margin-bg);color:var(--margin)} .pill.bad{background:var(--ink);color:var(--paper)}
+.pill.ok{background:var(--ok-bg);color:var(--ok)} .pill.wait{background:var(--wait-bg);color:var(--wait)}
+.pill.bad{background:var(--bad-bg);color:var(--bad)} .pill.plain{background:var(--rule2);color:var(--ink2)}
+.note{border-left:4px solid var(--ink2);padding:.4rem .75rem;border-radius:0}
+.note.bad{border-color:var(--bad);color:var(--bad)} .note.ok{border-color:var(--ok);color:var(--ok)}
+.alert{border:2px solid var(--bad);background:var(--bad-bg);color:var(--bad);border-radius:12px;padding:.9rem 1rem}
+.alert h2,.alert h3{color:var(--bad)}
+.alert .field input{border-color:var(--bad)}
+.goodbox{border:2px solid var(--ok);background:var(--ok-bg);color:var(--ok);border-radius:12px;padding:.9rem 1rem}
 
-/* field app */
-.phone{max-width:460px;margin:0 auto;padding:1.25rem 1rem 3rem}
+.phone{max-width:520px;margin:0 auto;padding:1rem 1rem 6.5rem}
 .sheet{background:var(--sheet);border:1.5px solid var(--rule);border-radius:14px;padding:1rem}
-.schoolcard{display:flex;gap:.75rem;align-items:center;justify-content:space-between}
-.demo{border:1.5px dashed var(--ink2);border-radius:14px;padding:.85rem 1rem;background:transparent}
-.demo .seg button{padding:.4rem .75rem;min-height:40px;font-size:.9rem}
-.list{list-style:none;margin:0;padding:0}
-.list li{padding:.7rem 0;border-bottom:1px solid var(--rule)}
-.list li:last-child{border-bottom:0}
+.nav{position:fixed;left:0;right:0;bottom:0;background:var(--sheet);border-top:2px solid var(--ink);padding-bottom:env(safe-area-inset-bottom,0px);z-index:20}
+.nav div{max-width:520px;margin:0 auto;display:flex}
+.nav button{flex:1;border:0;background:transparent;min-height:58px;padding:.4rem .2rem;cursor:pointer;font-size:.875rem;border-top:4px solid transparent;margin-top:-2px}
+.nav button[aria-pressed="true"]{border-color:var(--accent);font-weight:700}
+.login{max-width:420px;margin:0 auto;padding:2rem 1rem 3rem}
+.field label,.flabel{display:block;font-weight:700;margin-bottom:.25rem}
+.field input,.field select,.field textarea{width:100%;min-height:48px;border:1.5px solid var(--ink);border-radius:12px;padding:.5rem .75rem;background:var(--sheet)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.check{display:flex;gap:.7rem;align-items:flex-start;padding:.3rem 0}
+.check input{width:24px;height:24px;flex:none;margin-top:.1rem}
+.thumb{width:120px;max-width:100%;border-radius:10px;border:1.5px solid var(--rule);display:block}
+.face{width:56px;height:56px;border-radius:10px;object-fit:cover;border:1.5px solid var(--rule);flex:none;background:var(--rule2)}
+.filebtn{position:relative;overflow:hidden}
+.filebtn input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.vrow{display:flex;gap:.75rem;align-items:center;padding:.65rem 0;border-bottom:1px solid var(--rule2)}
+.vrow:last-child{border-bottom:0}
+.vrow .grow{flex:1;min-width:0}
+.beads{display:grid;grid-template-columns:repeat(var(--n,8),minmax(0,1fr));gap:4px}
+@media(max-width:620px){.beads{grid-template-columns:repeat(4,minmax(0,1fr));row-gap:.6rem}}
+.beads div{text-align:center;font-size:.6875rem;color:var(--ink2);line-height:1.2}
+.beads i{display:block;height:10px;border-radius:5px;background:var(--rule);margin-bottom:.25rem}
+.beads .on i{background:var(--ok)} .beads .on{color:var(--ink)}
+.count4{display:grid;grid-template-columns:repeat(4,1fr);border-top:2px solid var(--ink);border-bottom:1px solid var(--rule)}
+.count4 div{padding:.5rem .25rem .6rem 0}
+.count4 b{display:block;font-family:var(--display);font-size:1.5rem;line-height:1.1}
+.count4 span{font-size:.8125rem;color:var(--ink2)}
 .steps{display:flex;gap:6px;margin:.4rem 0 1rem}
 .steps i{flex:1;height:6px;border-radius:3px;background:var(--rule)} .steps i.on{background:var(--accent)}
 .chips{display:flex;flex-wrap:wrap;gap:.5rem}
-.chip{min-width:48px;min-height:48px;border-radius:10px;border:1.5px solid var(--ink);background:var(--sheet);cursor:pointer;font-weight:700;padding:0 .8rem}
+.chip{min-width:48px;min-height:48px;border-radius:12px;border:1.5px solid var(--ink);background:var(--sheet);cursor:pointer;font-weight:700;padding:0 .8rem}
 .chip[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
 .chip:disabled{border-color:var(--rule);color:var(--ink2);cursor:not-allowed;text-decoration:line-through}
-.field label{display:block;font-weight:700;margin-bottom:.25rem}
-.field input,.field select{width:100%;min-height:48px;border:1.5px solid var(--ink);border-radius:10px;padding:.5rem .75rem;background:var(--sheet)}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
-.thumb{width:132px;max-width:100%;border-radius:8px;border:1.5px solid var(--rule);display:block}
-.note{border-left:4px solid var(--ink2);padding:.35rem .75rem;border-radius:0}
-.note.bad{border-color:var(--margin);color:var(--margin)} .note.ok{border-color:var(--tick);color:var(--tick)}
-.msg{background:var(--tick-bg);border-radius:14px 14px 14px 2px;padding:.8rem 1rem;max-width:22rem}
-.filebtn{position:relative;overflow:hidden;display:inline-flex;align-items:center}
-.filebtn input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.pass{text-align:center}
+.pass svg{width:min(260px,70vw);height:auto;background:#fff;border-radius:12px;padding:10px;border:1.5px solid var(--rule)}
+.pass .vid{font-family:var(--display);font-size:2rem;font-weight:700;letter-spacing:.04em}
+#scan{position:fixed;inset:0;background:#000;z-index:50;display:flex;flex-direction:column}
+#scan video{flex:1;min-height:0;width:100%;object-fit:cover}
+#scan .sbar{padding:1rem;padding-bottom:calc(1rem + env(safe-area-inset-bottom,0px));background:#000;color:#fff;display:flex;gap:1rem;align-items:center;justify-content:space-between}
 
-/* dashboard */
-.dash{max-width:1180px;margin:0 auto;padding:1.25rem 1.25rem 4rem}
-.tabs{display:flex;gap:.25rem;flex-wrap:wrap;border-bottom:1.5px solid var(--rule);margin-bottom:1.5rem}
-.tabs button{border:0;background:transparent;padding:.7rem 1rem;min-height:44px;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1.5px;color:var(--ink2)}
-.tabs button[aria-selected="true"]{border-color:var(--ink);color:var(--ink);font-weight:700}
-.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));border-top:2px solid var(--ink);border-bottom:1px solid var(--rule)}
-.strip div{padding:.8rem 1rem .9rem 0}
-.strip b{display:block;font-family:var(--display);font-size:1.9rem;line-height:1.1}
+.dash{max-width:1180px;margin:0 auto;padding:1rem 1rem 4rem}
+.tabs{display:flex;gap:.25rem;overflow-x:auto;border-bottom:1.5px solid var(--rule);margin-bottom:1.25rem}
+.tabs button{border:0;background:transparent;padding:.7rem 1rem;min-height:44px;cursor:pointer;white-space:nowrap;border-bottom:4px solid transparent;margin-bottom:-1.5px;color:var(--ink2)}
+.tabs button[aria-selected="true"]{border-color:var(--tc,var(--accent));color:var(--ink);font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:1rem}
+.tile{background:var(--sheet);border:1.5px solid var(--rule);border-radius:14px;padding:1rem 1.1rem 1.1rem;grid-column:span 12;min-width:0}
+.tile>.thead{display:flex;gap:.75rem;justify-content:space-between;align-items:flex-start;margin-bottom:.15rem}
+.tile .sub{color:var(--ink2);font-size:.875rem;margin-bottom:.8rem}
+.tile .tools{display:flex;gap:.35rem;flex:none}
+.span12{grid-column:span 12}
+@media (min-width:860px){.s3{grid-column:span 3}.s4{grid-column:span 4}.s5{grid-column:span 5}.s6{grid-column:span 6}.s7{grid-column:span 7}.s8{grid-column:span 8}}
+@media (min-width:560px) and (max-width:859px){.s3,.s4{grid-column:span 6}}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));grid-column:span 12;border-top:2px solid var(--ink);border-bottom:1px solid var(--rule)}
+.kpis div{padding:.8rem 1rem .9rem 0}
+.kpis b{display:block;font-family:var(--display);font-size:1.9rem;line-height:1.1}
 .scroll{overflow-x:auto}
 table{border-collapse:collapse;width:100%}
-th,td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--rule);vertical-align:middle}
-th{font-weight:700;color:var(--ink2);font-size:.875rem}
-.reg{background:var(--sheet);border:1.5px solid var(--rule);min-width:720px}
-.reg th,.reg td{border-bottom:1px solid var(--rule);border-right:1px solid var(--rule2);text-align:center;padding:0}
-.reg th{padding:.45rem .3rem}
-.reg .cls{text-align:left;padding:.4rem .7rem;white-space:nowrap;border-right:2px solid var(--margin)}
-.reg .sch td{text-align:left;padding:.55rem .7rem;background:var(--paper);font-family:var(--display);font-weight:700}
-.reg .sch span{font-family:var(--body);font-weight:400;color:var(--ink2);font-size:.875rem;margin-left:.5rem}
-.cell{width:100%;min-width:44px;height:44px;border:0;background:transparent;cursor:pointer;font-size:1.25rem;font-weight:700;line-height:1}
-.cell.ok{color:var(--tick)} .cell.wait{color:var(--wait)} .cell.rev{color:var(--margin);background:var(--margin-bg)} .cell.bad{color:var(--ink2)}
-.cell.none{cursor:default}
-.legend{display:flex;flex-wrap:wrap;gap:.4rem 1.25rem;margin-top:.6rem}
-.qcard{background:var(--sheet);border:1.5px solid var(--rule);border-left:5px solid var(--margin);border-radius:0;padding:1rem}
-.flag{color:var(--margin);font-weight:700}
-.thumbs{display:flex;flex-wrap:wrap;gap:.75rem}
-.thumbs figure{margin:0} .thumbs figcaption{font-size:.8125rem;color:var(--ink2);max-width:132px}
-.crit{display:grid;grid-template-columns:auto 1fr auto;gap:.3rem .75rem;align-items:center;padding:.4rem 0;border-bottom:1px solid var(--rule2)}
-.crit input{width:22px;height:22px}
-.meter{height:10px;background:var(--rule2);border-radius:5px;overflow:hidden;min-width:120px}
-.meter i{display:block;height:100%;background:var(--tick)}
-dialog{border:2px solid var(--ink);border-radius:14px;background:var(--sheet);color:var(--ink);padding:0;width:min(640px,calc(100% - 2rem));max-height:calc(100% - 2rem)}
-dialog::backdrop{background:rgba(10,20,40,.55)}
+th,td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--rule2);vertical-align:middle}
+th{color:var(--ink2);font-size:.875rem} td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.qcard{background:var(--sheet);border:1.5px solid var(--rule);border-left:5px solid var(--wait);border-radius:0;padding:1rem}
+.qcard.red{border-left-color:var(--bad)}
+.flag{color:var(--bad);font-weight:700}
+svg.chart{display:block;height:auto;max-width:100%}
+#tip{position:fixed;z-index:80;pointer-events:none;background:var(--ink);color:var(--paper);padding:.3rem .55rem;border-radius:6px;font-size:.8125rem;max-width:260px;line-height:1.3}
+dialog{border:2px solid var(--ink);border-radius:14px;background:var(--sheet);color:var(--ink);padding:0;width:min(600px,calc(100% - 1.5rem));max-height:calc(100% - 1.5rem)}
+dialog::backdrop{background:rgba(15,15,30,.6)}
 dl{display:grid;grid-template-columns:auto 1fr;gap:.3rem 1rem;margin:0}
 dt{color:var(--ink2)} dd{margin:0}
 details summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;align-items:center}
-@media (max-width:560px){.dash{padding:1rem .75rem 3rem}.strip b{font-size:1.5rem}}
+.cellin{min-height:44px;border:1.5px solid var(--ink);border-radius:10px;padding:.4rem .6rem;background:var(--sheet);color:var(--ink);font:inherit;width:100%}
+
+.acts{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;margin-top:.6rem}
+.acts span{display:block;text-align:center;border-radius:6px;padding:.25rem 0;font-size:.8125rem;font-weight:700;font-variant-numeric:tabular-nums;border:1.5px solid var(--rule);color:var(--ink2)}
+.acts .counted{background:var(--ok);border-color:var(--ok);color:var(--sheet)}
+.acts .pending,.acts .flagged{background:var(--wait-bg);border-color:var(--wait);color:var(--wait)}
+.reg{background:var(--sheet);border:1.5px solid var(--rule);min-width:720px}
+.reg th,.reg td{border-bottom:1px solid var(--rule);border-right:1px solid var(--rule2);text-align:center;padding:0}
+.reg th{padding:.45rem .3rem}
+.reg .cls{text-align:left;padding:.4rem .7rem;white-space:nowrap}
+.reg .sch td{text-align:left;padding:.55rem .7rem;background:var(--paper);font-family:var(--display);font-weight:700}
+.reg .sch span{font-family:var(--body);font-weight:400;color:var(--ink2);font-size:.875rem;margin-left:.5rem}
+.cell{width:100%;min-width:44px;height:44px;border:0;background:transparent;cursor:pointer;font-size:1.2rem;font-weight:700;line-height:1}
+.cell.counted{color:var(--ok)} .cell.pending{color:var(--wait)} .cell.flagged{color:var(--bad);background:var(--bad-bg)} .cell.rejected{color:var(--mute)}
+.cell.none{cursor:default}
+.crit{display:grid;grid-template-columns:auto 1fr auto;gap:.3rem .75rem;align-items:center;padding:.4rem 0;border-bottom:1px solid var(--rule2)}
+.crit input{width:22px;height:22px}
+.meter{height:10px;background:var(--rule2);border-radius:5px;overflow:hidden;min-width:120px}
+.meter i{display:block;height:100%;background:var(--ok)}
+.tally{display:grid;grid-template-columns:repeat(3,1fr);border-top:2px solid var(--ink);border-bottom:1px solid var(--rule)}
+.tally div{padding:.5rem .25rem .6rem 0}
+.tally b{display:block;font-family:var(--display);font-size:1.5rem;line-height:1.1}
+.tally span{font-size:.8125rem;color:var(--ink2)}
 </style>
 </head>
 <body>
-<div class="bar">
-  <div class="brand">Arogya SchoolTrack <span id="rolelab"></span></div>
-  <div id="barlinks"></div>
-</div>
+<div class="band"><div class="in">
+  <div class="brand">Arogya SchoolTrack<small id="rolelab">Healthy Schools Program</small></div>
+  <div class="row" id="bandlinks"></div>
+</div></div>
 <main id="app"></main>
 <dialog id="dlg" aria-label="Details"></dialog>
 
-
+<script src="../../lib/awit.js"></script>
 <script>
 "use strict";
-const GEOFENCE_M=150, MIN_MIN=30, DUP_BITS=4, REPLY_HRS=48, KEY="schooltrack.v1";
+const {esc,nf,pct,sum,fmtDay,fmtTime,fmtDist,dayKey,uid,rng,hav,ch,tile,kpis}=AWIT;
+const ROLE="field",KEY="schooltrack.v2",MEKEY="schooltrack.me",GEOFENCE_M=150,MIN_MIN=30,DUP_BITS=4;
+const ORGS={aw:"Arogya World India Trust",cini:"CINI",mamta:"MAMTA"},ORGSHORT={aw:"Arogya World",cini:"CINI",mamta:"MAMTA"};
+const REASONS=["School closed or holiday","Exams or a school event","Teacher or class not available","I could not travel","Other"];
+const STATUS={counted:{sym:"✓",label:"Counted",cls:"ok"},pending:{sym:"•",label:"Waiting for review",cls:"wait"},flagged:{sym:"!",label:"Flagged to partner",cls:"bad"},rejected:{sym:"✕",label:"Not counted",cls:"plain"}};
 const $=s=>document.querySelector(s);
-const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const nf=n=>Number(n).toLocaleString("en-IN");
-const fmtDay=t=>new Date(t).toLocaleDateString("en-IN",{day:"numeric",month:"short"});
-const fmtTime=t=>new Date(t).toLocaleTimeString("en-IN",{hour:"2-digit",minute:"2-digit",hour12:false});
-const fmtDist=m=>m<1000?Math.round(m)+" m":(m/1000).toFixed(1)+" km";
-const uid=()=>"s"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
-const rng=a=>()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
-function hav(a,b,c,d){const R=6371000,r=x=>x*Math.PI/180,x=Math.sin(r(c-a)/2)**2+Math.cos(r(a))*Math.cos(r(c))*Math.sin(r(d-b)/2)**2;return 2*R*Math.asin(Math.sqrt(x))}
 
-const blank=()=>({coords:[],schools:{},sessions:{},as:{}});
+const blank=()=>({coords:[],schools:{},sessions:{},misses:{},flags:{},as:{}});
 let S=blank();
-try{const raw=localStorage.getItem(KEY);if(raw){const p=JSON.parse(raw);if(p&&p.schools&&p.sessions)S=Object.assign(blank(),p)}}catch(e){}
-function loadS(){try{const raw=localStorage.getItem(KEY);if(raw){const p=JSON.parse(raw);if(p&&p.schools&&p.sessions){S=Object.assign(blank(),p);return true}}}catch(e){}return false}
+function loadS(){const p=AWIT.get(KEY);if(p&&p.schools&&p.sessions){S=Object.assign(blank(),p);return true}return false}
+loadS();
 let saveWarn="",unlocked=false;
-function save(){
-  try{localStorage.setItem(KEY,JSON.stringify(S));saveWarn=""}
-  catch(e){saveWarn="This browser could not save the data. It stays until you close this page."}
-}
-const ROLE="field";
-const ui={mode:ROLE==="dash"?"dash":"field",tab:"overview",coord:null,screen:"home",schoolId:null,draft:null,lastId:null,asOpen:null,demo:{loc:"at",len:45},msg:""};
+function save(){saveWarn=AWIT.set(KEY,S)?"":"This device could not save the change. It stays until you close this page."}
+const ui={tab:"schools",dtab:"overview",me:null,org:null,pf:"all",loc:"real",screen:"home",schoolId:null,draft:null,miss:null,lastId:null,asOpen:null,who:"",pin:"",msg:"",ok:""};
+try{ui.me=localStorage.getItem(MEKEY)}catch(e){}
+const me=()=>S.coords.find(c=>c.id===ui.me)||null;
+const coordName=id=>(S.coords.find(c=>c.id===id)||{}).name||"Unassigned";
+const pill=st=>'<span class="pill '+STATUS[st].cls+'">'+STATUS[st].label+"</span>";
 
-/* ---------- photos and fingerprints ---------- */
-function dhash(src){
-  const c=document.createElement("canvas");c.width=9;c.height=8;
-  const x=c.getContext("2d",{willReadFrequently:true});if(!x)return null;
-  x.drawImage(src,0,0,9,8);const d=x.getImageData(0,0,9,8).data;let bits="";
-  for(let y=0;y<8;y++)for(let i=0;i<8;i++){const a=(y*9+i)*4,b=a+4;
-    bits+=(d[a]*.299+d[a+1]*.587+d[a+2]*.114)>(d[b]*.299+d[b+1]*.587+d[b+2]*.114)?"1":"0"}
-  let h="";for(let i=0;i<64;i+=4)h+=parseInt(bits.slice(i,i+4),2).toString(16);return h;
-}
-function ham(a,b){let n=0;for(let i=0;i<16;i++){let v=parseInt(a[i],16)^parseInt(b[i],16);while(v){n+=v&1;v>>=1}}return n}
-function randHash(r){let h="";for(let i=0;i<16;i++)h+=Math.floor(r()*16).toString(16);return h}
-function samplePhoto(seed){
-  const r=rng(seed),c=document.createElement("canvas");c.width=160;c.height=120;
-  const x=c.getContext("2d");if(!x)return{thumb:null,hash:randHash(r)};
-  const hue=Math.floor(r()*360);
-  x.fillStyle="hsl("+hue+" 28% "+(62+r()*20)+"%)";x.fillRect(0,0,160,120);
-  x.fillStyle="hsl("+((hue+40)%360)+" 18% "+(34+r()*16)+"%)";x.fillRect(0,68+r()*18,160,60);
-  x.fillStyle="#1f3b2d";x.fillRect(r()*90,8+r()*10,40+r()*50,24+r()*10);
-  for(let gy=0;gy<8;gy++)for(let gx=0;gx<9;gx++){x.fillStyle=(r()>.5?"rgba(255,255,255,":"rgba(0,0,0,")+(.08+r()*.2)+")";x.fillRect(gx*160/9,gy*15,160/9+1,16)}
-  const n=14+Math.floor(r()*18);
-  for(let i=0;i<n;i++){const px=8+r()*144,py=58+r()*54,s=4+(py-50)/9;
-    x.fillStyle="hsl("+(20+r()*20)+" 40% "+(18+r()*22)+"%)";x.beginPath();x.arc(px,py,s,0,7);x.fill();
-    x.fillStyle=["#f2f2ee","#c9d8f0","#f0d9a8"][Math.floor(r()*3)];x.fillRect(px-s,py+s,2*s,s*1.5)}
-  return{thumb:c.toDataURL("image/jpeg",.6),hash:dhash(c)||randHash(r)};
-}
-function fileToPhoto(file){return new Promise((res,rej)=>{
-  const fr=new FileReader();fr.onerror=()=>rej(new Error("read"));
-  fr.onload=()=>{const im=new Image();im.onerror=()=>rej(new Error("image"));
-    im.onload=()=>{const c=document.createElement("canvas"),w=200,h=Math.max(1,Math.round(im.height/im.width*w));c.width=w;c.height=h;
-      const x=c.getContext("2d");if(!x)return rej(new Error("canvas"));x.drawImage(im,0,0,w,h);
-      res({thumb:c.toDataURL("image/jpeg",.6),hash:dhash(c)})};
-    im.src=fr.result};
-  fr.readAsDataURL(file)})}
-function findDup(hash,selfId){
-  if(!hash)return null;let best=null;
-  for(const s of Object.values(S.sessions)){if(s.id===selfId)continue;
-    for(const p of s.photos){if(p.kind!=="class"||!p.hash)continue;const d=ham(hash,p.hash);
-      if(d<=DUP_BITS&&(!best||d<best.dist))best={sid:s.id,dist:d}}}
-  return best;
-}
-
-/* ---------- verification ---------- */
-const STATUS={verified:{sym:"\u2713",label:"Verified",cls:"ok"},waiting:{sym:"\u2026",label:"Waiting for school",cls:"wait"},
-  review:{sym:"?",label:"Under review",cls:"rev"},rejected:{sym:"\u2715",label:"Not counted",cls:"bad"}};
-const coordName=id=>(S.coords.find(c=>c.id===id)||{}).name||"Unknown";
+/* ---------- rules ---------- */
+function findDup(hash,selfId){if(!hash)return null;let best=null;
+  for(const s of Object.values(S.sessions)){if(s.id===selfId)continue;for(const p of s.photos){if(p.kind!=="class"||!p.hash)continue;const d=AWIT.ham(hash,p.hash);if(d<=DUP_BITS&&(!best||d<best.dist))best={sid:s.id,dist:d}}}return best}
 function evaluate(s){
-  const sc=S.schools[s.schoolId],cl=sc.classes.find(c=>c.id===s.classId),f=[];
-  if(s.newAnchor)f.push("First visit. The school's location was recorded on this check-in and needs approval.");
-  else{
-    if(s.distIn>GEOFENCE_M)f.push("Checked in "+fmtDist(s.distIn)+" from the school. The limit is "+GEOFENCE_M+" m.");
-    if(s.distOut!=null&&s.distOut>GEOFENCE_M)f.push("Checked out "+fmtDist(s.distOut)+" from the school.");
-  }
-  const mins=Math.round((s.endTs-s.startTs)/60000);
-  if(mins<MIN_MIN)f.push("Lasted "+mins+" minutes. The minimum is "+MIN_MIN+".");
-  for(const p of s.photos)if(p.kind==="class"&&p.dup){const o=S.sessions[p.dup.sid];
-    f.push(o?"Class photo matches one from "+S.schools[o.schoolId].name+", "+fmtDay(o.startTs)+", logged by "+coordName(o.coordId)+".":"Class photo matches an earlier photo.")}
+  const sc=S.schools[s.schoolId],cl=sc&&sc.classes.find(c=>c.id===s.classId),f=[];
+  if(s.sim)f.push("Demo mode: the location and the session length were simulated.");
+  if(s.newAnchor)f.push("First visit: the school's location was set from this check-in.");
+  else if(s.noGps)f.push("The phone did not give a location.");
+  else{if(s.distIn>GEOFENCE_M)f.push("Checked in "+fmtDist(s.distIn)+" from the school.");if(s.distOut!=null&&s.distOut>GEOFENCE_M)f.push("Checked out "+fmtDist(s.distOut)+" from the school.")}
+  const mins=Math.round((s.endTs-s.startTs)/60000);if(mins<MIN_MIN)f.push("Lasted "+mins+" minutes. Sessions usually take "+MIN_MIN+" or more.");
+  for(const p of s.photos)if(p.kind==="class"&&p.dup){const o=S.sessions[p.dup.sid];f.push(o&&S.schools[o.schoolId]?"Class photo matches one from "+S.schools[o.schoolId].name+", "+fmtDay(o.startTs)+", logged by "+coordName(o.coordId)+".":"Class photo matches an earlier photo.")}
   if(!s.photos.some(p=>p.kind==="class"))f.push("No class photo.");
   if(!s.photos.some(p=>p.kind==="register"))f.push("No attendance register photo.");
-  const tot=s.boys+s.girls;
-  if(cl&&tot>cl.enrol)f.push("Reported "+tot+" students. Class "+cl.id+" has "+cl.enrol+" enrolled.");
-  if(s.teacher==="disputed")f.push("The school says this record is wrong.");
-  if(s.teacher==="pending"&&Date.now()-s.endTs>REPLY_HRS*36e5)f.push("The school has not confirmed in "+REPLY_HRS+" hours.");
-  s.flags=f;
-  s.status=s.review==="accepted"?"verified":s.review==="rejected"?"rejected":f.length?"review":s.teacher==="pending"?"waiting":"verified";
-  return s;
+  const tot=s.boys+s.girls;if(cl&&tot>cl.enrol)f.push("Reported "+tot+" students. Class "+cl.id+" has "+cl.enrol+" enrolled.");
+  s.notes=f;
+  const flagged=Object.values(S.flags).some(fl=>fl.about.kind==="session"&&fl.about.id===s.id&&fl.status!=="closed");
+  s.status=s.decision||(flagged?"flagged":"pending");return s;
 }
+const evalAll=()=>Object.values(S.sessions).forEach(evaluate);
 const sessions=()=>Object.values(S.sessions).sort((a,b)=>b.startTs-a.startTs);
-function cellSession(schoolId,classId,act){
-  let live=null,dead=null;
-  for(const s of Object.values(S.sessions)){if(s.schoolId!==schoolId||s.classId!==classId||s.activity!==act)continue;
-    if(s.status==="rejected"){if(!dead||s.startTs>dead.startTs)dead=s}else if(!live||s.startTs>live.startTs)live=s}
-  return live||dead;
-}
+function cellSession(schoolId,classId,act){let live=null,dead=null;
+  for(const s of Object.values(S.sessions)){if(s.schoolId!==schoolId||s.classId!==classId||s.activity!==act)continue;if(s.status==="rejected"){if(!dead||s.startTs>dead.startTs)dead=s}else if(!live||s.startTs>live.startTs)live=s}
+  return live||dead}
 const activityTaken=(schoolId,classId,act)=>Object.values(S.sessions).some(s=>s.schoolId===schoolId&&s.classId===classId&&s.activity===act&&s.status!=="rejected");
-function schoolProgress(sc){let done=0;for(const c of sc.classes)for(let a=1;a<=10;a++){const s=cellSession(sc.id,c.id,a);if(s&&s.status==="verified")done++}return{done,total:sc.classes.length*10}}
+function schoolProgress(sc){let done=0,counted=0;for(const c of sc.classes)for(let a=1;a<=10;a++){const s=cellSession(sc.id,c.id,a);if(s&&s.status!=="rejected")done++;if(s&&s.status==="counted")counted++}return{done,counted,total:sc.classes.length*10}}
+function nextDue(sc){for(let a=1;a<=10;a++)for(const c of sc.classes)if(!activityTaken(sc.id,c.id,a))return{cls:c.id,act:a};return null}
+const sessLabel=s=>{const sc=S.schools[s.schoolId];return(sc?sc.name:"School")+", class "+s.classId+", activity "+s.activity+", "+fmtDay(s.startTs)};
+/* dashboard scope: a partner sees its own schools; Arogya World sees all, or one partner's */
+const inScope=sc=>ui.org==="aw"?(ui.pf==="all"||(sc.partner||"aw")===ui.pf):(sc.partner||"aw")===ui.org;
+const scopeSchools=()=>Object.values(S.schools).filter(inScope);
+const scopeSessions=()=>sessions().filter(s=>S.schools[s.schoolId]&&inScope(S.schools[s.schoolId]));
 
 /* ---------- Arogya Schools scoring ---------- */
 const CRIT=[
@@ -249,322 +254,327 @@ const CRIT=[
  ["P","tre",1,"25% of staff enrolled in NCD Prevention training"],["P","tra",1,"Enrolled staff attended the training"],
  ["P","gov",1,"A government scheme implemented"],["P","story",5,"Written impact story"]
 ];
-function hspDone(sc){let n=0;for(let a=1;a<=10;a++){if(sc.classes.length&&sc.classes.every(c=>{const s=cellSession(sc.id,c.id,a);return s&&s.status==="verified"}))n++}return n}
-function asScore(sc){
-  const t=S.as[sc.id]||{};let e=0,p=0;
-  for(const[g,k,pts,,auto]of CRIT){const got=auto?hspDone(sc)*1.5:(t[k]?pts:0);if(g==="E")e+=got;else p+=got}
-  return{e,p,total:e+p,eligible:e>=75&&p>=5};
-}
+function hspDone(sc){let n=0;for(let a=1;a<=10;a++){if(sc.classes.length&&sc.classes.every(c=>{const s=cellSession(sc.id,c.id,a);return s&&s.status==="counted"}))n++}return n}
+function asScore(sc){const t=S.as[sc.id]||{};let e=0,p=0;for(const[g,k,pts,,auto]of CRIT){const got=auto?hspDone(sc)*1.5:(t[k]?pts:0);if(g==="E")e+=got;else p+=got}return{e,p,total:e+p,eligible:e>=75&&p>=5}}
 
 /* ---------- sample data ---------- */
 function loadSample(){
   S=blank();const now=Date.now(),day=864e5,r=rng(20261005);
-  S.coords=[{id:"c1",name:"Lakshmi R"},{id:"c2",name:"Manjunath K"},{id:"c3",name:"Fathima S"},{id:"c4",name:"Priya M"}];
+  S.coords=[["c1","Lakshmi R","cini"],["c2","Manjunath K","cini"],["c3","Fathima S","mamta"],["c4","Hetal P","mamta"],["c5","Priya M","aw"]].map(([id,name,org])=>({id,name,org,pin:AWIT.pinHash(id,"1234")}));
   const list=[
-   ["29280100101","GHPS Hebbal","Bengaluru North",13.0358,77.5970,"c1",true,[["6A",42],["6B",39]],6],
-   ["29280100102","GHPS Yelahanka Old Town","Bengaluru North",13.1005,77.5963,"c1",true,[["6A",46],["6B",44],["6C",41]],5],
-   ["29280100103","GHPS Jakkur","Bengaluru North",13.0784,77.6068,"c2",false,[["6A",35],["6B",33]],3],
-   ["29280100104","GHPS Thanisandra","Bengaluru East",13.0580,77.6330,"c2",true,[["6A",48],["6B",45]],4],
-   ["29280100105","GHPS Kodigehalli","Bengaluru North",13.0606,77.5788,"c3",false,[["6A",38],["6B",36]],2],
-   ["29280100106","GHPS Vidyaranyapura","Bengaluru North",13.0767,77.5574,"c3",false,[["6A",40],["6B",43]],4],
-   ["27220100201","Govandi school 1","Mumbai M East",19.0553,72.9154,"c4",false,[["6A",44],["6B",41]],3,"Nourishing Govandi"],
-   ["27220100202","Govandi school 2","Mumbai M East",19.0601,72.9202,"c4",false,[["6A",38]],2,"Nourishing Govandi"]];
+   ["29280100101","GHPS Hebbal","Bengaluru North",13.0358,77.5970,"c1","cini",true,[["6A",42],["6B",39]],6],
+   ["29280100102","GHPS Yelahanka Old Town","Bengaluru North",13.1005,77.5963,"c1","cini",true,[["6A",46],["6B",44],["6C",41]],5],
+   ["29280100103","GHPS Jakkur","Bengaluru North",13.0784,77.6068,"c2","cini",false,[["6A",35],["6B",33]],3],
+   ["29280100104","GHPS Thanisandra","Bengaluru East",13.0580,77.6330,"c3","mamta",true,[["6A",48],["6B",45]],4],
+   ["29280100105","GHPS Kodigehalli","Bengaluru North",13.0606,77.5788,"c3","mamta",false,[["6A",38],["6B",36]],2],
+   ["29280100106","GHPS Vidyaranyapura","Bengaluru North",13.0767,77.5574,"c4","mamta",false,[["6A",40],["6B",43]],4],
+   ["27220100201","Govandi school 1","Mumbai M East",19.0553,72.9154,"c5","aw",false,[["6A",44],["6B",41]],3,"Nourishing Govandi"],
+   ["27220100202","Govandi school 2","Mumbai M East",19.0601,72.9202,"c5","aw",false,[["6A",38]],2,"Nourishing Govandi"]];
   let seed=100;const byKey={};
-  for(const[id,name,block,lat,lng,coordId,isAS,classes,k,project]of list){
-    S.schools[id]={id,name,block,project:project||"",lat,lng,coordId,isAS,teacher:"Head teacher",phone:"Sample number",classes:classes.map(([cid,enrol])=>({id:cid,enrol}))};
+  for(const[id,name,block,lat,lng,coordId,partner,isAS,classes,k,project]of list){
+    S.schools[id]={id,name,block,project:project||"",partner,lat,lng,coordId,isAS,teacher:"",phone:"",classes:classes.map(([cid,enrol])=>({id:cid,enrol}))};
     for(const[cid,enrol]of classes)for(let a=1;a<=k;a++){
-      const start=now-(k-a+1)*7*day-Math.floor(r()*3)*day,st=new Date(start);st.setHours(10+Math.floor(r()*4),Math.floor(r()*50),0,0);
+      const ago=(k-a)*7+2+Math.floor(r()*3),st=new Date(now-ago*day);st.setHours(10+Math.floor(r()*4),Math.floor(r()*50),0,0);
       const mins=35+Math.floor(r()*16),tot=Math.round(enrol*(.85+r()*.12)),boys=Math.round(tot*(.45+r()*.1));
-      const s={id:"seed"+(seed++),schoolId:id,classId:cid,activity:a,coordId,startTs:st.getTime(),endTs:st.getTime()+mins*6e4,
-        distIn:15+r()*80,distOut:15+r()*80,boys,girls:tot-boys,teacher:"confirmed",
-        photos:[Object.assign({kind:"class"},samplePhoto(seed*7)),{kind:"register",thumb:null,hash:null}]};
+      const s={id:"seed"+(seed++),schoolId:id,classId:cid,activity:a,coordId,startTs:st.getTime(),endTs:st.getTime()+mins*6e4,distIn:15+r()*80,distOut:15+r()*80,boys,girls:tot-boys,teacherPresent:r()<.85,remarks:"",
+        photos:[Object.assign({kind:"class"},AWIT.samplePhoto(seed*7,"class")),{kind:"register",thumb:null,hash:null}]};
+      if(ago>6){s.decision="counted";s.decidedBy=partner;s.decidedTs=s.endTs+day}
       S.sessions[s.id]=s;byKey[id+"|"+cid+"|"+a]=s;
     }
   }
-  const g=(i,c,a)=>byKey[list[i][0]+"|"+c+"|"+a];
-  g(2,"6A",3).distIn=2840;g(2,"6A",3).distOut=2790;
-  const dupOf=g(5,"6A",1),dup=g(4,"6B",2);dup.photos[0]=Object.assign({},dupOf.photos[0],{dup:{sid:dupOf.id,dist:0}});
-  const sh=g(3,"6B",4);sh.endTs=sh.startTs+9*6e4;
-  const ov=g(5,"6B",4);ov.boys=27;ov.girls=24;
-  g(1,"6C",5).teacher="disputed";
-  const w=g(0,"6B",6);w.teacher="pending";w.startTs=now-4*36e5;w.endTs=now-3*36e5;
-  const nr=g(2,"6B",3);nr.teacher="pending";nr.startTs=now-3*day-36e5;nr.endTs=now-3*day;
-  Object.values(S.sessions).forEach(evaluate);
-  S.as={"29280100101":{shc:1,man1:1,man2:1,kb1:1,ke1:1,sport:1,sugar:1,oil:1,demo:1,omb:1,hp1:1,water:1,wash:1,story:1},
-        "29280100102":{shc:1,man1:1,kb1:1,sugar:1,demo:1,omb:1,water:1},"29280100104":{shc:1,kb1:1,demo:1}};
-  ui.coord="c1";ui.screen="home";save();render();
-}
-
-/* ---------- location ---------- */
-function demoPos(sc,where){const lat=sc.lat??13.05,lng=sc.lng??77.6;return where==="away"?{lat:lat+.021,lng:lng+.016}:{lat:lat+.0003,lng:lng+.0002}}
-function getPos(sc){
-  if(ui.demo.loc!=="real")return Promise.resolve(demoPos(sc,ui.demo.loc));
-  return new Promise(res=>{
-    const fail=()=>{ui.msg="This device did not share its location, so the demo location was used.";res(demoPos(sc,"at"))};
-    if(!navigator.geolocation)return fail();
-    navigator.geolocation.getCurrentPosition(p=>res({lat:p.coords.latitude,lng:p.coords.longitude}),fail,{enableHighAccuracy:true,timeout:9000,maximumAge:0});
-  });
+  const g=(i,c,a)=>byKey[list[i][0]+"|"+c+"|"+a],open=s=>{delete s.decision;delete s.decidedBy;delete s.decidedTs;return s};
+  const far=open(g(2,"6A",3));far.distIn=2840;far.distOut=2790;
+  const dupOf=g(5,"6A",1),dup=open(g(4,"6B",2));dup.photos[0]=Object.assign({},dupOf.photos[0],{dup:{sid:dupOf.id,dist:0}});
+  const sh=open(g(3,"6B",4));sh.endTs=sh.startTs+9*6e4;
+  const ov=open(g(5,"6B",4));ov.boys=27;ov.girls=24;
+  const rej=g(1,"6C",2);rej.decision="rejected";rej.decisionNote="The register photo was from another class.";
+  const fl=open(g(1,"6B",5));
+  S.flags.f1={id:"f1",about:{kind:"session",id:fl.id,label:""},to:"cini",note:"The class photo shows very few students for a count of "+(fl.boys+fl.girls)+". Please confirm with the school.",ts:now-day,status:"open"};
+  const ans=g(3,"6A",3);
+  S.flags.f2={id:"f2",about:{kind:"school",id:list[3][0],label:"GHPS Thanisandra"},to:"mamta",note:"No session has been logged for class 6B activity 5 though it was planned last week. Is there a problem at the school?",ts:now-5*day,status:"answered",reply:"The school had exams. The coordinator has rescheduled it for this week.",replyTs:now-4*day};
+  S.misses={m1:{id:"m1",schoolId:list[3][0],classId:"6B",coordId:"c3",ts:now-6*day,reason:REASONS[1],remarks:"Unit tests all week."},m2:{id:"m2",schoolId:list[2][0],classId:"6B",coordId:"c2",ts:now-3*day,reason:REASONS[0],remarks:""},m3:{id:"m3",schoolId:list[7][0],classId:"6A",coordId:"c5",ts:now-2*day,reason:REASONS[2],remarks:"Class teacher on leave."}};
+  evalAll();S.flags.f1.about.label=sessLabel(fl);
+  S.as={"29280100101":{shc:1,man1:1,man2:1,kb1:1,ke1:1,sport:1,sugar:1,oil:1,demo:1,omb:1,hp1:1,water:1,wash:1,story:1},"29280100102":{shc:1,man1:1,kb1:1,sugar:1,demo:1,omb:1,water:1},"29280100104":{shc:1,kb1:1,demo:1}};
+  ui.screen="home";ui.draft=null;ui.miss=null;ui.msg="";ui.ok="";save();render();
 }
 
 /* ---------- field app ---------- */
-const pill=st=>'<span class="pill '+STATUS[st].cls+'">'+STATUS[st].label+"</span>";
-function emptyState(){return '<div class="phone stack"><h1>No schools yet</h1><p>Your manager adds your schools in the monitoring dashboard. To try the app now, load the sample schools.</p><button class="btn primary block" data-a="sample">Load sample data</button></div>'}
-function demoPanel(){
-  const b=(k,v,l)=>'<button data-a="demo" data-k="'+k+'" data-v="'+v+'" aria-pressed="'+(String(ui.demo[k])===String(v))+'">'+l+"</button>";
-  return '<section class="demo stack"><div><strong>Demo controls</strong><p class="small muted">Choose what the phone reports, to see how each check reacts.</p></div>'+
-   '<div><p class="small">Location at check-in</p><div class="seg">'+b("loc","at","At the school")+b("loc","away","3 km away")+b("loc","real","Real GPS")+"</div></div>"+
-   (ui.demo.loc==="real"?'<p class="small muted">Real GPS uses the clock too: the session lasts as long as you take.</p>':
-   '<div><p class="small">Session length</p><div class="seg">'+b("len",45,"45 minutes")+b("len",8,"8 minutes")+"</div></div>")+"</section>";
+const errBox=()=>(ui.msg?'<p class="note bad small" role="alert">'+esc(ui.msg)+"</p>":"")+(ui.ok?'<p class="note ok small" role="status">'+esc(ui.ok)+"</p>":"");
+const clearMsg=()=>{ui.msg="";ui.ok=""};
+const sampleBox=()=>'<details class="sheet"><summary>Trying the app?</summary><div class="stack tight"><p class="small muted">Load a sample set of coordinators, schools and sessions. Sample coordinators use the PIN 1234. Loading or erasing replaces everything saved on this device.</p><div class="row"><button class="btn quiet" data-a="sample">Load sample data</button>'+(Object.keys(S.schools).length?'<button class="btn quiet danger" data-a="reset">Erase all data</button>':"")+"</div></div></details>";
+function loginView(){
+  const groups=Object.keys(ORGS).map(o=>({o,list:S.coords.filter(c=>c.org===o)})).filter(g=>g.list.length);
+  return'<div class="login stack"><div><h1>Sign in</h1><p class="muted">Field app for Healthy Schools Program coordinators</p></div>'+
+   (S.coords.length?'<div class="field"><label for="l-who">Your name</label><select id="l-who" data-c="who"><option value="">Choose your name</option>'+groups.map(g=>'<optgroup label="'+esc(ORGS[g.o])+'">'+g.list.map(c=>'<option value="'+c.id+'"'+(ui.who===c.id?" selected":"")+">"+esc(c.name)+"</option>").join("")+"</optgroup>").join("")+"</select></div>"+
+    '<div class="field"><label for="l-pin">PIN</label><input id="l-pin" type="password" inputmode="numeric" maxlength="6" autocomplete="off" data-c="pin" value="'+esc(ui.pin)+'"></div>'+errBox()+'<button class="btn primary block" data-a="login">Sign in</button>'
+   :'<p class="note">No coordinators have been added on this device yet. A manager adds them in the dashboard, under Team.</p>')+sampleBox()+"</div>";
 }
-function home(){
-  const mine=Object.values(S.schools).filter(s=>s.coordId===ui.coord),rec=sessions().filter(s=>s.coordId===ui.coord).slice(0,6);
-  return '<div class="phone stack"><div class="row" style="justify-content:space-between"><h1>Today</h1>'+
-   '<label class="small">Signed in as <select data-c="coord" style="min-height:44px;border:1.5px solid var(--ink);border-radius:10px;background:var(--sheet);padding:0 .5rem">'+
-   S.coords.map(c=>'<option value="'+esc(c.id)+'"'+(c.id===ui.coord?" selected":"")+">"+esc(c.name)+"</option>").join("")+"</select></label></div>"+
-   demoPanel()+"<h2>Your schools</h2>"+
-   (mine.length?mine.map(sc=>{const p=schoolProgress(sc);return '<div class="sheet schoolcard"><div><h3>'+esc(sc.name)+'</h3><p class="small muted num">'+p.done+" of "+p.total+" activities verified</p></div>"+
-     '<button class="btn primary" data-a="open" data-id="'+esc(sc.id)+'">Open</button></div>'}).join(""):'<p class="muted">No schools are assigned to this coordinator.</p>')+
-   "<h2>Your recent sessions</h2>"+(rec.length?'<ul class="list">'+rec.map(s=>'<li class="row" style="justify-content:space-between"><button class="btn quiet" style="text-align:left;flex:1" data-a="detail" data-id="'+esc(s.id)+'">Activity '+s.activity+", class "+esc(s.classId)+'<br><span class="small muted">'+esc(S.schools[s.schoolId].name)+", "+fmtDay(s.startTs)+"</span></button>"+pill(s.status)+"</li>").join("")+"</ul>":'<p class="muted">Sessions you log appear here with their status.</p>')+
-   (saveWarn?'<p class="note bad small">'+esc(saveWarn)+"</p>":"")+"</div>";
+function homeView(){
+  const c=me(),mine=Object.values(S.schools).filter(s=>s.coordId===c.id),ms=new Date();ms.setDate(1);ms.setHours(0,0,0,0);
+  const month=sessions().filter(s=>s.coordId===c.id&&s.startTs>=ms.getTime()&&s.status!=="rejected");
+  return'<div class="stack"><div><h1>Hello, '+esc(c.name.split(" ")[0])+'</h1><p class="muted">'+new Date().toLocaleDateString("en-IN",{weekday:"long",day:"numeric",month:"long"})+"</p></div>"+
+   '<div class="tally"><div><b class="num">'+month.length+'</b><span>sessions this month</span></div><div><b class="num">'+nf(sum(month.map(s=>s.boys+s.girls)))+'</b><span>students attended</span></div><div><b class="num">'+month.filter(s=>s.status!=="counted").length+"</b><span>waiting for review</span></div></div>"+
+   "<h2>Your schools</h2>"+(mine.length?mine.map(sc=>{const p=schoolProgress(sc),nx=nextDue(sc);return'<div class="sheet stack tight"><div class="row between"><div><h3>'+esc(sc.name)+'</h3><p class="small muted">'+esc(sc.block)+'</p></div><button class="btn primary" data-a="open" data-id="'+esc(sc.id)+'">Open</button></div>'+
+     '<div class="meter" aria-hidden="true"><i style="width:'+p.done/p.total*100+'%"></i></div><p class="small num">'+p.done+" of "+p.total+" activities done"+(nx?'. <strong>Next: class '+esc(nx.cls)+", activity "+nx.act+"</strong>":". All activities are complete")+"</p></div>"}).join(""):'<p class="note">No school is assigned to you yet. Your manager assigns schools in the dashboard.</p>')+"</div>";
 }
-function schoolScreen(){
+function schoolView(){
   const sc=S.schools[ui.schoolId];
-  return '<div class="phone stack"><button class="btn quiet" data-a="home">Back to today</button><div><h1>'+esc(sc.name)+'</h1><p class="muted small">UDISE '+esc(sc.id)+", "+esc(sc.block)+"</p></div>"+
-   sc.classes.map(c=>{let dots="";for(let a=1;a<=10;a++){const s=cellSession(sc.id,c.id,a);dots+='<span class="pill '+(s?STATUS[s.status].cls:"")+'" style="'+(s?"":"border:1px solid var(--rule);color:var(--ink2)")+'" title="Activity '+a+(s?": "+STATUS[s.status].label:": not done")+'">'+a+"</span> "}
-     return '<div class="sheet"><h3>Class '+esc(c.id)+' <span class="muted small num" style="font-family:var(--body);font-weight:400">'+c.enrol+' enrolled</span></h3><p style="margin-top:.5rem;line-height:2">'+dots+"</p></div>"}).join("")+
-   '<button class="btn primary block" data-a="start">Start a session here</button></div>';
+  return'<div class="stack"><button class="btn quiet" data-a="home">All my schools</button><div><h1>'+esc(sc.name)+'</h1><p class="muted small num">UDISE '+esc(sc.id)+", "+esc(sc.block)+"</p></div>"+errBox()+
+   '<button class="btn primary block" data-a="start">Start a session here</button><div class="two"><button class="btn" data-a="missstart">Session could not be held</button>'+(sc.lat!=null?'<a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination='+sc.lat+","+sc.lng+'">Directions</a>':'<span class="btn" style="opacity:.5">No location yet</span>')+"</div>"+
+   sc.classes.map(c=>{let cells="";for(let a=1;a<=10;a++){const s=cellSession(sc.id,c.id,a);cells+='<span class="'+(s&&s.status!=="rejected"?s.status:"")+'" title="Activity '+a+(s?": "+STATUS[s.status].label:": not done")+'">'+a+"</span>"}
+     return'<div class="sheet"><h3>Class '+esc(c.id)+' <span class="muted small num" style="font-family:var(--body);font-weight:400">'+c.enrol+' enrolled</span></h3><div class="acts">'+cells+"</div></div>"}).join("")+
+   '<p class="small muted">Green is counted. Amber is waiting for your manager.</p></div>';
 }
 function photoBlock(kind,label){
   const d=ui.draft,p=d.photos.find(x=>x.kind===kind);
-  let h='<div class="stack"><div class="row"><span class="btn filebtn">Take photo<input type="file" accept="image/*" capture="environment" data-c="photo" data-kind="'+kind+'" aria-label="Take the '+label+'"></span>'+
-    '<button class="btn quiet" data-a="samplephoto" data-kind="'+kind+'">Use a sample photo</button>'+
-    (kind==="class"&&Object.keys(S.sessions).length?'<button class="btn quiet" data-a="oldphoto">Resend an old photo</button>':"")+"</div>";
-  if(p){h+=(p.thumb?'<img class="thumb" src="'+p.thumb+'" alt="'+label+' preview">':'<p class="small muted">Photo attached.</p>');
-    if(kind==="class")h+=p.dup?'<p class="note bad small">This photo was used before. The session will go to review.</p>':'<p class="note ok small">New photo. No match with earlier photos.</p>'}
+  let h='<div class="stack tight"><div class="row"><span class="btn filebtn">Take photo<input type="file" accept="image/*" capture="environment" data-c="photo" data-kind="'+kind+'" aria-label="Take the '+label+'"></span>'+
+    (ui.loc!=="real"?'<button class="btn quiet" data-a="samplephoto" data-kind="'+kind+'">Use a sample photo</button>':"")+"</div>";
+  if(p)h+=(p.thumb?'<img class="thumb" src="'+p.thumb+'" alt="'+label+' preview">':'<p class="small muted">Photo attached.</p>');
   return h+"</div>";
 }
 function wizard(){
   const d=ui.draft,sc=S.schools[d.schoolId],cl=sc.classes.find(c=>c.id===d.classId);
-  let steps="";for(let i=1;i<=6;i++)steps+='<i class="'+(i<=d.step?"on":"")+'"></i>';
+  let steps="";for(let i=1;i<=5;i++)steps+='<i class="'+(i<=d.step?"on":"")+'"></i>';
   let body="";
-  if(d.step===1)body="<h1>Check in</h1><p>"+esc(sc.name)+"</p>"+(sc.lat==null?'<p class="note small">This school has no recorded location yet. Checking in records it, and AWIT approves it.</p>':"")+demoPanel()+
-    '<button class="btn primary block" data-a="checkin">Check in at this school</button>';
+  if(d.step===1)body="<h1>Check in</h1><p>"+esc(sc.name)+"</p>"+(sc.lat==null?'<p class="note small">This school has no recorded location yet. Checking in records it.</p>':"")+'<p class="muted small">The app records where you are and the time.</p><button class="btn primary block" data-a="checkin">Check in at this school</button>';
   if(d.step===2){
-    body="<h1>Class and activity</h1>"+(d.newAnchor?'<p class="note small">School location recorded.</p>':'<p class="note '+(d.distIn>GEOFENCE_M?"bad":"ok")+' small">You are '+fmtDist(d.distIn)+" from the school"+(d.distIn>GEOFENCE_M?", outside the "+GEOFENCE_M+" m limit.":".")+"</p>")+
-     '<div><p><strong>Class</strong></p><div class="chips">'+sc.classes.map(c=>'<button class="chip" data-a="pickclass" data-v="'+esc(c.id)+'" aria-pressed="'+(c.id===d.classId)+'">'+esc(c.id)+"</button>").join("")+"</div></div>";
-    if(d.classId){body+='<div><p><strong>Activity</strong></p><div class="chips">';
-      for(let a=1;a<=10;a++){const taken=activityTaken(sc.id,d.classId,a);body+='<button class="chip" data-a="pickact" data-v="'+a+'" aria-pressed="'+(a===d.activity)+'"'+(taken?' disabled aria-label="Activity '+a+', already logged"':"")+">"+a+"</button>"}
-      body+='</div><p class="small muted" style="margin-top:.4rem">Activities already logged for this class cannot be logged again.</p></div>'}
+    body="<h1>Class and activity</h1>"+(d.newAnchor?'<p class="note ok small">The school\'s location is now recorded.</p>':d.noGps?'<p class="note bad small">The phone did not give its location. You can continue; your manager will see that the location is missing.</p>':'<p class="note '+(d.distIn>GEOFENCE_M?"bad":"ok")+' small">You are '+fmtDist(d.distIn)+" from the school"+(d.distIn>GEOFENCE_M?". Your manager will see this.":".")+"</p>")+
+     '<div><p class="flabel">Class</p><div class="chips">'+sc.classes.map(c=>'<button class="chip" data-a="pickclass" data-v="'+esc(c.id)+'" aria-pressed="'+(c.id===d.classId)+'">'+esc(c.id)+"</button>").join("")+"</div></div>";
+    if(d.classId){body+='<div><p class="flabel">Activity</p><div class="chips">';
+      for(let a=1;a<=10;a++){const taken=activityTaken(sc.id,d.classId,a);body+='<button class="chip" data-a="pickact" data-v="'+a+'" aria-pressed="'+(a===d.activity)+'"'+(taken?' disabled aria-label="Activity '+a+', already done"':"")+">"+a+"</button>"}
+      body+='</div><p class="small muted" style="margin-top:.4rem">Activities already done for this class cannot be logged again.</p></div>'}
     body+='<button class="btn primary block" data-a="next"'+(d.classId&&d.activity?"":" disabled")+">Continue</button>";
   }
-  if(d.step===3)body="<h1>Class photo</h1><p>Take one wide photo of the whole class at the start.</p>"+photoBlock("class","class photo")+
-    '<button class="btn primary block" data-a="next">Continue</button>';
+  if(d.step===3)body="<h1>Class photo</h1><p>Take one wide photo of the whole class.</p>"+photoBlock("class","class photo")+'<button class="btn primary block" data-a="next">Continue</button>';
   if(d.step===4)body="<h1>Register and count</h1><p>Photograph today's page of the attendance register, then enter who is present.</p>"+photoBlock("register","register photo")+
-    '<div class="two"><div class="field"><label for="boys">Boys present</label><input id="boys" inputmode="numeric" data-c="count" data-k="boys" value="'+esc(d.boys)+'"></div>'+
-    '<div class="field"><label for="girls">Girls present</label><input id="girls" inputmode="numeric" data-c="count" data-k="girls" value="'+esc(d.girls)+'"></div></div>'+
-    '<p class="small muted">Class '+esc(cl.id)+" has "+cl.enrol+" students enrolled.</p>"+
-    '<button class="btn primary block" data-a="next">Continue</button>';
-  if(d.step===5)body="<h1>Check out</h1><p>Check out when the activity ends. The app records the time and your location again.</p>"+demoPanel()+
-    '<button class="btn primary block" data-a="checkout">Check out</button>';
-  if(d.step===6){const s=S.sessions[d.id];
-    body="<h1>School confirmation</h1><p class=\"small muted\">In the live system this message goes to the teacher's own phone. Here, you answer for the teacher.</p>"+
-     '<div class="msg">Arogya World: '+esc(coordName(s.coordId))+" reports Activity "+s.activity+" for class "+esc(s.classId)+" today, with "+(s.boys+s.girls)+" students ("+s.boys+" boys, "+s.girls+" girls). Is this correct?</div>"+
-     '<div class="stack"><button class="btn primary block" data-a="teacher" data-v="confirmed">Yes, this is correct</button>'+
-     '<button class="btn danger block" data-a="teacher" data-v="disputed">No, this is wrong</button>'+
-     '<button class="btn quiet block" data-a="teacher" data-v="pending">The teacher has not replied yet</button></div>';
-  }
-  return '<div class="phone stack"><div><p class="small muted">Step '+d.step+" of 6</p><div class=\"steps\">"+steps+"</div></div>"+
-    (ui.msg?'<p class="note small">'+esc(ui.msg)+"</p>":"")+body+(d.step<5?'<button class="btn quiet block" data-a="cancel">Cancel this session</button>':"")+"</div>";
+    '<div class="two"><div class="field"><label for="boys">Boys present</label><input id="boys" inputmode="numeric" data-c="count" data-k="boys" value="'+esc(d.boys)+'"></div><div class="field"><label for="girls">Girls present</label><input id="girls" inputmode="numeric" data-c="count" data-k="girls" value="'+esc(d.girls)+'"></div></div>'+
+    '<p class="small muted">Class '+esc(cl.id)+" has "+cl.enrol+' students enrolled.</p><button class="btn primary block" data-a="next">Continue</button>';
+  if(d.step===5)body="<h1>Finish the session</h1>"+'<div><p class="flabel">Was the class teacher present?</p><div class="seg"><button data-a="setd" data-k="teacher" data-v="yes" aria-pressed="'+(d.teacher==="yes")+'">Yes</button><button data-a="setd" data-k="teacher" data-v="no" aria-pressed="'+(d.teacher==="no")+'">No</button></div></div>'+
+    '<div class="field"><label for="rem">Remarks, if any</label><textarea id="rem" rows="3" data-c="rem">'+esc(d.remarks)+'</textarea><p class="small muted">Anything your manager should know: what went well, what the school asked for.</p></div><button class="btn primary block" data-a="checkout">Check out and save</button>';
+  return'<div class="stack"><div><p class="small muted">Step '+d.step+' of 5</p><div class="steps">'+steps+"</div></div>"+errBox()+body+(d.step<5?'<button class="btn quiet block" data-a="cancel">Cancel this session</button>':"")+"</div>";
 }
-function resultScreen(){
-  const s=S.sessions[ui.lastId];
-  return '<div class="phone stack"><h1>Session saved</h1><p>'+pill(s.status)+"</p>"+
-    (s.status==="verified"?"<p>All checks passed. This session counts.</p>":s.status==="waiting"?"<p>Everything else passed. It counts once the school confirms.</p>":
-     "<p>This session goes to the review queue for these reasons:</p><ul>"+s.flags.map(f=>'<li class="flag">'+esc(f)+"</li>").join("")+"</ul>")+
-    '<button class="btn primary block" data-a="home">Back to today</button></div>';
+function missView(){const d=ui.miss,sc=S.schools[d.schoolId];
+  return'<div class="stack"><div><h1>Session could not be held</h1><p class="muted">'+esc(sc.name)+'</p></div><div><p class="flabel">Which class?</p><div class="chips">'+sc.classes.map(c=>'<button class="chip" data-a="missset" data-k="classId" data-v="'+esc(c.id)+'" aria-pressed="'+(d.classId===c.id)+'">'+esc(c.id)+"</button>").join("")+"</div></div>"+
+   '<div class="field"><label for="m-reason">Why?</label><select id="m-reason" data-c="missreason"><option value="">Choose a reason</option>'+REASONS.map(r=>"<option"+(d.reason===r?" selected":"")+">"+r+"</option>").join("")+'</select></div><div class="field"><label for="m-rem">Remarks, if any</label><textarea id="m-rem" rows="2" data-c="missrem">'+esc(d.remarks)+"</textarea></div>"+errBox()+
+   '<button class="btn primary block" data-a="misssave">Tell my manager</button><button class="btn quiet block" data-a="misscancel">Cancel</button></div>'}
+function resultView(){const s=S.sessions[ui.lastId];
+  return'<div class="stack"><div class="goodbox stack tight"><h1 style="color:inherit">Session saved</h1><p>Class '+esc(s.classId)+", activity "+s.activity+", "+(s.boys+s.girls)+" students.</p></div><p>Your manager will review it and decide whether it counts.</p>"+
+   (s.notes.length?'<div class="sheet stack tight"><h3>Your manager will also see</h3><ul style="margin:0;padding-left:1.1rem">'+s.notes.map(f=>"<li>"+esc(f)+"</li>").join("")+"</ul></div>":"")+'<button class="btn primary block" data-a="home">Back to my schools</button></div>'}
+function mySessions(){
+  const c=me(),mine=sessions().filter(s=>s.coordId===c.id),miss=Object.values(S.misses).filter(m=>m.coordId===c.id).sort((a,b)=>b.ts-a.ts);
+  return'<div class="stack"><div><h1>My sessions</h1><p class="muted num">'+mine.length+" logged</p></div>"+(mine.length?'<div class="sheet">'+mine.slice(0,60).map(s=>'<div class="vrow"><div class="grow"><strong>Activity '+s.activity+", class "+esc(s.classId)+'</strong><br><span class="small muted">'+esc((S.schools[s.schoolId]||{}).name||"")+", "+fmtDay(s.startTs)+", "+(s.boys+s.girls)+" students</span>"+(s.decisionNote?'<br><span class="small">Manager: '+esc(s.decisionNote)+"</span>":"")+"</div>"+pill(s.status==="flagged"?"pending":s.status)+"</div>").join("")+"</div>":'<p class="muted">Sessions you log appear here with what your manager decided.</p>')+
+   (miss.length?'<h2>Sessions that could not be held</h2><div class="sheet">'+miss.map(m=>'<div class="vrow"><div class="grow"><strong>'+esc((S.schools[m.schoolId]||{}).name||"")+(m.classId?", class "+esc(m.classId):"")+'</strong><br><span class="small muted">'+fmtDay(m.ts)+", "+esc(m.reason)+"</span></div></div>").join("")+"</div>":"")+"</div>";
 }
+function meView(){const c=me(),b=(v,l)=>'<button data-a="loc" data-v="'+v+'" aria-pressed="'+(ui.loc===v)+'">'+l+"</button>";
+  return'<div class="stack"><div><h1>'+esc(c.name)+'</h1><p class="muted">'+esc(ORGS[c.org])+'</p></div><div class="sheet stack tight"><h3>Location and time</h3><div class="seg">'+b("real","Use this phone's GPS and clock")+b("demo","Pretend I am at the school")+b("far","Pretend I am 2 km away")+'</div><p class="small muted">The two pretend settings are for training and demos. Sessions logged with them are marked for the manager.</p></div><button class="btn block" data-a="logout">Sign out</button>'+sampleBox()+"</div>"}
 function fieldView(){
-  if(!S.coords.length||!Object.keys(S.schools).length)return emptyState();
-  if(!S.coords.some(c=>c.id===ui.coord))ui.coord=S.coords[0].id;
-  if(ui.screen==="session"&&ui.draft)return wizard();
-  if(ui.screen==="school"&&S.schools[ui.schoolId])return schoolScreen();
-  if(ui.screen==="result"&&S.sessions[ui.lastId])return resultScreen();
-  return home();
+  const c=me();if(!c)return loginView();
+  let body;
+  if(ui.draft)body=wizard();else if(ui.miss)body=missView();
+  else if(ui.tab==="sessions")body=mySessions();else if(ui.tab==="me")body=meView();
+  else body=ui.screen==="school"&&S.schools[ui.schoolId]?schoolView():ui.screen==="result"&&S.sessions[ui.lastId]?resultView():homeView();
+  return'<div class="phone stack">'+(saveWarn?'<p class="note bad small">'+esc(saveWarn)+"</p>":"")+body+'</div><nav class="nav" aria-label="Field app sections"><div>'+[["schools","My schools"],["sessions","My sessions"],["me","Me"]].map(([k,l])=>'<button data-a="ftab" data-v="'+k+'" aria-pressed="'+(ui.tab===k)+'">'+l+"</button>").join("")+"</div></nav>";
 }
 
 /* ---------- dashboard ---------- */
-function overview(){
-  const all=Object.values(S.sessions),ver=all.filter(s=>s.status==="verified"),auto=ver.filter(s=>!s.review),rev=all.filter(s=>s.status==="review");
-  let reach=0,schoolsActive=0;
-  for(const sc of Object.values(S.schools)){let any=false;for(const c of sc.classes){if(ver.some(s=>s.schoolId===sc.id&&s.classId===c.id)){reach+=c.enrol;any=true}}if(any)schoolsActive++}
-  const att=ver.reduce((n,s)=>n+s.boys+s.girls,0);
-  let h='<div class="strip"><div><b class="num">'+nf(ver.length)+'</b><span class="muted">verified sessions</span></div>'+
-   '<div><b class="num">'+nf(reach)+'</b><span class="muted">students reached, counted once</span></div>'+
-   '<div><b class="num">'+nf(att)+'</b><span class="muted">session attendances</span></div>'+
-   '<div><b class="num">'+(all.length?Math.round(auto.length/all.length*100):0)+'%</b><span class="muted">verified without review</span></div>'+
-   '<div><b class="num">'+rev.length+'</b><span class="muted">waiting in the review queue</span></div></div>';
-  h+='<div><h2>Activity register</h2><p class="muted small" style="margin:.25rem 0 .75rem">One row per class, one column per HSP activity. Select a mark to see the evidence behind it.</p><div class="scroll"><table class="reg"><thead><tr><th class="cls">Class</th>';
-  for(let a=1;a<=10;a++)h+='<th scope="col">'+a+"</th>";h+="</tr></thead><tbody>";
-  for(const sc of Object.values(S.schools)){
-    h+='<tr class="sch"><td colspan="11">'+esc(sc.name)+"<span>"+esc(coordName(sc.coordId))+(sc.isAS?", Arogya School nominee":"")+(sc.project?", "+esc(sc.project):"")+"</span></td></tr>";
-    for(const c of sc.classes){h+='<tr><th scope="row" class="cls">'+esc(c.id)+' <span class="muted small num" style="font-weight:400">'+c.enrol+"</span></th>";
-      for(let a=1;a<=10;a++){const s=cellSession(sc.id,c.id,a);
-        h+="<td>"+(s?'<button class="cell '+STATUS[s.status].cls+'" data-a="detail" data-id="'+esc(s.id)+'" aria-label="'+esc(sc.name)+", class "+esc(c.id)+", activity "+a+": "+STATUS[s.status].label+'">'+STATUS[s.status].sym+"</button>":'<span class="cell none" aria-label="Not done"></span>')+"</td>"}
-      h+="</tr>"}
-  }
-  h+='</tbody></table></div><div class="legend small">'+Object.values(STATUS).map(m=>'<span><b class="cell '+m.cls+'" style="display:inline;background:none;font-size:1rem">'+m.sym+"</b> "+m.label+"</span>").join("")+"</div></div>";
-  h+='<div><h2>Coordinators</h2><div class="scroll"><table style="margin-top:.5rem"><thead><tr><th>Coordinator</th><th>Sessions</th><th>Verified without review</th><th>Flagged</th><th>Not counted</th></tr></thead><tbody>'+
-   S.coords.map(c=>{const m=all.filter(s=>s.coordId===c.id),a=m.filter(s=>s.status==="verified"&&!s.review).length,fl=m.filter(s=>s.flags.length).length,rj=m.filter(s=>s.status==="rejected").length;
-    return "<tr><td>"+esc(c.name)+'</td><td class="num">'+m.length+'</td><td class="num">'+(m.length?Math.round(a/m.length*100):0)+'%</td><td class="num">'+fl+'</td><td class="num">'+rj+"</td></tr>"}).join("")+"</tbody></table></div></div>";
+function evidence(s){let h='<div class="row" style="align-items:flex-start">';
+  for(const p of s.photos){if(!p.thumb)continue;h+='<figure style="margin:0"><img class="thumb" src="'+p.thumb+'" alt="'+(p.kind==="class"?"Class":"Register")+' photo"><figcaption class="small muted">'+(p.kind==="class"?"Class photo":"Register photo")+"</figcaption></figure>";
+    if(p.dup&&S.sessions[p.dup.sid]){const o=S.sessions[p.dup.sid],op=o.photos.find(x=>x.kind==="class");if(op&&op.thumb)h+='<figure style="margin:0"><img class="thumb" src="'+op.thumb+'" alt="Earlier matching photo"><figcaption class="small muted" style="max-width:120px">Earlier: '+esc(S.schools[o.schoolId].name)+", "+fmtDay(o.startTs)+"</figcaption></figure>"}}
+  return h+"</div>"}
+const facts=s=>{const sc=S.schools[s.schoolId],cl=sc.classes.find(c=>c.id===s.classId),mins=Math.round((s.endTs-s.startTs)/60000);
+  return'<p class="small muted">'+esc(coordName(s.coordId))+", "+fmtDay(s.startTs)+", "+fmtTime(s.startTs)+" to "+fmtTime(s.endTs)+" ("+mins+" minutes). "+(s.boys+s.girls)+" students present ("+s.boys+" boys, "+s.girls+" girls) of "+(cl?cl.enrol:"?")+" enrolled. Class teacher "+(s.teacherPresent===false?"not present":"present")+".</p>"+(s.remarks?'<p class="small"><strong>Coordinator\'s remarks:</strong> '+esc(s.remarks)+"</p>":"")};
+function decideButtons(s){const sc=S.schools[s.schoolId],partner=sc.partner||"aw";
+  return'<div class="row"><button class="btn primary" data-a="decide" data-v="counted" data-id="'+s.id+'">Count this session</button><button class="btn danger" data-a="rejectask" data-id="'+s.id+'">Do not count</button>'+(ui.org==="aw"&&partner!=="aw"?'<button class="btn" data-a="flag" data-kind="session" data-id="'+s.id+'">Flag to '+esc(ORGSHORT[partner])+"</button>":"")+"</div>"}
+function dOverview(){
+  const schools=scopeSchools();if(!schools.length)return'<div class="tile stack"><h2>No schools yet</h2><p class="muted">Add schools under Schools, or load the sample to see the dashboard working.</p><div><button class="btn primary" data-a="sample">Load sample data</button></div></div>';
+  const all=scopeSessions(),cnt=all.filter(s=>s.status==="counted"),pend=all.filter(s=>s.status==="pending"),ids=new Set(schools.map(s=>s.id)),misses=Object.values(S.misses).filter(m=>ids.has(m.schoolId));
+  let reach=0,enrol=0;for(const sc of schools)for(const c of sc.classes){enrol+=c.enrol;if(cnt.some(s=>s.schoolId===sc.id&&s.classId===c.id))reach+=c.enrol}
+  let h=kpis([[schools.length,"schools"],[nf(enrol),"students enrolled"],[nf(reach),"students reached"],[cnt.length,"sessions counted"],[pend.length,"waiting for review"],[misses.length,misses.length===1?"session that could not be held":"sessions that could not be held"]]);
+  const weeks=[];for(let w=7;w>=0;w--){const end=Date.now()-w*7*864e5,st=end-7*864e5;weeks.push({l:fmtDay(st),v:all.filter(s=>s.status!=="rejected"&&s.startTs>st&&s.startTs<=end).length})}
+  h+=tile("s6","Sessions delivered each week","The last eight weeks.",ch.line(weeks.map(w=>w.l),[{name:"Sessions",color:"var(--series)",values:weeks.map(w=>w.v)}],{w:540,h:170,area:true,fmt:nf}));
+  const classes=schools.flatMap(sc=>sc.classes.map(c=>({sc,c}))),comp=[];for(let a=1;a<=10;a++)comp.push(classes.length?Math.round(classes.filter(x=>{const s=cellSession(x.sc.id,x.c.id,a);return s&&s.status==="counted"}).length/classes.length*100):0);
+  h+=tile("s6","How far classes have got","Share of classes with each of the 10 activities counted.",ch.vbar(["1","2","3","4","5","6","7","8","9","10"],comp,{w:540,h:170,max:100,fmt:v=>Math.round(v)+"%"}));
+  let t='<div class="scroll"><table class="reg"><thead><tr><th class="cls">Class</th>';for(let a=1;a<=10;a++)t+='<th scope="col">'+a+"</th>";t+="</tr></thead><tbody>";
+  for(const sc of schools){t+='<tr class="sch"><td colspan="11">'+esc(sc.name)+"<span>"+esc(coordName(sc.coordId))+", "+esc(ORGSHORT[sc.partner||"aw"])+(sc.isAS?", Arogya School nominee":"")+(sc.project?", "+esc(sc.project):"")+"</span></td></tr>";
+    for(const c of sc.classes){t+='<tr><th scope="row" class="cls">'+esc(c.id)+' <span class="muted small num" style="font-weight:400">'+c.enrol+"</span></th>";
+      for(let a=1;a<=10;a++){const s=cellSession(sc.id,c.id,a);t+="<td>"+(s?'<button class="cell '+s.status+'" data-a="detail" data-id="'+esc(s.id)+'" aria-label="'+esc(sc.name)+", class "+esc(c.id)+", activity "+a+": "+STATUS[s.status].label+'">'+STATUS[s.status].sym+"</button>":'<span class="cell none"></span>')+"</td>"}
+      t+="</tr>"}}
+  t+='</tbody></table></div><div class="row small" style="margin-top:.6rem;gap:.4rem 1.25rem">'+Object.values(STATUS).map(m=>"<span><strong>"+m.sym+"</strong> "+m.label+"</span>").join("")+"</div>";
+  h+=tile("","Activity register","One row per class, one column per activity. Select a mark to see the session.",t);
+  const coords=S.coords.filter(c=>schools.some(s=>s.coordId===c.id));
+  h+=tile("","Coordinators","",'<div class="scroll"><table><thead><tr><th>Coordinator</th><th>Organisation</th><th class="n">Schools</th><th class="n">Sessions</th><th class="n">Counted</th><th class="n">Waiting</th><th class="n">Not counted</th><th class="n">Could not be held</th></tr></thead><tbody>'+
+   coords.map(c=>{const m=all.filter(s=>s.coordId===c.id);return"<tr><td>"+esc(c.name)+"</td><td>"+esc(ORGSHORT[c.org])+'</td><td class="n">'+schools.filter(s=>s.coordId===c.id).length+'</td><td class="n">'+m.length+'</td><td class="n">'+m.filter(s=>s.status==="counted").length+'</td><td class="n">'+m.filter(s=>s.status==="pending"||s.status==="flagged").length+'</td><td class="n">'+m.filter(s=>s.status==="rejected").length+'</td><td class="n">'+misses.filter(x=>x.coordId===c.id).length+"</td></tr>"}).join("")+"</tbody></table></div>");
   return h;
 }
-function evidence(s){
-  let h='<div class="thumbs">';
-  for(const p of s.photos){if(!p.thumb)continue;h+='<figure><img class="thumb" src="'+p.thumb+'" alt="'+(p.kind==="class"?"Class":"Register")+' photo"><figcaption>'+(p.kind==="class"?"Class photo":"Register photo")+", this session</figcaption></figure>";
-    if(p.dup&&S.sessions[p.dup.sid]){const o=S.sessions[p.dup.sid],op=o.photos.find(x=>x.kind==="class");
-      if(op&&op.thumb)h+='<figure><img class="thumb" src="'+op.thumb+'" alt="Earlier matching photo"><figcaption>Earlier photo: '+esc(S.schools[o.schoolId].name)+", "+fmtDay(o.startTs)+"</figcaption></figure>"}}
-  return h+"</div>";
+function dReview(){
+  const q=scopeSessions().filter(s=>s.status==="pending"),clean=q.filter(s=>!s.notes.length);
+  if(!q.length)return'<div class="tile"><h2>Review</h2><p class="muted">No session is waiting for a decision.</p></div>';
+  return'<div class="span12 stack"><div class="sheet row between"><p><strong>'+q.length+"</strong> sessions are waiting for a decision. <strong>"+clean.length+"</strong> of them have nothing to look at.</p>"+(clean.length?'<button class="btn primary" data-a="countclean">Count those '+clean.length+" sessions</button>":"")+"</div>"+
+   q.sort((a,b)=>b.notes.length-a.notes.length||b.startTs-a.startTs).map(s=>{const sc=S.schools[s.schoolId];
+    return'<div class="qcard'+(s.notes.length?" red":"")+' stack tight"><div class="row between"><h3>'+esc(sc.name)+", class "+esc(s.classId)+", activity "+s.activity+'</h3><span class="small muted">'+esc(ORGSHORT[sc.partner||"aw"])+"</span></div>"+facts(s)+
+     (s.notes.length?'<div><p class="flabel">To look at</p><ul style="margin:0;padding-left:1.2rem">'+s.notes.map(f=>'<li class="flag">'+esc(f)+"</li>").join("")+"</ul></div>":'<p class="small note ok">Nothing to look at.</p>')+evidence(s)+decideButtons(s)+"</div>"}).join("")+"</div>";
 }
-function reviewButtons(s){return '<div class="row"><button class="btn primary" data-a="review" data-v="accepted" data-id="'+esc(s.id)+'">Count this session</button><button class="btn danger" data-a="review" data-v="rejected" data-id="'+esc(s.id)+'">Do not count</button></div>'}
-function queue(){
-  const q=sessions().filter(s=>s.status==="review");
-  if(!q.length)return '<h2>Review queue</h2><p class="muted">Nothing needs a decision. Sessions that fail a check appear here.</p>';
-  return "<h2>Review queue</h2><p class=\"muted small\">"+q.length+" sessions failed at least one check. Decide whether each one counts.</p>"+q.map(s=>{const sc=S.schools[s.schoolId];
-    return '<div class="qcard stack"><div><h3>'+esc(sc.name)+", class "+esc(s.classId)+", activity "+s.activity+'</h3><p class="small muted">'+esc(coordName(s.coordId))+", "+fmtDay(s.startTs)+" at "+fmtTime(s.startTs)+"</p></div>"+
-     "<ul style=\"margin:0;padding-left:1.2rem\">"+s.flags.map(f=>'<li class="flag">'+esc(f)+"</li>").join("")+"</ul>"+evidence(s)+
-     '<div class="row">'+reviewButtons(s)+'<button class="btn quiet" data-a="detail" data-id="'+esc(s.id)+'">See all details</button></div></div>'}).join("");
+function dMissed(){
+  const ids=new Set(scopeSchools().map(s=>s.id)),list=Object.values(S.misses).filter(m=>ids.has(m.schoolId)).sort((a,b)=>b.ts-a.ts);
+  if(!list.length)return'<div class="tile"><h2>Sessions that could not be held</h2><p class="muted">Coordinators report here when they reach a school and cannot hold the session.</p></div>';
+  const by={};for(const m of list)by[m.reason]=(by[m.reason]||0)+1;
+  return tile("s5","Why sessions could not be held","",ch.hbar(Object.entries(by).sort((a,b)=>b[1]-a[1]).map(([l,v])=>({label:l,value:v})),{w:440}))+
+   tile("s7","Reports","",'<div class="scroll"><table><thead><tr><th>Date</th><th>School</th><th>Class</th><th>Coordinator</th><th>Reason</th><th>Remarks</th></tr></thead><tbody>'+list.map(m=>"<tr><td>"+fmtDay(m.ts)+"</td><td>"+esc((S.schools[m.schoolId]||{}).name||"")+"</td><td>"+esc(m.classId||"")+"</td><td>"+esc(coordName(m.coordId))+"</td><td>"+esc(m.reason)+"</td><td>"+esc(m.remarks||"")+"</td></tr>").join("")+"</tbody></table></div>");
 }
-function asTab(){
-  const list=Object.values(S.schools).filter(s=>s.isAS);
-  if(!list.length)return '<h2>Arogya Schools</h2><p class="muted">No school is nominated yet. Mark a school as a nominee in the Schools tab.</p>';
-  let h='<h2>Arogya Schools</h2><p class="muted small">The Seal needs 80 points: all 75 essential points and at least 5 preferred points.</p>';
+function dAS(){
+  const list=scopeSchools().filter(s=>s.isAS);
+  if(!list.length)return'<div class="tile"><h2>Arogya Schools</h2><p class="muted">No school is nominated yet. Arogya World India Trust nominates schools under Schools.</p></div>';
+  let h='<div class="span12 stack"><p class="muted">The Seal needs 80 points: all 75 essential points and at least 5 preferred points.</p>';
   for(const sc of list){const r=asScore(sc),open=ui.asOpen===sc.id,t=S.as[sc.id]||{};
-    h+='<div class="sheet stack"><div class="row" style="justify-content:space-between"><div><h3>'+esc(sc.name)+'</h3><p class="small muted num">Essential '+r.e+" of 75, preferred "+r.p+" of 25</p></div>"+
-     '<div class="row"><b class="num" style="font-family:var(--display);font-size:1.5rem">'+r.total+'</b><div class="meter" aria-hidden="true"><i style="width:'+r.total+'%"></i></div>'+
-     '<span class="pill '+(r.eligible?"ok":"wait")+'">'+(r.eligible?"Eligible for the Seal":r.e<75?(75-r.e)+" essential points open":"Needs "+(5-r.p)+" preferred points")+"</span>"+
-     '<button class="btn quiet" data-a="asopen" data-id="'+esc(sc.id)+'" aria-expanded="'+open+'">'+(open?"Hide criteria":"Show criteria")+"</button></div></div>";
+    h+='<div class="sheet stack"><div class="row between"><div><h3>'+esc(sc.name)+'</h3><p class="small muted num">Essential '+r.e+" of 75, preferred "+r.p+" of 25</p></div>"+
+     '<div class="row"><b class="num" style="font-family:var(--display);font-size:1.5rem">'+r.total+'</b><div class="meter" aria-hidden="true"><i style="width:'+r.total+'%"></i></div><span class="pill '+(r.eligible?"ok":"wait")+'">'+(r.eligible?"Eligible for the Seal":r.e<75?(75-r.e)+" essential points open":"Needs "+(5-r.p)+" preferred points")+"</span>"+
+     '<button class="btn quiet sm" data-a="asopen" data-id="'+esc(sc.id)+'" aria-expanded="'+open+'">'+(open?"Hide criteria":"Show criteria")+"</button></div></div>";
     if(open){for(const g of["E","P"]){h+="<div><h3>"+(g==="E"?"Essential criteria":"Preferred criteria")+"</h3>";
       for(const[gg,k,pts,label,auto]of CRIT){if(gg!==g)continue;const got=auto?hspDone(sc)*1.5:(t[k]?pts:0);
-        h+='<label class="crit">'+(auto?'<span class="pill ok" title="Scored from verified sessions">auto</span>':'<input type="checkbox" data-c="crit" data-id="'+esc(sc.id)+'" data-k="'+k+'"'+(t[k]?" checked":"")+">")+
-         "<span>"+label+(auto?' <span class="muted small">('+hspDone(sc)+" of 10 activities verified for every section)</span>":"")+'</span><span class="num muted">'+got+" / "+pts+"</span></label>"}
+        h+='<label class="crit">'+(auto?'<span class="pill ok">auto</span>':'<input type="checkbox" data-c="crit" data-id="'+esc(sc.id)+'" data-k="'+k+'"'+(t[k]?" checked":"")+">")+"<span>"+label+(auto?' <span class="muted small">('+hspDone(sc)+" of 10 activities counted for every section)</span>":"")+'</span><span class="num muted">'+got+" / "+pts+"</span></label>"}
       h+="</div>"}}
     h+="</div>"}
-  return h;
+  return h+"</div>";
 }
 const parseClasses=t=>String(t||"").split(",").map(x=>x.split(":")).filter(x=>x.length===2).map(([c,n])=>({id:c.trim().slice(0,6),enrol:parseInt(n,10)})).filter(c=>c.id&&c.enrol>0);
 const projList=()=>'<datalist id="projlist">'+[...new Set(["Nourishing Govandi"].concat(Object.values(S.schools).map(s=>s.project).filter(Boolean)))].map(p=>'<option value="'+esc(p)+'">').join("")+"</datalist>";
+const orgSelect=(id,val)=>'<select id="'+id+'">'+Object.keys(ORGS).map(o=>'<option value="'+o+'"'+(o===val?" selected":"")+">"+(o==="aw"?"Arogya World India Trust, direct":esc(ORGS[o]))+"</option>").join("")+"</select>";
+const coordSelect=(id,val)=>'<select id="'+id+'">'+S.coords.map(c=>'<option value="'+esc(c.id)+'"'+(c.id===val?" selected":"")+">"+esc(c.name)+", "+esc(ORGSHORT[c.org])+"</option>").join("")+"</select>";
 function editHtml(sc){const used=Object.values(S.sessions).some(s=>s.schoolId===sc.id);
-  return '<div class="stack" style="padding:1.25rem"><h2>Edit school</h2><p class="muted small num">UDISE '+esc(sc.id)+'</p><div class="field"><label for="e-name">School name</label><input id="e-name" value="'+esc(sc.name)+'"></div>'+
-   '<div class="two"><div class="field"><label for="e-block">Block</label><input id="e-block" value="'+esc(sc.block)+'"></div><div class="field"><label for="e-coord">Coordinator</label><select id="e-coord">'+S.coords.map(c=>'<option value="'+esc(c.id)+'"'+(c.id===sc.coordId?" selected":"")+">"+esc(c.name)+"</option>").join("")+"</select></div></div>"+
-   '<div class="field"><label for="e-project">Project or funder, if any</label><input id="e-project" list="projlist" value="'+esc(sc.project||"")+'"></div>'+
+  return'<div class="stack" style="padding:1.25rem"><h2>Edit school</h2><p class="muted small num">UDISE '+esc(sc.id)+'</p><div class="field"><label for="e-name">School name</label><input id="e-name" value="'+esc(sc.name)+'"></div>'+
+   '<div class="two"><div class="field"><label for="e-block">Block</label><input id="e-block" value="'+esc(sc.block)+'"></div><div class="field"><label for="e-partner">Partner</label>'+orgSelect("e-partner",sc.partner||"aw")+"</div></div>"+
+   '<div class="two"><div class="field"><label for="e-coord">Coordinator</label>'+coordSelect("e-coord",sc.coordId)+'</div><div class="field"><label for="e-project">Project or funder, if any</label><input id="e-project" list="projlist" value="'+esc(sc.project||"")+'"></div></div>'+
    '<div class="field"><label for="e-classes">Classes and enrolment</label><input id="e-classes" value="'+esc(sc.classes.map(c=>c.id+": "+c.enrol).join(", "))+'"></div>'+
-   '<div class="two"><div class="field"><label for="e-teacher">Head teacher</label><input id="e-teacher" value="'+esc(sc.teacher||"")+'"></div><div class="field"><label for="e-phone">Head teacher\'s phone</label><input id="e-phone" inputmode="numeric" value="'+esc(/^\d+$/.test(sc.phone||"")?sc.phone:"")+'"></div></div>'+
-   (ui.msg?'<p class="note bad small" role="alert">'+esc(ui.msg)+"</p>":"")+
-   '<div class="row"><button class="btn primary" data-a="saveschool" data-id="'+esc(sc.id)+'">Save changes</button><button class="btn quiet" data-a="close">Cancel</button></div>'+
-   '<div class="row">'+(sc.lat!=null?'<button class="btn quiet" data-a="clearloc" data-id="'+esc(sc.id)+'">Clear the recorded location</button>':"")+'<button class="btn danger" data-a="delschool" data-id="'+esc(sc.id)+'"'+(used?" disabled":"")+">Delete this school</button></div>"+
-   (used?'<p class="small muted">A school with recorded sessions cannot be deleted.</p>':"")+"</div>"}
-function schoolsTab(){
-  let h='<h2>School master</h2><p class="muted small">Coordinators can log sessions only against schools listed here.</p><div class="scroll"><table><thead><tr><th>School</th><th>UDISE</th><th>Project</th><th>Coordinator</th><th>Classes and enrolment</th><th>Location</th><th>Arogya School nominee</th><th></th></tr></thead><tbody>'+
-   Object.values(S.schools).map(sc=>"<tr><td>"+esc(sc.name)+'<br><span class="small muted">'+esc(sc.block)+'</span></td><td class="num">'+esc(sc.id)+"</td><td>"+(sc.project?esc(sc.project):'<span class="muted">None</span>')+"</td><td>"+esc(coordName(sc.coordId))+'</td><td class="num">'+sc.classes.map(c=>esc(c.id)+": "+c.enrol).join(", ")+"</td><td>"+(sc.lat==null?'<span class="pill wait">Set on first visit</span>':'<span class="pill ok">Recorded</span>')+
-    '</td><td><input type="checkbox" style="width:22px;height:22px" data-c="isas" data-id="'+esc(sc.id)+'"'+(sc.isAS?" checked":"")+' aria-label="Nominate '+esc(sc.name)+'"></td><td><button class="btn quiet" data-a="editschool" data-id="'+esc(sc.id)+'">Edit</button></td></tr>').join("")+"</tbody></table></div>"+projList();
-  h+='<details class="sheet"><summary>Add a school</summary><div class="stack" style="margin-top:.5rem"><div class="two"><div class="field"><label for="n-name">School name</label><input id="n-name"></div><div class="field"><label for="n-udise">UDISE code</label><input id="n-udise" inputmode="numeric"></div></div>'+
-   '<div class="two"><div class="field"><label for="n-block">Block</label><input id="n-block"></div><div class="field"><label for="n-coord">Coordinator</label><select id="n-coord">'+S.coords.map(c=>'<option value="'+esc(c.id)+'">'+esc(c.name)+"</option>").join("")+"</select></div></div>"+
-   '<div class="field"><label for="n-project">Project or funder, if any</label><input id="n-project" list="projlist" placeholder="Nourishing Govandi"></div>'+
-   '<div class="field"><label for="n-classes">Classes and enrolment</label><input id="n-classes" placeholder="6A: 42, 6B: 39"><p class="small muted">Write each class, a colon, then its enrolment. Separate classes with commas.</p></div>'+
-   '<p class="small muted">The location is recorded at the coordinator\'s first check-in and then needs your approval.</p>'+(ui.msg?'<p class="note bad small">'+esc(ui.msg)+"</p>":"")+
-   '<button class="btn primary" data-a="addschool">Add school</button></div></details>';
-  h+='<details class="sheet"><summary>Add a coordinator</summary><div class="row" style="margin-top:.5rem"><div class="field" style="flex:1;min-width:180px"><label for="n-cname">Coordinator\'s name</label><input id="n-cname"></div><button class="btn primary" data-a="addcoord" style="align-self:flex-end">Add coordinator</button></div><p class="small muted" style="margin-top:.5rem">Now listed: '+S.coords.map(c=>esc(c.name)).join(", ")+".</p></details>";
-  h+='<p class="small muted">To add many schools at once from an Excel file, use the Data hub in the Program MIS.</p>';
-  h+='<div class="sheet stack"><h3>Rules in this prototype</h3><p class="small">Geofence: '+GEOFENCE_M+" m from the school. Minimum session: "+MIN_MIN+" minutes. School confirmation: within "+REPLY_HRS+" hours. A class photo counts as reused when its fingerprint differs from an earlier one by "+DUP_BITS+" bits or fewer out of 64.</p>"+
-   '<div class="row"><button class="btn" data-a="sample">Load sample data</button><button class="btn danger" data-a="reset">Erase all data</button></div><p class="small muted">Data is kept in this browser only. Both buttons replace what is here.</p></div>';
+   '<div class="two"><div class="field"><label for="e-teacher">Head teacher</label><input id="e-teacher" value="'+esc(sc.teacher||"")+'"></div><div class="field"><label for="e-phone">Head teacher\'s phone</label><input id="e-phone" inputmode="numeric" value="'+esc(sc.phone||"")+'"></div></div>'+
+   (ui.msg?'<p class="note bad small" role="alert">'+esc(ui.msg)+"</p>":"")+'<div class="row"><button class="btn primary" data-a="saveschool" data-id="'+esc(sc.id)+'">Save changes</button><button class="btn quiet" data-a="close">Cancel</button></div>'+
+   '<div class="row">'+(sc.lat!=null?'<button class="btn quiet" data-a="clearloc" data-id="'+esc(sc.id)+'">Clear the recorded location</button>':"")+'<button class="btn danger" data-a="delschool" data-id="'+esc(sc.id)+'"'+(used?" disabled":"")+">Delete this school</button></div>"+(used?'<p class="small muted">A school with recorded sessions cannot be deleted.</p>':"")+projList()+"</div>"}
+function dSchools(){
+  const aw=ui.org==="aw",list=scopeSchools();
+  let h=tile("","School master","Coordinators see and log sessions only for the schools assigned to them here.",'<div class="scroll"><table><thead><tr><th>School</th><th>UDISE</th><th>Partner</th><th>Project</th><th>Coordinator</th><th>Classes and enrolment</th><th>Location</th>'+(aw?"<th>Arogya School nominee</th><th></th>":"")+"</tr></thead><tbody>"+
+   list.map(sc=>"<tr><td>"+esc(sc.name)+'<br><span class="small muted">'+esc(sc.block)+'</span></td><td class="num">'+esc(sc.id)+"</td><td>"+esc(ORGSHORT[sc.partner||"aw"])+"</td><td>"+(sc.project?esc(sc.project):'<span class="muted">None</span>')+"</td><td>"+esc(coordName(sc.coordId))+'</td><td class="num">'+sc.classes.map(c=>esc(c.id)+": "+c.enrol).join(", ")+"</td><td>"+(sc.lat==null?'<span class="pill wait">Set on first visit</span>':'<span class="pill ok">Recorded</span>')+"</td>"+
+    (aw?'<td><input type="checkbox" style="width:22px;height:22px" data-c="isas" data-id="'+esc(sc.id)+'"'+(sc.isAS?" checked":"")+' aria-label="Nominate '+esc(sc.name)+'"></td><td><button class="btn quiet sm" data-a="editschool" data-id="'+esc(sc.id)+'">Edit</button> '+((sc.partner||"aw")!=="aw"?'<button class="btn quiet sm" data-a="flag" data-kind="school" data-id="'+esc(sc.id)+'">Flag</button>':"")+"</td>":"")+"</tr>").join("")+"</tbody></table></div>");
+  if(!aw)return h+'<p class="small muted span12">Arogya World India Trust keeps the school master. Ask them to add or change a school.</p>';
+  h+=tile("","Add a school","To add many schools at once from an Excel file, use the Data hub in the Program MIS.",S.coords.length?'<div class="stack"><div class="two"><div class="field"><label for="n-name">School name</label><input id="n-name"></div><div class="field"><label for="n-udise">UDISE code</label><input id="n-udise" inputmode="numeric"></div></div>'+
+   '<div class="two"><div class="field"><label for="n-block">Block</label><input id="n-block"></div><div class="field"><label for="n-partner">Partner</label>'+orgSelect("n-partner","aw")+"</div></div>"+
+   '<div class="two"><div class="field"><label for="n-coord">Coordinator</label>'+coordSelect("n-coord","")+'</div><div class="field"><label for="n-project">Project or funder, if any</label><input id="n-project" list="projlist" placeholder="Nourishing Govandi"></div></div>'+
+   '<div class="field"><label for="n-classes">Classes and enrolment</label><input id="n-classes" placeholder="6A: 42, 6B: 39"><p class="small muted">Write each class, a colon, then its enrolment. Separate classes with commas. The location is recorded at the coordinator\'s first check-in.</p></div>'+errBox()+'<div><button class="btn primary" data-a="addschool">Add school</button></div>'+projList()+"</div>":'<p class="note">Add a coordinator under Team first, so the school can be assigned.</p>');
+  return h;
+}
+function dTeam(){
+  const mine=S.coords.filter(c=>ui.org==="aw"||c.org===ui.org);
+  let h=tile("","Coordinators","Each coordinator signs in to the field app with their name and PIN.",mine.length?'<div class="scroll"><table><thead><tr><th>Coordinator</th><th>Organisation</th><th class="n">Schools</th><th class="n">Sessions</th><th></th></tr></thead><tbody>'+mine.map(c=>"<tr><td>"+esc(c.name)+"</td><td>"+esc(ORGS[c.org])+'</td><td class="n">'+Object.values(S.schools).filter(s=>s.coordId===c.id).length+'</td><td class="n">'+Object.values(S.sessions).filter(s=>s.coordId===c.id).length+'</td><td><button class="btn quiet sm" data-a="pinreset" data-id="'+c.id+'">Set a new PIN</button></td></tr>').join("")+"</tbody></table></div>":'<p class="muted">No coordinators yet.</p>');
+  h+=tile("","Add a coordinator","",'<div class="stack"><div class="two"><div class="field"><label for="t-name">Name</label><input id="t-name"></div><div class="field"><label for="t-org">Organisation</label><select id="t-org">'+Object.keys(ORGS).filter(o=>ui.org==="aw"||o===ui.org).map(o=>'<option value="'+o+'">'+esc(ORGS[o])+"</option>").join("")+'</select></div></div><div class="field" style="max-width:220px"><label for="t-pin">PIN, 4 digits</label><input id="t-pin" inputmode="numeric" maxlength="4"></div>'+errBox()+'<div><button class="btn primary" data-a="addcoord">Add coordinator</button></div></div>');
   return h;
 }
 function dashView(){
-  if(!Object.keys(S.schools).length&&ui.tab!=="schools")ui.tab="schools";
-  const tabs=[["overview","Overview"],["queue","Review queue ("+Object.values(S.sessions).filter(s=>s.status==="review").length+")"],["as","Arogya Schools"],["schools","Schools"]];
-  if(!S.coords.length)return '<div class="dash stack"><h1>No data yet</h1><p>Load the sample schools and sessions to see the dashboard working.</p><div><button class="btn primary" data-a="sample">Load sample data</button></div></div>';
-  return '<div class="dash"><div class="tabs" role="tablist">'+tabs.map(([k,l])=>'<button role="tab" data-a="tab" data-v="'+k+'" aria-selected="'+(ui.tab===k)+'">'+l+"</button>").join("")+'</div><div class="stack" style="--gap:1.75rem">'+
-    (ui.tab==="overview"?overview():ui.tab==="queue"?queue():ui.tab==="as"?asTab():schoolsTab())+"</div></div>";
+  const pend=scopeSessions().filter(s=>s.status==="pending").length,fl=Object.values(S.flags).filter(f=>ui.org==="aw"?(ui.pf==="all"||f.to===ui.pf):f.to===ui.org),fn=fl.filter(f=>f.status===(ui.org==="aw"?"answered":"open")).length;
+  const tabs=[["overview","Overview"],["review","Review ("+pend+")"],["flags","Flags ("+fn+")"],["missed","Could not be held"],["as","Arogya Schools"],["schools","Schools"],["team","Team"]];
+  const body=ui.dtab==="overview"?dOverview():ui.dtab==="review"?dReview():ui.dtab==="missed"?dMissed():ui.dtab==="as"?dAS():ui.dtab==="schools"?dSchools():ui.dtab==="team"?dTeam():
+    '<div class="span12 stack"><p class="muted">'+(ui.org==="aw"?"Things you have asked a partner to look at.":"Things Arogya World India Trust has asked you to look at.")+"</p>"+AWIT.flagsHtml(fl,ui.org,ORGS)+"</div>";
+  return'<div class="dash">'+(ui.org==="aw"?'<div class="row" style="margin-bottom:.75rem"><label for="pf" class="small">Show</label><select id="pf" data-c="pf" class="cellin" style="width:auto"><option value="all">All partners</option>'+Object.keys(ORGS).map(o=>'<option value="'+o+'"'+(ui.pf===o?" selected":"")+">"+(o==="aw"?"Arogya World, direct":esc(ORGS[o]))+"</option>").join("")+"</select></div>":"")+
+   '<div class="tabs" role="tablist">'+tabs.map(([k,l])=>'<button role="tab" data-a="dtab" data-v="'+k+'" aria-selected="'+(ui.dtab===k)+'">'+l+'</button>').join("")+'</div><div class="grid">'+body+'</div><p class="small muted" style="margin-top:1.5rem">A manager decides whether each session counts. The app adds a note when a session is more than '+GEOFENCE_M+" m from the school, shorter than "+MIN_MIN+" minutes, reuses a photo or reports more students than are enrolled. Data is kept in this browser only.</p></div>";
 }
-function detailHtml(s){
-  const sc=S.schools[s.schoolId],cl=sc.classes.find(c=>c.id===s.classId),mins=Math.round((s.endTs-s.startTs)/60000);
-  return '<div class="stack"><div class="row" style="justify-content:space-between"><h2>Activity '+s.activity+", class "+esc(s.classId)+"</h2>"+pill(s.status)+"</div>"+
-   "<dl><dt>School</dt><dd>"+esc(sc.name)+"</dd><dt>Coordinator</dt><dd>"+esc(coordName(s.coordId))+"</dd><dt>When</dt><dd>"+fmtDay(s.startTs)+", "+fmtTime(s.startTs)+" to "+fmtTime(s.endTs)+" ("+mins+" minutes)</dd>"+
-   "<dt>Check-in</dt><dd>"+(s.newAnchor?"Recorded as the school's location":fmtDist(s.distIn)+" from the school")+"</dd><dt>Check-out</dt><dd>"+(s.distOut==null?"Not recorded":fmtDist(s.distOut)+" from the school")+"</dd>"+
-   "<dt>Students</dt><dd>"+(s.boys+s.girls)+" present ("+s.boys+" boys, "+s.girls+" girls) of "+(cl?cl.enrol:"?")+" enrolled</dd>"+
-   "<dt>School</dt><dd>"+(s.teacher==="confirmed"?"Confirmed by the teacher":s.teacher==="disputed"?"Disputed by the teacher":"No reply yet")+"</dd>"+
-   (s.review?"<dt>Review</dt><dd>"+(s.review==="accepted"?"Counted by a reviewer":"Rejected by a reviewer")+"</dd>":"")+"</dl>"+
-   (s.flags.length?"<ul style=\"margin:0;padding-left:1.2rem\">"+s.flags.map(f=>'<li class="flag">'+esc(f)+"</li>").join("")+"</ul>":"")+evidence(s)+
-   (s.teacher==="pending"&&!s.review?'<div class="demo stack"><p class="small">Demo: answer for the teacher</p><div class="row"><button class="btn" data-a="lateteacher" data-v="confirmed" data-id="'+esc(s.id)+'">Teacher confirms</button><button class="btn" data-a="lateteacher" data-v="disputed" data-id="'+esc(s.id)+'">Teacher disputes</button></div></div>':"")+
-   (s.status==="review"?reviewButtons(s):"")+'<button class="btn quiet" data-a="close">Close</button></div>';
-}
+function detailHtml(s){const sc=S.schools[s.schoolId];
+  return'<div class="stack" style="padding:1.25rem"><div class="row between"><h2>'+esc(sc.name)+'</h2>'+pill(s.status)+"</div><p><strong>Class "+esc(s.classId)+", activity "+s.activity+"</strong></p>"+facts(s)+
+   (s.notes.length?'<div><p class="flabel">To look at</p><ul style="margin:0;padding-left:1.2rem">'+s.notes.map(f=>'<li class="flag">'+esc(f)+"</li>").join("")+"</ul></div>":"")+(s.decisionNote?'<p class="note small">Reason given: '+esc(s.decisionNote)+"</p>":"")+evidence(s)+
+   (s.status==="pending"?decideButtons(s):s.status==="counted"||s.status==="rejected"?'<div><button class="btn quiet" data-a="decide" data-v="" data-id="'+s.id+'">Put back for review</button></div>':"")+'<button class="btn quiet" data-a="close">Close</button></div>'}
 
 /* ---------- actions ---------- */
 function render(){
-  $("#app").innerHTML=ui.mode==="field"?fieldView():dashView();
+  if(ROLE==="dash"){$("#app").innerHTML=dashView();return}
+  const c=me();$("#bandlinks").innerHTML=c?'<span class="small">'+esc(c.name)+", "+esc(ORGSHORT[c.org])+"</span>":"";
+  $("#app").innerHTML=fieldView();
 }
-function openDetail(id){const s=S.sessions[id];if(!s)return;const d=$("#dlg");d.innerHTML='<div style="padding:1.25rem">'+detailHtml(s)+'</div>';if(!d.open){if(d.showModal)d.showModal();else d.setAttribute("open","")}}
-function closeDetail(){const d=$("#dlg");if(d.open){if(d.close)d.close();else d.removeAttribute("open")}}
-function setPhoto(kind,p){const d=ui.draft;if(!d)return;d.photos=d.photos.filter(x=>x.kind!==kind);const o={kind,thumb:p.thumb,hash:p.hash};
-  if(kind==="class"){const dup=p.dup||findDup(p.hash,null);if(dup)o.dup=dup}d.photos.push(o);render()}
+function openDlg(html){const d=$("#dlg");d.innerHTML=html;if(!d.open){if(d.showModal)d.showModal();else d.setAttribute("open","")}}
+function closeDlg(){const d=$("#dlg");if(d.open){if(d.close)d.close();else d.removeAttribute("open")}}
+function setPhoto(kind,p){const d=ui.draft;if(!d)return;d.photos=d.photos.filter(x=>x.kind!==kind);const o={kind,thumb:p.thumb,hash:p.hash};if(kind==="class"){const dup=findDup(p.hash,null);if(dup)o.dup=dup}d.photos.push(o);render()}
 const A={
-  tab(d){ui.tab=d.v;ui.msg="";render()},
+  ftab(d){ui.tab=d.v;ui.screen="home";clearMsg();render();window.scrollTo(0,0)},
+  dtab(d){ui.dtab=d.v;clearMsg();render()},
+  loc(d){ui.loc=d.v;render()},
   sample(){loadSample()},
-  reset(){S=blank();ui.screen="home";ui.draft=null;save();render()},
-  home(){ui.screen="home";ui.draft=null;ui.msg="";render()},
-  open(d){ui.schoolId=d.id;ui.screen="school";render()},
-  demo(d){ui.demo[d.k]=d.k==="len"?Number(d.v):d.v;render()},
-  start(){ui.draft={schoolId:ui.schoolId,classId:null,activity:null,photos:[],boys:"",girls:"",step:1};ui.msg="";ui.screen="session";render()},
-  cancel(){ui.draft=null;ui.screen="school";render()},
-  async checkin(){const d=ui.draft,sc=S.schools[d.schoolId];ui.msg="";const p=await getPos(sc);if(ui.draft!==d)return;
-    if(sc.lat==null){sc.lat=p.lat;sc.lng=p.lng;d.newAnchor=true;d.distIn=0;save()}else d.distIn=hav(sc.lat,sc.lng,p.lat,p.lng);
+  reset(){S=blank();ui.me=null;try{localStorage.removeItem(MEKEY)}catch(e){}ui.screen="home";ui.draft=null;ui.miss=null;clearMsg();save();render()},
+  login(){clearMsg();const c=S.coords.find(x=>x.id===ui.who);
+    if(!c){ui.msg="Choose your name.";return render()}
+    if(AWIT.pinHash(c.id,ui.pin)!==c.pin){ui.msg="That PIN is not right. Ask your manager if you have forgotten it.";ui.pin="";return render()}
+    ui.me=c.id;ui.pin="";ui.tab="schools";ui.screen="home";try{localStorage.setItem(MEKEY,c.id)}catch(e){}render();window.scrollTo(0,0)},
+  logout(){ui.me=null;ui.who="";ui.draft=null;ui.miss=null;try{localStorage.removeItem(MEKEY)}catch(e){}clearMsg();render()},
+  home(){ui.screen="home";ui.tab="schools";ui.draft=null;clearMsg();render();window.scrollTo(0,0)},
+  open(d){ui.schoolId=d.id;ui.screen="school";clearMsg();render();window.scrollTo(0,0)},
+  start(){ui.draft={schoolId:ui.schoolId,classId:null,activity:null,photos:[],boys:"",girls:"",teacher:"",remarks:"",step:1};clearMsg();render();window.scrollTo(0,0)},
+  cancel(){ui.draft=null;ui.screen="school";clearMsg();render()},
+  async checkin(){const d=ui.draft,sc=S.schools[d.schoolId];clearMsg();const p=await AWIT.getPos(ui.loc,sc.lat!=null?[sc.lat,sc.lng]:null);if(ui.draft!==d)return;
+    d.sim=!!p.sim;
+    if(p.fail)d.noGps=true;else if(sc.lat==null){sc.lat=p.lat;sc.lng=p.lng;d.newAnchor=true;d.distIn=0;save()}else d.distIn=hav(sc.lat,sc.lng,p.lat,p.lng);
     d.startTs=Date.now();d.step=2;render()},
   pickclass(d){ui.draft.classId=d.v;ui.draft.activity=null;render()},
   pickact(d){ui.draft.activity=Number(d.v);render()},
-  next(){ui.msg="";ui.draft.step++;render()},
-  samplephoto(d){setPhoto(d.kind,samplePhoto(Math.floor(Math.random()*1e9)))},
-  oldphoto(){const pool=[];for(const s of Object.values(S.sessions))for(const p of s.photos)if(p.kind==="class"&&p.hash)pool.push({p,sid:s.id});
-    if(!pool.length)return;const pick=pool[Math.floor(Math.random()*pool.length)];setPhoto("class",{thumb:pick.p.thumb,hash:pick.p.hash,dup:{sid:pick.sid,dist:0}})},
-  async checkout(){const d=ui.draft,sc=S.schools[d.schoolId];const p=await getPos(sc);if(ui.draft!==d)return;const now=Date.now();
-    const s={id:uid(),schoolId:d.schoolId,classId:d.classId,activity:d.activity,coordId:ui.coord,
-      startTs:ui.demo.loc==="real"?d.startTs:now-ui.demo.len*6e4,endTs:now,distIn:d.distIn,distOut:hav(sc.lat,sc.lng,p.lat,p.lng),newAnchor:!!d.newAnchor,
-      boys:Math.max(0,parseInt(d.boys,10)||0),girls:Math.max(0,parseInt(d.girls,10)||0),teacher:"pending",photos:d.photos};
-    S.sessions[s.id]=evaluate(s);d.id=s.id;d.step=6;save();render()},
-  teacher(d){const s=S.sessions[ui.draft.id];s.teacher=d.v;evaluate(s);save();ui.lastId=s.id;ui.draft=null;ui.screen="result";render()},
-  lateteacher(d){const s=S.sessions[d.id];s.teacher=d.v;evaluate(s);save();render();openDetail(s.id)},
-  detail(d){openDetail(d.id)},
-  close(){closeDetail()},
-  review(d){const s=S.sessions[d.id];s.review=d.v;evaluate(s);save();closeDetail();render()},
+  setd(d){ui.draft[d.k]=d.v;render()},
+  next(){const d=ui.draft;clearMsg();
+    if(d.step===3&&!d.photos.some(p=>p.kind==="class")){ui.msg="Take the class photo first.";return render()}
+    if(d.step===4&&(d.boys===""||d.girls==="")){ui.msg="Enter how many boys and girls are present. Enter 0 if none.";return render()}
+    d.step++;render();window.scrollTo(0,0)},
+  samplephoto(d){setPhoto(d.kind,AWIT.samplePhoto(Math.floor(Math.random()*1e9),d.kind==="register"?"page":"class"))},
+  async checkout(){const d=ui.draft,sc=S.schools[d.schoolId];clearMsg();if(!d.teacher){ui.msg="Say whether the class teacher was present.";return render()}
+    const p=await AWIT.getPos(ui.loc,sc.lat!=null?[sc.lat,sc.lng]:null);if(ui.draft!==d)return;const now=Date.now();
+    const s={id:uid("s"),schoolId:d.schoolId,classId:d.classId,activity:d.activity,coordId:ui.me,startTs:d.sim?now-40*6e4:d.startTs,endTs:now,distIn:d.distIn,distOut:p.fail||sc.lat==null?null:hav(sc.lat,sc.lng,p.lat,p.lng),noGps:!!d.noGps,sim:d.sim,newAnchor:!!d.newAnchor,
+      boys:Math.max(0,parseInt(d.boys,10)||0),girls:Math.max(0,parseInt(d.girls,10)||0),teacherPresent:d.teacher==="yes",remarks:d.remarks.trim(),photos:d.photos};
+    S.sessions[s.id]=evaluate(s);save();ui.lastId=s.id;ui.draft=null;ui.screen="result";render();window.scrollTo(0,0)},
+  missstart(){ui.miss={schoolId:ui.schoolId,classId:"",reason:"",remarks:""};clearMsg();render();window.scrollTo(0,0)},
+  missset(d){ui.miss[d.k]=d.v;render()},
+  misscancel(){ui.miss=null;clearMsg();render()},
+  misssave(){const d=ui.miss;clearMsg();if(!d.reason){ui.msg="Choose a reason.";return render()}const id=uid("m");S.misses[id]={id,schoolId:d.schoolId,classId:d.classId,coordId:ui.me,ts:Date.now(),reason:d.reason,remarks:d.remarks.trim()};save();ui.miss=null;ui.ok="Your manager has been told.";render()},
+  detail(d){const s=S.sessions[d.id];if(s)openDlg(detailHtml(s))},
+  close(){closeDlg()},
+  decide(d){const s=S.sessions[d.id];if(d.v){s.decision=d.v;s.decidedBy=ui.org;s.decidedTs=Date.now()}else{delete s.decision;delete s.decisionNote}evaluate(s);save();closeDlg();render()},
+  rejectask(d){const s=S.sessions[d.id];openDlg('<div class="stack" style="padding:1.25rem"><h2>Do not count this session</h2><p class="muted">'+esc(sessLabel(s))+'</p><div class="field"><label for="rj">Reason, for the coordinator</label><textarea id="rj" rows="2"></textarea></div><div class="row"><button class="btn danger" data-a="reject" data-id="'+s.id+'">Do not count</button><button class="btn quiet" data-a="close">Cancel</button></div></div>')},
+  reject(d){const s=S.sessions[d.id];s.decision="rejected";s.decisionNote=$("#rj").value.trim();s.decidedBy=ui.org;s.decidedTs=Date.now();evaluate(s);save();closeDlg();render()},
+  countclean(){for(const s of scopeSessions())if(s.status==="pending"&&!s.notes.length){s.decision="counted";s.decidedBy=ui.org;s.decidedTs=Date.now();evaluate(s)}save();render()},
+  flag(d){let label,to;if(d.kind==="session"){const s=S.sessions[d.id];label=sessLabel(s);to=S.schools[s.schoolId].partner}else{const sc=S.schools[d.id];label=sc.name;to=sc.partner}
+    openDlg(AWIT.flagForm({kind:d.kind,id:d.id,label},to,ORGS))},
+  flagsend(d){const note=$("#flag-note").value.trim();if(!note){$("#flag-err").hidden=false;return}const id=uid("f");S.flags[id]={id,about:{kind:d.kind,id:d.id,label:d.label},to:d.to,note,ts:Date.now(),status:"open"};evalAll();save();closeDlg();ui.dtab="flags";render()},
+  flagreply(d){const el=$("#fr-"+d.id),txt=el?el.value.trim():"";if(!txt)return;Object.assign(S.flags[d.id],{reply:txt,replyTs:Date.now(),status:"answered"});save();render()},
+  flagclose(d){Object.assign(S.flags[d.id],{status:"closed",closedTs:Date.now()});evalAll();save();render()},
   asopen(d){ui.asOpen=ui.asOpen===d.id?null:d.id;render()},
-  addschool(){const name=$("#n-name").value.trim(),id=$("#n-udise").value.trim(),block=$("#n-block").value.trim(),coordId=$("#n-coord").value,project=$("#n-project").value.trim();
-    const classes=parseClasses($("#n-classes").value);
+  addschool(){clearMsg();const name=$("#n-name").value.trim(),id=$("#n-udise").value.trim(),classes=parseClasses($("#n-classes").value);
     ui.msg=!name?"Enter the school name.":!/^\d{11}$/.test(id)?"A UDISE code has 11 digits.":S.schools[id]?"A school with this UDISE code is already listed.":!classes.length?"Add at least one class with its enrolment, like 6A: 42.":"";
-    if(!ui.msg){S.schools[id]={id,name,block,project,lat:null,lng:null,coordId,isAS:false,teacher:"",phone:"",classes};save()}
-    render();if(ui.msg){const dt=document.querySelector("details");if(dt)dt.open=true}},
-  addcoord(){const name=$("#n-cname").value.trim();if(!name)return;if(!S.coords.some(c=>c.name.toLowerCase()===name.toLowerCase())){S.coords.push({id:"c"+Date.now().toString(36),name});save()}render()},
-  editschool(d){ui.msg="";const dl=$("#dlg");dl.innerHTML=editHtml(S.schools[d.id]);if(!dl.open)dl.showModal()},
+    if(!ui.msg){S.schools[id]={id,name,block:$("#n-block").value.trim(),project:$("#n-project").value.trim(),partner:$("#n-partner").value,lat:null,lng:null,coordId:$("#n-coord").value,isAS:false,teacher:"",phone:"",classes};save();ui.ok=name+" is added.";}render()},
+  editschool(d){ui.msg="";openDlg(editHtml(S.schools[d.id]))},
   saveschool(d){const sc=S.schools[d.id],name=$("#e-name").value.trim(),classes=parseClasses($("#e-classes").value),lost=sc.classes.filter(c=>!classes.some(x=>x.id===c.id)&&Object.values(S.sessions).some(s=>s.schoolId===sc.id&&s.classId===c.id));
     ui.msg=!name?"Enter the school name.":!classes.length?"Add at least one class with its enrolment, like 6A: 42.":lost.length?"Class "+lost[0].id+" has recorded sessions, so it cannot be removed.":"";
     if(ui.msg){$("#dlg").innerHTML=editHtml(sc);return}
-    Object.assign(sc,{name,block:$("#e-block").value.trim(),coordId:$("#e-coord").value,project:$("#e-project").value.trim(),classes,teacher:$("#e-teacher").value.trim(),phone:$("#e-phone").value.replace(/\D/g,"")});
-    Object.values(S.sessions).forEach(evaluate);save();closeDetail();render()},
-  clearloc(d){const sc=S.schools[d.id];sc.lat=null;sc.lng=null;save();closeDetail();render()},
-  delschool(d){delete S.schools[d.id];delete S.as[d.id];save();closeDetail();render()}
+    Object.assign(sc,{name,block:$("#e-block").value.trim(),partner:$("#e-partner").value,coordId:$("#e-coord").value,project:$("#e-project").value.trim(),classes,teacher:$("#e-teacher").value.trim(),phone:$("#e-phone").value.replace(/\D/g,"")});
+    evalAll();save();closeDlg();render()},
+  clearloc(d){const sc=S.schools[d.id];sc.lat=null;sc.lng=null;save();closeDlg();render()},
+  delschool(d){delete S.schools[d.id];delete S.as[d.id];save();closeDlg();render()},
+  addcoord(){clearMsg();const name=$("#t-name").value.trim(),org=$("#t-org").value,pin=$("#t-pin").value.trim();
+    ui.msg=!name?"Enter the coordinator's name.":!/^\d{4}$/.test(pin)?"The PIN must be 4 digits.":S.coords.some(c=>c.name.toLowerCase()===name.toLowerCase()&&c.org===org)?"A coordinator with this name is already listed.":"";if(ui.msg)return render();
+    const id=uid("c");S.coords.push({id,name,org,pin:AWIT.pinHash(id,pin)});save();ui.ok=name+" is added. Tell them their PIN.";render()},
+  pinreset(d){const c=S.coords.find(x=>x.id===d.id);openDlg('<div class="stack" style="padding:1.25rem"><h2>New PIN for '+esc(c.name)+'</h2><div class="field"><label for="np">PIN, 4 digits</label><input id="np" inputmode="numeric" maxlength="4"></div><p id="np-err" class="note bad small" hidden>The PIN must be 4 digits.</p><div class="row"><button class="btn primary" data-a="pinsave" data-id="'+c.id+'">Save PIN</button><button class="btn quiet" data-a="close">Cancel</button></div></div>')},
+  pinsave(d){const pin=$("#np").value.trim();if(!/^\d{4}$/.test(pin)){$("#np-err").hidden=false;return}const c=S.coords.find(x=>x.id===d.id);c.pin=AWIT.pinHash(c.id,pin);save();closeDlg();clearMsg();ui.ok="New PIN saved for "+c.name+".";render()},
+  signout(){awitSignOut("schooltrack")}
 };
 document.addEventListener("click",e=>{const t=e.target.closest("[data-a]");if(!t||t.disabled)return;const fn=A[t.dataset.a];if(fn)fn(t.dataset,t)});
-document.addEventListener("input",e=>{const t=e.target;if(t.dataset.c==="count"&&ui.draft)ui.draft[t.dataset.k]=t.value.replace(/[^\d]/g,"").slice(0,3)});
+document.addEventListener("input",e=>{const t=e.target,c=t.dataset.c;
+  if(c==="count"&&ui.draft)ui.draft[t.dataset.k]=t.value=t.value.replace(/[^\d]/g,"").slice(0,3);
+  if(c==="rem"&&ui.draft)ui.draft.remarks=t.value;
+  if(c==="missrem"&&ui.miss)ui.miss.remarks=t.value;
+  if(c==="pin")ui.pin=t.value.replace(/\D/g,"")});
 document.addEventListener("change",async e=>{const t=e.target,c=t.dataset.c;
-  if(c==="coord"){ui.coord=t.value;render()}
-  if(c==="photo"&&t.files&&t.files[0]){const kind=t.dataset.kind;try{setPhoto(kind,await fileToPhoto(t.files[0]))}catch(err){ui.msg="That file could not be read as a photo. Try again.";render()}}
+  if(c==="who"){ui.who=t.value;ui.msg=""}
+  if(c==="missreason"&&ui.miss)ui.miss.reason=t.value;
+  if(c==="pf"){ui.pf=t.value;render()}
+  if(c==="photo"&&t.files&&t.files[0]){const kind=t.dataset.kind;try{setPhoto(kind,await AWIT.fileToPhoto(t.files[0]))}catch(err){ui.msg="That file could not be read as a photo. Try again.";render()}}
   if(c==="crit"){S.as[t.dataset.id]=S.as[t.dataset.id]||{};S.as[t.dataset.id][t.dataset.k]=t.checked?1:0;save();render()}
   if(c==="isas"){S.schools[t.dataset.id].isAS=t.checked;save();render()}
 });
-$("#dlg").addEventListener("click",e=>{if(e.target===e.currentTarget)closeDetail()});
-Object.values(S.sessions).forEach(evaluate);
-$("#rolelab").textContent=ROLE==="dash"?"Monitoring dashboard":"Field app";
+$("#dlg").addEventListener("click",e=>{if(e.target===e.currentTarget)closeDlg()});
+evalAll();
 const start=()=>{unlocked=true;render()};
-if(ROLE==="dash"){$("#barlinks").innerHTML='<a href="../../">Program MIS</a>';awitGate("team","Arogya SchoolTrack dashboard").then(start)}else start();
-window.addEventListener("storage",e=>{if(e.key===KEY&&loadS()){Object.values(S.sessions).forEach(evaluate);if(unlocked&&!ui.draft&&!$("#dlg").open)render()}});
+if(ROLE!=="dash"){$("#rolelab").textContent="Field app, Healthy Schools Program";start()}
+else awitSignIn("schooltrack","Arogya SchoolTrack dashboard",Object.keys(ORGS).map(o=>({id:o,name:ORGS[o]}))).then(org=>{ui.org=org;$("#rolelab").textContent="Dashboard, signed in as "+ORGS[org];
+  $("#bandlinks").innerHTML=(org==="aw"?'<a href="../../" class="small">Program MIS</a>':"")+'<button class="linkbtn small" data-a="signout">Sign out</button>';start()});
+window.addEventListener("storage",e=>{if(e.key===KEY&&loadS()){evalAll();if(unlocked&&!ui.draft&&!ui.miss&&!$("#dlg").open&&!["INPUT","TEXTAREA","SELECT"].includes(document.activeElement.tagName))render()}});
 </script>
 </body>
 </html>

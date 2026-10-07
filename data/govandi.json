@@ -15,63 +15,216 @@
    "name": "Schools in the program",
    "unit": "schools",
    "target": 2,
-   "achieved": 0
-  },
-  {
-   "comp": "Healthy Schools Program",
-   "name": "Activities completed",
-   "unit": "Activities",
-   "target": 10,
    "achieved": 2
   },
   {
-   "comp": "Women's nutrition outreach",
+   "comp": "Healthy Schools Program",
+   "name": "Students reached",
+   "unit": "students",
+   "target": 0,
+   "achieved": 123
+  },
+  {
+   "comp": "Nutrition outreach",
    "name": "Women and adolescents reached",
    "unit": "people",
    "target": 1000,
-   "achieved": 381
+   "achieved": 310
   },
   {
-   "comp": "Women's nutrition outreach",
+   "comp": "Nutrition outreach",
    "name": "Community sessions held",
    "unit": "sessions",
-   "target": 30,
-   "achieved": 7
+   "target": 40,
+   "achieved": 12
   },
   {
-   "comp": "Women's nutrition outreach",
+   "comp": "Nutrition outreach",
    "name": "Follow-up group discussions",
    "unit": "discussions",
    "target": 15,
-   "achieved": 0
+   "achieved": 3
   },
   {
    "comp": "mDiabetes",
    "name": "People enrolled in mDiabetes",
    "unit": "people",
    "target": 5000,
-   "achieved": 450
+   "achieved": 1460
   },
   {
-   "comp": "Street food vendors",
+   "comp": "Street food vendor training",
    "name": "Vendors trained",
    "unit": "vendors",
    "target": 50,
-   "achieved": 26
+   "achieved": 8
   },
   {
-   "comp": "Street food vendors",
+   "comp": "Street food vendor training",
    "name": "Stall monitoring visits",
    "unit": "visits",
    "target": 50,
-   "achieved": 8
+   "achieved": 4
   }
  ],
- "updates": [],
- "datasets": [],
+ "updates": [
+  {
+   "date": "2026-10-01",
+   "text": "Community sessions are running in three localities, with pre and post questions answered by raised cards."
+  },
+  {
+   "date": "2026-09-15",
+   "text": "Arogya City Coordinator for Mumbai in place; community mobilisation partner on board."
+  }
+ ],
+ "datasets": [
+  {
+   "id": "d-sample1",
+   "title": "Knowledge before and after the session",
+   "labelName": "Session",
+   "type": "bar",
+   "labels": [
+    "GOV001",
+    "GOV002",
+    "GOV003",
+    "GOV004",
+    "GOV005",
+    "GOV006"
+   ],
+   "series": [
+    {
+     "name": "Before, % correct",
+     "values": [
+      52,
+      48,
+      57,
+      55,
+      50,
+      61
+     ]
+    },
+    {
+     "name": "After, % correct",
+     "values": [
+      81,
+      79,
+      86,
+      84,
+      77,
+      88
+     ]
+    }
+   ],
+   "show": "govandi"
+  },
+  {
+   "id": "d-sample2",
+   "title": "mDiabetes enrolments, running total",
+   "labelName": "Week",
+   "type": "line",
+   "labels": [
+    "1 Sep",
+    "8 Sep",
+    "15 Sep",
+    "22 Sep",
+    "29 Sep",
+    "6 Oct"
+   ],
+   "series": [
+    {
+     "name": "People enrolled",
+     "values": [
+      0,
+      180,
+      420,
+      760,
+      1120,
+      1460
+     ]
+    }
+   ],
+   "show": "govandi"
+  }
+ ],
  "tools": {
-  "schools": [],
-  "vendors": null
+  "schools": [
+   {
+    "name": "Govandi school 1",
+    "id": "27220100201",
+    "classes": [
+     {
+      "id": "6A",
+      "enrol": 44,
+      "acts": [
+       "v",
+       "v",
+       "v",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       ""
+      ]
+     },
+     {
+      "id": "6B",
+      "enrol": 41,
+      "acts": [
+       "v",
+       "v",
+       "p",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       ""
+      ]
+     }
+    ],
+    "reach": 85,
+    "enrol": 85,
+    "sessions": 5
+   },
+   {
+    "name": "Govandi school 2",
+    "id": "27220100202",
+    "classes": [
+     {
+      "id": "6A",
+      "enrol": 38,
+      "acts": [
+       "v",
+       "v",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       ""
+      ]
+     }
+    ],
+    "reach": 38,
+    "enrol": 38,
+    "sessions": 2
+   }
+  ],
+  "vendors": {
+   "registered": 14,
+   "attended": 8,
+   "screened": 7,
+   "trained": 8,
+   "visit1": 5,
+   "visit2": 0,
+   "visit3": 0,
+   "visits": 5
+  }
  },
- "publishedAt": "2026-10-06T07:33:49.151Z"
+ "publishedAt": "2026-10-07T09:38:41.487789Z"
 }
