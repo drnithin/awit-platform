@@ -182,7 +182,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
 <script>
 "use strict";
 const {esc,nf,pct,sum,fmtDay,fmtDate,fmtDist,dayKey,uid,rng,hav,ch,tile,kpis}=AWIT;
-const ROLE="dash",KEY="sfvt.v3",MEKEY="sfvt.me",GEOFENCE_M=100,DUP_BITS=4,BP_SYS=140,BP_DIA=90,GRBS_REF=140;
+const ROLE="dash",KEY="sfvt.v3",MEKEY="sfvt.me",GEOFENCE_M=100,GAP_DAYS=60,DUP_BITS=4,BP_SYS=140,BP_DIA=90,GRBS_REF=140;
 const ORGS={aw:"Arogya World India Trust",nasvi:"NASVI"},ORGSHORT={aw:"Arogya World",nasvi:"NASVI"};
 const DUTY=[["register","Register vendors"],["invite","Plan trainings and invite vendors"],["desk","Attendance desk"],["screen","Screening desk"],["kit","Certificate and apron desk"],["visit","Stall monitoring visits"]];
 const DEF_DUTY={nasvi:["register","invite","desk"],aw:["screen","kit","visit"]};
@@ -244,11 +244,16 @@ const visitsOf=(v,strict)=>Object.values(S.visits).filter(x=>x.vid===v.id&&(stri
 function chain(v,strict){const vs=visitsOf(v,strict);return[true,invitedTo(v).length>0||!!v.att,!!v.att,!!(v.scr&&!v.scr.declined),!!(v.kit&&v.kit.trained)].concat([1,2,3].map(n=>vs.some(x=>x.n===n)))}
 function stagePill(v){const c=chain(v);let i=7;while(i>0&&!c[i])i--;
   return'<span class="pill '+(i>=4?"ok":i>=1?"wait":"plain")+'">'+(i>=5?STEPS[i]+" done":STEPS[i])+"</span>"}
+/* touch points (training, visit 1, visit 2, visit 3) are GAP_DAYS apart */
+const mid=ts=>{const d=new Date(ts);d.setHours(0,0,0,0);return d.getTime()},daysApart=(a,b)=>Math.round((mid(b)-mid(a))/864e5),GAP_TEXT=GAP_DAYS+" days (2 months)";
+function touchBefore(v,n){if(!v)return null;if(n===1)return v.kit&&v.kit.ts?{ts:v.kit.ts,label:"the training"}:null;
+  const o=Object.values(S.visits).filter(x=>x.vid===v.id&&x.n===n-1&&x.review!=="rejected").sort((a,b)=>a.ts-b.ts)[0];return o?{ts:o.ts,label:"visit "+(n-1)}:null}
 function nextVisit(v){
   if(!v.att)return{block:v.name+" has not attended a training yet. Stall visits start after the training."};
   if(!(v.kit&&v.kit.trained))return{block:v.name+" came to the training on "+fmtDay(v.att.ts)+", but completing it has not been recorded at the certificate desk."};
   const vs=visitsOf(v).sort((a,b)=>b.ts-a.ts);
-  for(const n of[1,2,3])if(!vs.some(x=>x.n===n)){if(vs[0]&&dayKey(vs[0].ts)===dayKey(Date.now()))return{block:"Visit "+vs[0].n+" was recorded today. Record the next visit on another day."};return{n}}
+  for(const n of[1,2,3])if(!vs.some(x=>x.n===n)){if(vs[0]&&dayKey(vs[0].ts)===dayKey(Date.now()))return{block:"Visit "+vs[0].n+" was recorded today. Record the next visit on another day."};
+    const from=touchBefore(v,n),dueTs=from?mid(from.ts)+GAP_DAYS*864e5:0;return{n,dueTs,after:from?from.label:"",early:Date.now()<dueTs,late:Math.max(0,daysApart(dueTs,Date.now()))}}
   return{block:"All three visits for "+v.name+" are complete."};
 }
 function score(ans){
@@ -263,6 +268,7 @@ const ratePill=sc=>sc.rating?'<span class="pill '+RATING[sc.rating].cls+'">'+RAT
 function evalVisit(x){const f=[];
   if(x.noGps)f.push("The phone did not give a location for this visit.");
   else if(x.dist>GEOFENCE_M)f.push("Recorded "+fmtDist(x.dist)+" from the registered stall. The limit is "+GEOFENCE_M+" m.");
+  const from=touchBefore(S.vendors[x.vid],x.n);if(from){const gap=daysApart(from.ts,x.ts);if(gap<GAP_DAYS)f.push("Recorded "+gap+(gap===1?" day":" days")+" after "+from.label+". The gap between touch points should be "+GAP_TEXT+".")}
   if(!x.photo)f.push("No stall photo.");else if(x.photo.dup){const o=S.visits[x.photo.dup.xid];f.push(o&&S.vendors[o.vid]?"Photo matches the one from "+S.vendors[o.vid].name+"'s visit on "+fmtDay(o.ts)+".":"Photo matches an earlier photo.")}
   x.notes=f;x.status=x.review==="accepted"?"counted":x.review==="rejected"?"rejected":f.length?"review":"counted";return x}
 const bpClass=(s,d)=>s>=180||d>=110?"Very high":s>=BP_SYS||d>=BP_DIA?"Raised":"Within range";
@@ -300,14 +306,14 @@ function loadDemo(){
     .map(c=>Object.assign(c,{pin:pin(c.id),duties:DEF_DUTY[c.org].slice()}));
   const W=["Lakshmi","Saroja","Meena","Fathima","Geetha","Salma","Manjula","Shanthi","Noor","Kavitha","Asha","Jyoti","Rekha","Sunita","Pushpa","Deepa","Shabana","Latha","Rukmini","Zarina","Padma","Anitha","Mumtaz","Vimala","Savitri","Nagamma","Yasmin","Kamala","Radha","Shobha","Farida"],
         M=["Ramesh","Ravi","Suresh","Imran","Anwar","Ganesh","Mahesh","Javed","Prakash","Venkatesh","Salim","Manoj","Kumar","Irfan","Basavaraj","Dinesh","Rafiq","Shankar","Naveen","Aslam","Vijay"];
-  const mk=(city,ward,i,spread,regBy)=>{const P=PLACES[city];let woman=r()<.6;if(woman&&!W.length)woman=false;if(!woman&&!M.length)woman=true;
+  const mk=(city,ward,i,spread,regBy,regAgo)=>{const P=PLACES[city];let woman=r()<.6;if(woman&&!W.length)woman=false;if(!woman&&!M.length)woman=true;
     const name=(woman?W.splice(Math.floor(r()*W.length),1)[0]:M.splice(Math.floor(r()*M.length),1)[0])+" "+"ABDGHKMNPRSTV"[Math.floor(r()*13)];
     const id=P.code+"-"+String(i).padStart(4,"0"),a=P.wards[ward],ph=AWIT.samplePhoto(5000+i+(city==="Mumbai"?500:0),"stall");
     S.vendors[id]={id,name,phone:"90000"+String(10000+Object.keys(S.vendors).length*37).slice(-5),sex:woman?"Woman":"Man",food:pick(FOODS.slice(0,6)),city,ward,lat:a[0]+(r()-.5)*spread,lng:a[1]+(r()-.5)*spread,
-      photo:ph.thumb,regTs:now-(25+Math.floor(r()*30))*day,regBy,demo:true,fostac:r()<.12?"yes":r()<.15?"unsure":"no",q:.28+r()*.3};return id};
+      photo:ph.thumb,regTs:now-(regAgo+Math.floor(r()*20))*day,regBy,demo:true,fostac:r()<.12?"yes":r()<.15?"unsure":"no",q:.28+r()*.3};return id};
   const blr=[],mum=[];let n=1;
-  for(const[w,c]of[["Shivajinagar",12],["KR Market",9],["Johnson Market",5]])for(let i=0;i<c;i++)blr.push(mk("Bengaluru",w,n++,.012,"n3"));
-  for(let i=1;i<=22;i++)mum.push(mk("Mumbai","Govandi",i,i>17?.07:.016,i%2?"n1":"n2"));
+  for(const[w,c]of[["Shivajinagar",12],["KR Market",9],["Johnson Market",5]])for(let i=0;i<c;i++)blr.push(mk("Bengaluru",w,n++,.012,"n3",196));
+  for(let i=1;i<=22;i++)mum.push(mk("Mumbai","Govandi",i,i>17?.07:.016,i%2?"n1":"n2",74));
   S.vendors[mum[9]].phone=S.vendors[mum[2]].phone;S.vendors[mum[9]].dupOf=mum[2];
   const answers=(v,k)=>{const a={},q=v.q+k*.17,noFry=/Juice|Tea/.test(v.food);for(const it of ITEMS){if(noFry&&[1,2,5].includes(it.n)){a[it.n]="x";continue}const t=r();a[it.n]=t<q?2:t<q+.3?1:0}return a};
   const run=(tid,venue,city,ago,hall,km,attN,scrBy,visitPlan)=>{
@@ -320,8 +326,9 @@ function loadDemo(){
       visitPlan.forEach(([vn,count,dago],k)=>{if(i>=count)return;const ph=AWIT.samplePhoto(9000+Object.keys(S.visits).length,"stall");
         const x={id:"x"+tid+"v"+vn+"_"+i,vid:id,n:vn,ts:now-dago*day+i*5e5,by:scrBy,dist:12+r()*60,trained:r()<.8,ans:answers(v,k),said:{},remarks:"",photo:{thumb:null,hash:ph.hash}};S.visits[x.id]=x;
         if(vn===1&&v.scr.referral)v.scr.went=r()<.6})})};
-  run("t1","Shivajinagar community hall","Bengaluru",24,[12.9857,77.6057],2,13,"a2",[[1,12,16],[2,8,9],[3,4,2]]);
-  run("t2","Govandi municipal school hall","Mumbai",11,[19.0553,72.9154],1.5,8,"a1",[[1,5,3]]);
+  run("t1","Shivajinagar community hall","Bengaluru",190,[12.9857,77.6057],2,13,"a2",[[1,12,128],[2,8,66],[3,4,4]]);
+  run("t2","Govandi municipal school hall","Mumbai",70,[19.0553,72.9154],1.5,8,"a1",[[1,5,6]]);
+  mum.forEach(id=>{const v=S.vendors[id];if(!v.att)v.regTs=now-(5+Math.floor(r()*20))*day});
   const hall3=[19.0561,72.9171],inv3=vlist().filter(v=>v.city==="Mumbai"&&!v.att&&!v.dupOf&&hav(hall3[0],hall3[1],v.lat,v.lng)<=2000).map(v=>v.id);
   S.trainings.t3={id:"t3",venue:"Shivaji Nagar community centre, Govandi",city:"Mumbai",date:dayKey(now),lat:hall3[0],lng:hall3[1],radius:2,invited:inv3,by:"n1",sent:Object.fromEntries(inv3.slice(0,5).map(id=>[id,now-day]))};
   const far=S.visits["xt1v1_5"];if(far){far.dist=1840;far.photo=Object.assign({},AWIT.samplePhoto(7771,"stall"))}
@@ -457,6 +464,7 @@ function visitForm(){
     '<div class="seg" role="group" aria-label="Score for item '+it.n+'">'+(it.ask?[[2,"2"],[1,"1"],[0,"0"]]:[[2,"Yes"],[1,"Partly"],[0,"No"],["x","Could not see"]]).map(([val,l])=>'<button data-a="ans" data-n="'+it.n+'" data-v="'+val+'" aria-pressed="'+(String(d.ans[it.n])===String(val))+'">'+l+"</button>").join("")+"</div></div>";
   return'<div class="stack"><div><h1>Visit '+d.n+(d.n===3?", the final visit":"")+'</h1><p class="muted">Check that this is the same person and stall as at registration.</p></div><div class="sheet">'+vcard(v,stagePill(v))+"</div>"+lastPanel(v,d.n)+
    (d.noGps?'<p class="note bad small">The phone did not give its location, so this visit will go to review.</p>':'<p class="note '+(d.dist>GEOFENCE_M?"bad":"ok")+' small">You are '+fmtDist(d.dist)+" from the registered stall"+(d.dist>GEOFENCE_M?", outside the "+GEOFENCE_M+" m limit. The visit will go to review.":".")+"</p>")+
+   (d.early?'<p class="note bad small">Visit '+d.n+" is due from "+fmtDay(d.dueTs)+", "+GAP_TEXT+" after "+d.after+". You can record it today, and your manager will decide whether it counts.</p>":"")+
    '<div class="sheet">'+photoPick("visit","Photo of the stall today")+"</div>"+
    '<div class="sheet"><p class="flabel">Is the trained person at the stall today?</p><div class="seg"><button data-a="set" data-o="visit" data-k="trained" data-v="yes" aria-pressed="'+(d.trained==="yes")+'">Yes</button><button data-a="set" data-o="visit" data-k="trained" data-v="no" aria-pressed="'+(d.trained==="no")+'">No</button></div></div>'+
    (v.scr&&v.scr.referral&&v.scr.went==null?'<div class="sheet"><p class="flabel">'+esc(v.name)+" was referred to "+esc(v.scr.referral.to)+'. Did they go?</p><div class="seg"><button data-a="set" data-o="visit" data-k="went" data-v="yes" aria-pressed="'+(d.went==="yes")+'">Yes</button><button data-a="set" data-o="visit" data-k="went" data-v="no" aria-pressed="'+(d.went==="no")+'">Not yet</button></div></div>':"")+
@@ -474,12 +482,19 @@ function doneView(){
   const todo=ITEMS.filter(it=>x.ans[it.n]===0||x.ans[it.n]===1).sort((a,b)=>(b.crit-a.crit)||(x.ans[a.n]-x.ans[b.n]));
   h+='<div class="sheet stack tight"><h2>Tell the vendor</h2>'+(todo.length?'<p class="small muted">Still to work on, most important first.</p><ul class="small" style="margin:0;padding-left:1.1rem">'+todo.slice(0,8).map(it=>itemLine(it,x.ans[it.n])).join("")+"</ul>"+(todo.length>8?'<p class="small muted">and '+(todo.length-8)+" more, in the vendor's history.</p>":""):"<p>Everything on the checklist is being followed.</p>")+"</div>";
   if(x.status==="review")h+='<p class="note bad small">This visit goes to review: '+esc(x.notes.join(" "))+"</p>";
+  h+='<p class="note small">'+(x.n<3?"Visit "+(x.n+1)+" is due from "+fmtDay(mid(x.ts)+GAP_DAYS*864e5)+".":"This was the final visit. "+esc(v.name)+" has completed the programme.")+"</p>";
   return h+'<button class="btn primary block" data-a="donevisit">Back to stall visits</button></div>';
 }
 function visitResults(){
   const pool=vlist().filter(v=>v.city===myCity()&&v.kit&&v.kit.trained),res=search(ui.q,ui.q.trim()?vlist().filter(v=>v.city===myCity()):pool).slice(0,ui.q.trim()?10:30);
   if(!res.length)return'<p class="muted">'+(ui.q.trim()?"No registered vendor matches.":"No vendor in "+esc(myCity())+" has completed training yet.")+"</p>";
-  return res.map(v=>{const n=nextVisit(v),vs=visitsOf(v),last=vs.length?score(vs[vs.length-1].ans):null;return vcard(v,n.n?'<button class="btn primary" data-a="startvisit" data-id="'+v.id+'">Visit '+n.n+"</button>":'<button class="btn quiet" data-a="startvisit" data-id="'+v.id+'">Check</button>',last?"last "+Math.round(last.p*100)+"%":"")}).join("");
+  const rows=res.map(v=>({v,n:nextVisit(v)})),card=({v,n})=>{const vs=visitsOf(v),last=vs.length?score(vs[vs.length-1].ans):null,when=!n.n?"":n.early?"due from "+fmtDay(n.dueTs):n.late>30?"due since "+fmtDay(n.dueTs):"due now";
+    return vcard(v,n.n?'<button class="btn '+(n.early?"":"primary")+'" data-a="startvisit" data-id="'+v.id+'">Visit '+n.n+"</button>":'<button class="btn quiet" data-a="startvisit" data-id="'+v.id+'">Check</button>',[last?"last "+Math.round(last.p*100)+"%":"",when].filter(Boolean).join(", "))};
+  if(ui.q.trim())return rows.map(card).join("");
+  const due=rows.filter(e=>e.n.n&&!e.n.early).sort((a,b)=>a.n.dueTs-b.n.dueTs),later=rows.filter(e=>e.n.n&&e.n.early).sort((a,b)=>a.n.dueTs-b.n.dueTs),fin=rows.filter(e=>!e.n.n);
+  return'<h3 class="num">Due now ('+due.length+")</h3>"+(due.length?due.map(card).join(""):'<p class="small muted">No vendor is due for a visit today.</p>')+
+    (later.length?'<h3 class="num" style="margin-top:1rem">Not due yet ('+later.length+')</h3><p class="small muted">Each visit is due '+GAP_TEXT+" after the last touch point.</p>"+later.map(card).join(""):"")+
+    (fin.length?'<h3 class="num" style="margin-top:1rem">All three visits done ('+fin.length+")</h3>"+fin.map(card).join(""):"");
 }
 function visitView(){
   if(ui.done&&S.visits[ui.done])return doneView();
@@ -512,7 +527,8 @@ function profileHtml(v){
    (v.att?"<dt>Training</dt><dd>"+esc((S.trainings[v.att.tid]||{}).venue||"")+", "+fmtDay(v.att.ts)+"</dd>":invitedTo(v).length?"<dt>Invited to</dt><dd>"+invitedTo(v).map(t=>esc(t.venue)+", "+tDate(t)).join("; ")+"</dd>":"")+
    (v.scr?"<dt>Screening</dt><dd>"+(v.scr.declined?"Did not want screening":seeHealth?"BP "+v.scr.sys+"/"+v.scr.dia+" ("+bpClass(v.scr.sys,v.scr.dia)+"), GRBS "+v.scr.grbs+" ("+grbsClass(v.scr.grbs)+")":"Done")+"</dd>":"")+
    (seeHealth&&needsReferral(v.scr)?"<dt>Referral</dt><dd>"+(v.scr.referral?"Referred to "+esc(v.scr.referral.to)+" on "+fmtDay(v.scr.referral.ts)+(v.scr.went===true?". Went.":v.scr.went===false?". Has not gone yet.":""):'<span class="flag">Not referred yet</span>')+"</dd>":"")+
-   (v.kit?"<dt>Handed over</dt><dd>"+([v.kit.cert&&"certificate",v.kit.apron&&"apron"].filter(Boolean).join(" and ")||"nothing yet")+"</dd>":"")+"</dl>"+
+   (v.kit?"<dt>Handed over</dt><dd>"+([v.kit.cert&&"certificate",v.kit.apron&&"apron"].filter(Boolean).join(" and ")||"nothing yet")+"</dd>":"")+
+   (nv=>nv.n?"<dt>Next visit</dt><dd>Visit "+nv.n+", "+(nv.early?"due from "+fmtDay(nv.dueTs):nv.late>30?"due since "+fmtDay(nv.dueTs):"due now")+"</dd>":"")(nextVisit(v))+"</dl>"+
    (vs.length?'<div><h3>Monitoring visits</h3><div class="scroll"><table class="hist"><thead><tr><th></th>'+vs.map(x=>'<th class="n">Visit '+x.n+'<br><span style="font-weight:400">'+fmtDay(x.ts)+"</span></th>").join("")+"</tr></thead><tbody>"+
      SECTIONS.map(s=>"<tr><td>"+s.name+"</td>"+scs.map(sc=>'<td class="n">'+sc.sec[s.id].got+" of "+sc.sec[s.id].max+"</td>").join("")+"</tr>").join("")+
      "<tr><td><strong>Total</strong></td>"+scs.map(sc=>'<td class="n"><strong>'+Math.round(sc.p*100)+"%</strong></td>").join("")+"</tr><tr><td>Rating</td>"+scs.map((sc,i)=>'<td class="n">'+(vs[i].status==="review"?'<span class="pill bad">In review</span>':ratePill(sc))+"</td>").join("")+"</tr>"+
@@ -560,6 +576,9 @@ function dMonitoring(){
   const itemAvg=ITEMS.map(it=>{const a=lat.map(x=>x.ans[it.n]).filter(v=>typeof v==="number");return{it,p:a.length?sum(a)/(a.length*2)*100:null}}).filter(e=>e.p!=null).sort((a,b)=>a.p-b.p).slice(0,8);
   h+=tile("s7","Where vendors need the most help","The eight checklist items followed least at the latest visit.",ch.hbar(itemAvg.map(e=>({label:e.it.n+". "+e.it.text,sub:e.it.crit?"Critical":"",value:e.p,text:Math.round(e.p)+"%",color:e.it.crit?"var(--bad)":"var(--series)"})),{w:640,max:100,labelW:400}));
   const rows=Object.values(S.vendors).filter(v=>v.review!=="rejected"&&xs.some(x=>x.vid===v.id)).map(v=>{const vs=[1,2,3].map(n=>xs.find(x=>x.vid===v.id&&x.n===n)),p=vs.map(x=>x?Math.round(sc.get(x.id).p*100):null),got=p.filter(x=>x!=null);return{v,vs,p,chg:got.length>1?got[got.length-1]-got[0]:null}}).sort((a,b)=>(b.chg??-999)-(a.chg??-999));
+  const nxt=vlist().filter(v=>v.kit&&v.kit.trained).map(nextVisit).filter(n=>n.n),cell=(n,f)=>nxt.filter(e=>e.n===n&&f(e)).length;
+  h+=tile("","Visits due","Each touch point is due "+GAP_TEXT+" after the one before: training, then visits 1, 2 and 3.",'<div class="scroll"><table><thead><tr><th>Next visit</th><th class="n">Due now</th><th class="n">Of those, more than 30 days late</th><th class="n">Not due yet</th></tr></thead><tbody>'+
+    [1,2,3].map(n=>"<tr><td>Visit "+n+'</td><td class="n">'+cell(n,e=>!e.early)+'</td><td class="n">'+cell(n,e=>!e.early&&e.late>30)+'</td><td class="n">'+cell(n,e=>e.early)+"</td></tr>").join("")+"</tbody></table></div>",{report:false});
   h+=tile("","Vendor by vendor","Score at each visit, and the change from the first to the latest.",'<div class="scroll"><table><thead><tr><th>Vendor</th><th>Ward</th><th class="n">Visit 1</th><th class="n">Visit 2</th><th class="n">Visit 3</th><th class="n">Change</th><th></th></tr></thead><tbody>'+
     rows.map(r=>"<tr><td>"+esc(r.v.name)+'<br><span class="small muted num">'+r.v.id+"</span></td><td>"+esc(r.v.ward)+"</td>"+r.vs.map((x,i)=>'<td class="n">'+(x?r.p[i]+"% "+ratePill(sc.get(x.id)):"")+"</td>").join("")+'<td class="n">'+(r.chg==null?"":(r.chg>0?"+":"")+r.chg+" points")+'</td><td><button class="btn quiet sm" data-a="profile" data-id="'+r.v.id+'">Open</button></td></tr>').join("")+"</tbody></table></div>");
   return h;
@@ -618,7 +637,7 @@ function openDlg(html){const d=$("#dlg");d.innerHTML=html;if(!d.open){if(d.showM
 function closeDlg(){const d=$("#dlg");if(d.open){if(d.close)d.close();else d.removeAttribute("open")}}
 function markPresent(id){const v=S.vendors[id],t=S.trainings[ui.tid];if(!v||!t||v.att)return;v.att={tid:t.id,ts:Date.now(),by:ui.me,walkin:!t.invited.includes(id)};save();ui.ok=v.name+" is marked present."+(v.att.walkin?" They were not on the invite list.":"");ui.q=""}
 async function startVisit(id){const v=S.vendors[id];clearMsg();if(!v)return render();const n=nextVisit(v);if(n.block){ui.msg=n.block;return render()}
-  const p=await AWIT.getPos(ui.loc,[v.lat,v.lng]);ui.visit={vid:id,n:n.n,dist:p.fail?null:hav(v.lat,v.lng,p.lat,p.lng),noGps:!!p.fail,sim:!!p.sim,photo:null,trained:"",went:"",ans:{},said:{},remarks:""};render();window.scrollTo(0,0)}
+  const p=await AWIT.getPos(ui.loc,[v.lat,v.lng]);ui.visit={vid:id,n:n.n,early:n.early,dueTs:n.dueTs,after:n.after,dist:p.fail?null:hav(v.lat,v.lng,p.lat,p.lng),noGps:!!p.fail,sim:!!p.sim,photo:null,trained:"",went:"",ans:{},said:{},remarks:""};render();window.scrollTo(0,0)}
 const A={
   ftab(d){ui.tab=d.v;clearMsg();ui.q="";ui.pick=null;ui.refer=null;render();window.scrollTo(0,0)},
   dtab(d){ui.dtab=d.v;ui.q="";clearMsg();render()},
@@ -672,7 +691,7 @@ const A={
   skiprefer(){ui.refer=null;clearMsg();render()},
   declinescr(){const v=S.vendors[ui.pick];v.scr={declined:true,ts:Date.now(),by:ui.me};save();clearMsg();ui.ok=v.name+" did not want screening. They can go on to the training.";ui.pick=null;render()},
   savekit(){const v=S.vendors[ui.pick],d=ui.kit;clearMsg();if(!d.trained&&(d.cert||d.apron)){ui.msg="Tick 'Attended the full training' before handing over the certificate or apron.";return render()}
-    v.kit={trained:!!d.trained,cert:!!d.cert,apron:!!d.apron,ts:Date.now(),by:ui.me};save();ui.ok=v.name+" is recorded."+(d.trained?" Stall visits can now start.":"");ui.pick=null;render()},
+    v.kit={trained:!!d.trained,cert:!!d.cert,apron:!!d.apron,ts:Date.now(),by:ui.me};save();ui.ok=v.name+" is recorded."+(d.trained?" Visit 1 is due from "+fmtDay(mid(Date.now())+GAP_DAYS*864e5)+".":"");ui.pick=null;render()},
   scan(){openScanner(id=>{clearMsg();const v=id&&S.vendors[id];
     if(!v||v.review==="rejected"){ui.msg="No registered vendor has this code. Only vendors registered at their stall can take part.";return render()}
     if(ui.tab==="visit")return startVisit(v.id);

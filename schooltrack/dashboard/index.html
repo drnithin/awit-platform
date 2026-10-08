@@ -186,7 +186,7 @@ details summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;alig
 <script>
 "use strict";
 const {esc,nf,pct,sum,fmtDay,fmtTime,fmtDist,dayKey,uid,rng,hav,ch,tile,kpis}=AWIT;
-const ROLE="dash",KEY="schooltrack.v2",MEKEY="schooltrack.me",GEOFENCE_M=150,MIN_MIN=30,DUP_BITS=4;
+const ROLE="dash",KEY="schooltrack.v2",MEKEY="schooltrack.me",GEOFENCE_M=150,MIN_MIN=30,GAP_DAYS=15,DUP_BITS=4;
 const ORGS={aw:"Arogya World India Trust",cini:"CINI",mamta:"MAMTA"},ORGSHORT={aw:"Arogya World",cini:"CINI",mamta:"MAMTA"};
 const REASONS=["School closed or holiday","Exams or a school event","Teacher or class not available","I could not travel","Other"];
 const STATUS={counted:{sym:"✓",label:"Counted",cls:"ok"},pending:{sym:"•",label:"Waiting for review",cls:"wait"},flagged:{sym:"!",label:"Flagged to partner",cls:"bad"},rejected:{sym:"✕",label:"Not counted",cls:"plain"}};
@@ -214,6 +214,7 @@ function evaluate(s){
   else if(s.noGps)f.push("The phone did not give a location.");
   else{if(s.distIn>GEOFENCE_M)f.push("Checked in "+fmtDist(s.distIn)+" from the school.");if(s.distOut!=null&&s.distOut>GEOFENCE_M)f.push("Checked out "+fmtDist(s.distOut)+" from the school.")}
   const mins=Math.round((s.endTs-s.startTs)/60000);if(mins<MIN_MIN)f.push("Lasted "+mins+" minutes. Sessions usually take "+MIN_MIN+" or more.");
+  const pv=prevInClass(s.schoolId,s.classId,s.startTs,s.id);if(pv){const gap=daysApart(pv.startTs,s.startTs);if(gap<GAP_DAYS)f.push("Held "+(gap===0?"on the same day as":gap+(gap===1?" day after":" days after"))+" activity "+pv.activity+" for this class. The gap between activities should be "+GAP_DAYS+" days or more.")}
   for(const p of s.photos)if(p.kind==="class"&&p.dup){const o=S.sessions[p.dup.sid];f.push(o&&S.schools[o.schoolId]?"Class photo matches one from "+S.schools[o.schoolId].name+", "+fmtDay(o.startTs)+", logged by "+coordName(o.coordId)+".":"Class photo matches an earlier photo.")}
   if(!s.photos.some(p=>p.kind==="class"))f.push("No class photo.");
   if(!s.photos.some(p=>p.kind==="register"))f.push("No attendance register photo.");
@@ -229,7 +230,12 @@ function cellSession(schoolId,classId,act){let live=null,dead=null;
   return live||dead}
 const activityTaken=(schoolId,classId,act)=>Object.values(S.sessions).some(s=>s.schoolId===schoolId&&s.classId===classId&&s.activity===act&&s.status!=="rejected");
 function schoolProgress(sc){let done=0,counted=0;for(const c of sc.classes)for(let a=1;a<=10;a++){const s=cellSession(sc.id,c.id,a);if(s&&s.status!=="rejected")done++;if(s&&s.status==="counted")counted++}return{done,counted,total:sc.classes.length*10}}
-function nextDue(sc){for(let a=1;a<=10;a++)for(const c of sc.classes)if(!activityTaken(sc.id,c.id,a))return{cls:c.id,act:a};return null}
+/* activities for one class are held at least GAP_DAYS apart */
+const mid=ts=>{const d=new Date(ts);d.setHours(0,0,0,0);return d.getTime()},daysApart=(a,b)=>Math.round((mid(b)-mid(a))/864e5);
+function prevInClass(schoolId,classId,before,selfId){let p=null;for(const o of Object.values(S.sessions)){if(o.id===selfId||o.schoolId!==schoolId||o.classId!==classId||o.decision==="rejected"||o.startTs>=before)continue;if(!p||o.startTs>p.startTs)p=o}return p}
+function classNext(sc,c){let act=0;for(let a=1;a<=10;a++)if(!activityTaken(sc.id,c.id,a)){act=a;break}if(!act)return null;
+  const last=prevInClass(sc.id,c.id,Infinity),openTs=last?mid(last.startTs)+GAP_DAYS*864e5:0;return{cls:c.id,act,last,openTs,early:Date.now()<openTs}}
+function nextDue(sc){const all=sc.classes.map(c=>classNext(sc,c)).filter(Boolean);if(!all.length)return null;const open=all.filter(n=>!n.early);return open.length?open.sort((a,b)=>a.act-b.act)[0]:all.sort((a,b)=>a.openTs-b.openTs)[0]}
 const sessLabel=s=>{const sc=S.schools[s.schoolId];return(sc?sc.name:"School")+", class "+s.classId+", activity "+s.activity+", "+fmtDay(s.startTs)};
 /* dashboard scope: a partner sees its own schools; Arogya World sees all, or one partner's */
 const inScope=sc=>ui.org==="aw"?(ui.pf==="all"||(sc.partner||"aw")===ui.pf):(sc.partner||"aw")===ui.org;
@@ -270,15 +276,15 @@ function loadSample(){
    ["29280100106","GHPS Vidyaranyapura","Bengaluru North",13.0767,77.5574,"c4","mamta",false,[["6A",40],["6B",43]],4],
    ["27220100201","Govandi school 1","Mumbai M East",19.0553,72.9154,"c5","aw",false,[["6A",44],["6B",41]],3,"Nourishing Govandi"],
    ["27220100202","Govandi school 2","Mumbai M East",19.0601,72.9202,"c5","aw",false,[["6A",38]],2,"Nourishing Govandi"]];
-  let seed=100;const byKey={};
-  for(const[id,name,block,lat,lng,coordId,partner,isAS,classes,k,project]of list){
+  let seed=100;const byKey={},OFF=[0,17,3,18,9,20,1,16];
+  for(const[id,name,block,lat,lng,coordId,partner,isAS,classes,k,project]of list){const off=OFF[list.findIndex(l=>l[0]===id)];
     S.schools[id]={id,name,block,project:project||"",partner,lat,lng,coordId,isAS,teacher:"",phone:"",classes:classes.map(([cid,enrol])=>({id:cid,enrol}))};
     for(const[cid,enrol]of classes)for(let a=1;a<=k;a++){
-      const ago=(k-a)*7+2+Math.floor(r()*3),st=new Date(now-ago*day);st.setHours(10+Math.floor(r()*4),Math.floor(r()*50),0,0);
+      const ago=off+(k-a)*16+1+Math.floor(r()*2),st=new Date(now-ago*day);st.setHours(10+Math.floor(r()*4),Math.floor(r()*50),0,0);
       const mins=35+Math.floor(r()*16),tot=Math.round(enrol*(.85+r()*.12)),boys=Math.round(tot*(.45+r()*.1));
       const s={id:"seed"+(seed++),schoolId:id,classId:cid,activity:a,coordId,startTs:st.getTime(),endTs:st.getTime()+mins*6e4,distIn:15+r()*80,distOut:15+r()*80,boys,girls:tot-boys,teacherPresent:r()<.85,remarks:"",
         photos:[Object.assign({kind:"class"},AWIT.samplePhoto(seed*7,"class")),{kind:"register",thumb:null,hash:null}]};
-      if(ago>6){s.decision="counted";s.decidedBy=partner;s.decidedTs=s.endTs+day}
+      if(!(a===k&&off<10)){s.decision="counted";s.decidedBy=partner;s.decidedTs=s.endTs+day}
       S.sessions[s.id]=s;byKey[id+"|"+cid+"|"+a]=s;
     }
   }
@@ -288,6 +294,7 @@ function loadSample(){
   const sh=open(g(3,"6B",4));sh.endTs=sh.startTs+9*6e4;
   const ov=open(g(5,"6B",4));ov.boys=27;ov.girls=24;
   const rej=g(1,"6C",2);rej.decision="rejected";rej.decisionNote="The register photo was from another class.";
+  const soon=g(6,"6B",3),before=g(6,"6B",2),shift=soon.startTs-6*day-before.startTs;before.startTs+=shift;before.endTs+=shift;
   const fl=open(g(1,"6B",5));
   S.flags.f1={id:"f1",about:{kind:"session",id:fl.id,label:""},to:"cini",note:"The class photo shows very few students for a count of "+(fl.boys+fl.girls)+". Please confirm with the school.",ts:now-day,status:"open"};
   const ans=g(3,"6A",3);
@@ -315,15 +322,15 @@ function homeView(){
   return'<div class="stack"><div><h1>Hello, '+esc(c.name.split(" ")[0])+'</h1><p class="muted">'+new Date().toLocaleDateString("en-IN",{weekday:"long",day:"numeric",month:"long"})+"</p></div>"+
    '<div class="tally"><div><b class="num">'+month.length+'</b><span>sessions this month</span></div><div><b class="num">'+nf(sum(month.map(s=>s.boys+s.girls)))+'</b><span>students attended</span></div><div><b class="num">'+month.filter(s=>s.status!=="counted").length+"</b><span>waiting for review</span></div></div>"+
    "<h2>Your schools</h2>"+(mine.length?mine.map(sc=>{const p=schoolProgress(sc),nx=nextDue(sc);return'<div class="sheet stack tight"><div class="row between"><div><h3>'+esc(sc.name)+'</h3><p class="small muted">'+esc(sc.block)+'</p></div><button class="btn primary" data-a="open" data-id="'+esc(sc.id)+'">Open</button></div>'+
-     '<div class="meter" aria-hidden="true"><i style="width:'+p.done/p.total*100+'%"></i></div><p class="small num">'+p.done+" of "+p.total+" activities done"+(nx?'. <strong>Next: class '+esc(nx.cls)+", activity "+nx.act+"</strong>":". All activities are complete")+"</p></div>"}).join(""):'<p class="note">No school is assigned to you yet. Your manager assigns schools in the dashboard.</p>')+"</div>";
+     '<div class="meter" aria-hidden="true"><i style="width:'+p.done/p.total*100+'%"></i></div><p class="small num">'+p.done+" of "+p.total+" activities done"+(nx?'. <strong>Next: class '+esc(nx.cls)+", activity "+nx.act+"</strong>"+(nx.early?", from "+fmtDay(nx.openTs):", due now"):". All activities are complete")+"</p></div>"}).join(""):'<p class="note">No school is assigned to you yet. Your manager assigns schools in the dashboard.</p>')+"</div>";
 }
 function schoolView(){
   const sc=S.schools[ui.schoolId];
   return'<div class="stack"><button class="btn quiet" data-a="home">All my schools</button><div><h1>'+esc(sc.name)+'</h1><p class="muted small num">UDISE '+esc(sc.id)+", "+esc(sc.block)+"</p></div>"+errBox()+
    '<button class="btn primary block" data-a="start">Start a session here</button><div class="two"><button class="btn" data-a="missstart">Session could not be held</button>'+(sc.lat!=null?'<a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination='+sc.lat+","+sc.lng+'">Directions</a>':'<span class="btn" style="opacity:.5">No location yet</span>')+"</div>"+
    sc.classes.map(c=>{let cells="";for(let a=1;a<=10;a++){const s=cellSession(sc.id,c.id,a);cells+='<span class="'+(s&&s.status!=="rejected"?s.status:"")+'" title="Activity '+a+(s?": "+STATUS[s.status].label:": not done")+'">'+a+"</span>"}
-     return'<div class="sheet"><h3>Class '+esc(c.id)+' <span class="muted small num" style="font-family:var(--body);font-weight:400">'+c.enrol+' enrolled</span></h3><div class="acts">'+cells+"</div></div>"}).join("")+
-   '<p class="small muted">Green is counted. Amber is waiting for your manager.</p></div>';
+     return'<div class="sheet"><h3>Class '+esc(c.id)+' <span class="muted small num" style="font-family:var(--body);font-weight:400">'+c.enrol+' enrolled</span></h3><div class="acts">'+cells+"</div>"+(nx=>'<p class="small num" style="margin-top:.5rem">'+(!nx?"All 10 activities are done.":nx.early?"Next: activity "+nx.act+", <strong>from "+fmtDay(nx.openTs)+"</strong>. Activity "+nx.last.activity+" was on "+fmtDay(nx.last.startTs)+".":"Next: activity "+nx.act+", <strong>due now</strong>.")+"</p>")(classNext(sc,c))+"</div>"}).join("")+
+   '<p class="small muted">Green is counted. Amber is waiting for your manager. Activities for a class are held at least '+GAP_DAYS+" days apart.</p></div>";
 }
 function photoBlock(kind,label){
   const d=ui.draft,p=d.photos.find(x=>x.kind===kind);
@@ -340,7 +347,8 @@ function wizard(){
   if(d.step===2){
     body="<h1>Class and activity</h1>"+(d.newAnchor?'<p class="note ok small">The school\'s location is now recorded.</p>':d.noGps?'<p class="note bad small">The phone did not give its location. You can continue; your manager will see that the location is missing.</p>':'<p class="note '+(d.distIn>GEOFENCE_M?"bad":"ok")+' small">You are '+fmtDist(d.distIn)+" from the school"+(d.distIn>GEOFENCE_M?". Your manager will see this.":".")+"</p>")+
      '<div><p class="flabel">Class</p><div class="chips">'+sc.classes.map(c=>'<button class="chip" data-a="pickclass" data-v="'+esc(c.id)+'" aria-pressed="'+(c.id===d.classId)+'">'+esc(c.id)+"</button>").join("")+"</div></div>";
-    if(d.classId){body+='<div><p class="flabel">Activity</p><div class="chips">';
+    if(d.classId){const nx=classNext(sc,cl);if(nx&&nx.early)body+='<p class="note bad small">Class '+esc(cl.id)+" had activity "+nx.last.activity+" on "+fmtDay(nx.last.startTs)+". The next activity is due from "+fmtDay(nx.openTs)+", "+GAP_DAYS+" days later. You can continue, and your manager will decide whether this session counts.</p>";
+      body+='<div><p class="flabel">Activity</p><div class="chips">';
       for(let a=1;a<=10;a++){const taken=activityTaken(sc.id,d.classId,a);body+='<button class="chip" data-a="pickact" data-v="'+a+'" aria-pressed="'+(a===d.activity)+'"'+(taken?' disabled aria-label="Activity '+a+', already done"':"")+">"+a+"</button>"}
       body+='</div><p class="small muted" style="margin-top:.4rem">Activities already done for this class cannot be logged again.</p></div>'}
     body+='<button class="btn primary block" data-a="next"'+(d.classId&&d.activity?"":" disabled")+">Continue</button>";
@@ -390,8 +398,8 @@ function dOverview(){
   const all=scopeSessions(),cnt=all.filter(s=>s.status==="counted"),pend=all.filter(s=>s.status==="pending"),ids=new Set(schools.map(s=>s.id)),misses=Object.values(S.misses).filter(m=>ids.has(m.schoolId));
   let reach=0,enrol=0;for(const sc of schools)for(const c of sc.classes){enrol+=c.enrol;if(cnt.some(s=>s.schoolId===sc.id&&s.classId===c.id))reach+=c.enrol}
   let h=kpis([[schools.length,"schools"],[nf(enrol),"students enrolled"],[nf(reach),"students reached"],[cnt.length,"sessions counted"],[pend.length,"waiting for review"],[misses.length,misses.length===1?"session that could not be held":"sessions that could not be held"]]);
-  const weeks=[];for(let w=7;w>=0;w--){const end=Date.now()-w*7*864e5,st=end-7*864e5;weeks.push({l:fmtDay(st),v:all.filter(s=>s.status!=="rejected"&&s.startTs>st&&s.startTs<=end).length})}
-  h+=tile("s6","Sessions delivered each week","The last eight weeks.",ch.line(weeks.map(w=>w.l),[{name:"Sessions",color:"var(--series)",values:weeks.map(w=>w.v)}],{w:540,h:170,area:true,fmt:nf}));
+  const weeks=[];for(let w=11;w>=0;w--){const end=Date.now()-w*7*864e5,st=end-7*864e5;weeks.push({l:fmtDay(st),v:all.filter(s=>s.status!=="rejected"&&s.startTs>st&&s.startTs<=end).length})}
+  h+=tile("s6","Sessions delivered each week","The last twelve weeks.",ch.line(weeks.map(w=>w.l),[{name:"Sessions",color:"var(--series)",values:weeks.map(w=>w.v)}],{w:540,h:170,area:true,fmt:nf}));
   const classes=schools.flatMap(sc=>sc.classes.map(c=>({sc,c}))),comp=[];for(let a=1;a<=10;a++)comp.push(classes.length?Math.round(classes.filter(x=>{const s=cellSession(x.sc.id,x.c.id,a);return s&&s.status==="counted"}).length/classes.length*100):0);
   h+=tile("s6","How far classes have got","Share of classes with each of the 10 activities counted.",ch.vbar(["1","2","3","4","5","6","7","8","9","10"],comp,{w:540,h:170,max:100,fmt:v=>Math.round(v)+"%"}));
   let t='<div class="scroll"><table class="reg"><thead><tr><th class="cls">Class</th>';for(let a=1;a<=10;a++)t+='<th scope="col">'+a+"</th>";t+="</tr></thead><tbody>";
