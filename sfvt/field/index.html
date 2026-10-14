@@ -164,6 +164,11 @@ details summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;alig
 .savebar{position:sticky;bottom:66px;background:var(--sheet);border:1.5px solid var(--ink);border-radius:14px;padding:.6rem .8rem;z-index:5}
 .hist td,.hist th{padding:.4rem .5rem;font-size:.9rem}
 </style>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#2B2140">
+<link rel="apple-touch-icon" href="../../icons/sfvt-192.png">
+<style>#netbar{position:sticky;top:0;z-index:70;background:#FBE7B5;color:#4A3200;border-bottom:1px solid #D9A93A;padding:.55rem 1rem;font-weight:700;font-size:.92rem;text-align:center;line-height:1.35}</style>
+<script>(function(){if("serviceWorker"in navigator&&/^https?:$/.test(location.protocol))window.addEventListener("load",function(){navigator.serviceWorker.register("../../sw.js").catch(function(){})});function bar(){var b=document.getElementById("netbar");if(navigator.onLine){if(b)b.remove();return}if(!b){b=document.createElement("div");b.id="netbar";b.setAttribute("role","status");b.textContent="No network. Keep working: everything you save stays on this phone.";document.body.insertBefore(b,document.body.firstChild)}}window.addEventListener("online",bar);window.addEventListener("offline",bar);document.addEventListener("DOMContentLoaded",bar)})();</script>
 </head>
 <body>
 <div class="band"><div class="in">

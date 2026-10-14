@@ -20,3 +20,4 @@ Notes
 
 - Passcodes and PINs are a screen lock for a prototype, not real security. Do not enter real personal or health data until logins and a shared database are added.
 - Every tool keeps its data in the browser of the device it is opened on. Two devices do not share data yet.
+- `sw.js` keeps the two field apps working without network once they have been opened on a phone with a signal. `icons/` and each field folder's `manifest.webmanifest` let coordinators add the app to the home screen.
