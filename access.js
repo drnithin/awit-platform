@@ -6,6 +6,9 @@
 
    This is a screen lock for a prototype. It keeps casual visitors out, but it is not
    real security: proper logins come with the shared database. */
+/* The online store for real figures (Supabase). Paste the Project URL and the anon (public) key from
+   Supabase, Project Settings, API. Leave both empty to keep using files in the data folder. */
+window.AWIT_DB = { url: "", key: "" };
 window.AWIT_ACCESS = {
   // Arogya World India Trust managers and heads: Program MIS and every dashboard
   team: ["01e92f4b5d75adc8d7487587a570693f73f2d87a08426871cafe0028daef36c2"],
@@ -17,7 +20,8 @@ window.AWIT_ACCESS = {
   },
   // One line per funder dashboard. The team passcode also opens every funder dashboard.
   funders: {
-    govandi: ["c80fbfc4e03dfba4345f6b1de5e19e0495599476c2bd9e77ee60df07ed2b0768"]
+    govandi: ["c80fbfc4e03dfba4345f6b1de5e19e0495599476c2bd9e77ee60df07ed2b0768"],
+    hcltech: ["a566ec035c37bbce82d9ba66af8155e58b8a1420b329a33d1b12f16088347817"]
   }
 };
 (function () {

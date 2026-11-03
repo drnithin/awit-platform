@@ -1,0 +1,22 @@
+{
+ "name": "Arogya SchoolTrack",
+ "short_name": "SchoolTrack",
+ "start_url": "./",
+ "scope": "./",
+ "display": "standalone",
+ "background_color": "#F2F6F5",
+ "theme_color": "#0D5C56",
+ "icons": [
+  {
+   "src": "../../icons/schooltrack-192.png",
+   "sizes": "192x192",
+   "type": "image/png"
+  },
+  {
+   "src": "../../icons/schooltrack-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any maskable"
+  }
+ ]
+}
