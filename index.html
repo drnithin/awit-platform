@@ -3,15 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>HCLTech project: progress</title>
+<title>Arogya World India Trust: Program MIS</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&display=swap" rel="stylesheet">
 <style>
 :root{
   --paper:#F2F6FB; --sheet:#FFFFFF; --ink:#16233F; --ink2:#52617E; --rule:#C7D5E8; --rule2:#E6EDF6;
-  --bad:#C4352B; --ok:#1B7648; --ok-bg:#E3F3EA; --wait:#8A5A05; --wait-bg:#FBF0D6;
-  --c-hsp:#2a78d6; --c-as:#1baf7a; --c-sfvt:#eb6834; --c-city:#4a3aa7; --c-mute:#9AA9C2; --mute:#9AA9C2; --accent:#16233F; --accent-ink:#FFFFFF; --link:#1D4FC0; --bad-bg:#FBE9E7; --warn:#D99A00; --series:#2a78d6; --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4;
+  --band:#16233F; --band-ink:#FFFFFF; --accent:#16233F; --accent-ink:#FFFFFF; --link:#1D4FC0; --focus:#1D4FC0;
+  --bad:#C4352B; --bad-bg:#FBE9E7; --ok:#1B7648; --ok-bg:#E3F3EA; --wait:#8A5A05; --wait-bg:#FBF0D6; --warn:#D99A00; --mute:#9AA9C2;
+  --c-hsp:#2a78d6; --c-my:#eb6834; --c-city:#1baf7a; --c-mdb:#7c5cd6; --series:#2a78d6;
+  --v1:#F6BDA4; --v2:#EB6834; --v3:#9C3F17; --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4;
   --display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
   --body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
@@ -19,14 +21,18 @@
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --paper:#111A2B; --sheet:#18243A; --ink:#EEF2F9; --ink2:#A6B3CB; --rule:#33435F; --rule2:#22304A;
-    --bad:#FF9384; --ok:#86D9A9; --ok-bg:#1C3A2C; --wait:#F1C56C; --wait-bg:#3A3018;
-    --c-hsp:#3987e5; --c-as:#199e70; --c-sfvt:#d95926; --c-city:#9085e9; --c-mute:#5C6C8A; --mute:#5C6C8A; --accent:#EEF2F9; --accent-ink:#111A2B; --link:#9DBBFF; --bad-bg:#40221F; --warn:#F1C56C; --series:#3987e5; --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181;
+    --band:#0B1220; --band-ink:#FFFFFF; --accent:#EEF2F9; --accent-ink:#111A2B; --link:#9DBBFF; --focus:#9DBBFF;
+    --bad:#FF9384; --bad-bg:#40221F; --ok:#86D9A9; --ok-bg:#1C3A2C; --wait:#F1C56C; --wait-bg:#3A3018; --warn:#F1C56C; --mute:#5C6C8A;
+    --c-hsp:#3987e5; --c-my:#d95926; --c-city:#199e70; --c-mdb:#8f74e8; --series:#3987e5;
+    --v1:#7A3516; --v2:#D95926; --v3:#F2A98C; --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181;
   }
 }
 :root[data-theme="dark"]{
   --paper:#111A2B; --sheet:#18243A; --ink:#EEF2F9; --ink2:#A6B3CB; --rule:#33435F; --rule2:#22304A;
-  --bad:#FF9384; --ok:#86D9A9; --ok-bg:#1C3A2C; --wait:#F1C56C; --wait-bg:#3A3018;
-  --c-hsp:#3987e5; --c-as:#199e70; --c-sfvt:#d95926; --c-city:#9085e9; --c-mute:#5C6C8A; --mute:#5C6C8A; --accent:#EEF2F9; --accent-ink:#111A2B; --link:#9DBBFF; --bad-bg:#40221F; --warn:#F1C56C; --series:#3987e5; --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181;
+  --band:#0B1220; --band-ink:#FFFFFF; --accent:#EEF2F9; --accent-ink:#111A2B; --link:#9DBBFF; --focus:#9DBBFF;
+  --bad:#FF9384; --bad-bg:#40221F; --ok:#86D9A9; --ok-bg:#1C3A2C; --wait:#F1C56C; --wait-bg:#3A3018; --warn:#F1C56C; --mute:#5C6C8A;
+  --c-hsp:#3987e5; --c-my:#d95926; --c-city:#199e70; --c-mdb:#8f74e8; --series:#3987e5;
+  --v1:#7A3516; --v2:#D95926; --v3:#F2A98C; --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181;
 }
 *,*::before,*::after{box-sizing:inherit}
 [hidden]{display:none!important}
@@ -148,103 +154,914 @@ dt{color:var(--ink2)} dd{margin:0}
 details summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;align-items:center}
 .cellin{min-height:44px;border:1.5px solid var(--ink);border-radius:10px;padding:.4rem .6rem;background:var(--sheet);color:var(--ink);font:inherit;width:100%}
 
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5}
-h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.15;margin:0}
-h1{font-size:clamp(2rem,5vw,3.2rem);letter-spacing:-.02em} h2{font-size:1.1rem} h3{font-size:1rem}
-p{margin:0}
-.muted{color:var(--ink2)} .small{font-size:.875rem} .num{font-variant-numeric:tabular-nums}
-.wrap{max-width:1180px;margin:0 auto;padding:0 1.25rem}
+.wrap{max-width:1280px;margin:0 auto;padding:0 1.25rem}
 .bar{border-bottom:2px solid var(--ink);background:var(--sheet)}
-.bar .wrap{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;justify-content:space-between;align-items:center;padding-top:.8rem;padding-bottom:.8rem}
-.brand{font-family:var(--display);font-weight:700;font-size:1.1rem} .brand span{font-weight:500;color:var(--ink2)}
-.hero{padding:2rem 0 1.25rem}
-.hero .tag{font-family:var(--display);font-size:1.35rem;font-weight:500;color:var(--ink2);margin-top:.3rem}
-.meta{display:flex;flex-wrap:wrap;gap:.3rem 1.5rem;margin-top:.9rem}
-.period{margin-top:1.2rem}
-.period .track{position:relative;height:12px;background:var(--rule2);border-radius:6px}
-.period .fill{position:absolute;left:0;top:0;bottom:0;border-radius:6px;background:var(--ink)}
-.period .ends{display:flex;justify-content:space-between;margin-top:.35rem}
-.banner{border-left:5px solid var(--wait);background:var(--wait-bg);color:var(--wait);padding:.6rem .9rem;margin-top:.8rem;font-weight:700}
-.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:1rem;margin-top:1rem}
-.tile{background:var(--sheet);border:1.5px solid var(--rule);border-radius:12px;padding:1.1rem 1.2rem 1.2rem;grid-column:span 12;min-width:0}
-.tile>h2{margin-bottom:.15rem} .tile .sub{color:var(--ink2);font-size:.875rem;margin-bottom:.8rem}
-@media (min-width:860px){.s3{grid-column:span 3}.s6{grid-column:span 6}}
-@media (min-width:560px) and (max-width:859px){.s3{grid-column:span 6}}
-.ring{text-align:center;border-top:6px solid var(--pc)}
-.ring svg{width:150px;height:150px;display:block;margin:.6rem auto .4rem}
-.ring b{display:block;font-family:var(--display);font-size:1.5rem;line-height:1.1}
-.comp{border-top:6px solid var(--pc)}
-.ind{margin-top:.9rem}
-.ind .top{display:flex;justify-content:space-between;gap:1rem;align-items:baseline}
-.ind .track{height:14px;background:var(--rule2);border-radius:4px;margin-top:.3rem;overflow:hidden}
-.ind .fill{height:100%;background:var(--pc);border-radius:4px}
-.ind .big{font-family:var(--display);font-size:1.6rem;font-weight:700}
-.scroll{overflow-x:auto}
-.reg{border-collapse:collapse;width:100%;min-width:480px}
-.reg th,.reg td{border:1px solid var(--rule2);text-align:center;padding:.4rem .2rem;font-size:.95rem}
-.reg th{color:var(--ink2);font-weight:700;font-size:.8125rem}
-.reg td.c{text-align:left;padding-left:.6rem;white-space:nowrap}
-.reg .v{color:var(--ok);font-weight:700} .reg .p{color:var(--wait);font-weight:700}
-.upd{display:grid;grid-template-columns:6.5rem 1fr;gap:.4rem 1rem;padding:.6rem 0;border-bottom:1px solid var(--rule2)}
-.upd:last-child{border-bottom:0}
-svg text{font-family:var(--body);fill:var(--ink2);font-size:11px}
+.bar .wrap{display:flex;flex-wrap:wrap;gap:.75rem 1.5rem;align-items:center;justify-content:space-between;padding-top:.8rem;padding-bottom:.8rem}
+.bar .brand span{font-weight:500;color:var(--ink2)}
+.slicers{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
+.slicers .seg,.slicers select{border-radius:999px}
+.slicers select{min-height:44px;border:1.5px solid var(--ink);background:var(--sheet);padding:0 .9rem}
+.pill.sample{background:var(--wait-bg);color:var(--wait)} .pill.real{background:var(--ok-bg,#E3F4EA);color:var(--ok)}
+h1.big{font-size:clamp(1.7rem,3.6vw,2.6rem);letter-spacing:-.015em}
+.lead{grid-column:span 12;padding:.5rem 0 .25rem}
+.lead p{font-size:1.1rem;color:var(--ink2);margin-top:.4rem;max-width:62ch}
+.actions{grid-column:span 12;display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
+.actions select{min-height:48px;border:1.5px solid var(--ink);border-radius:12px;background:var(--sheet);padding:0 .8rem;font-weight:700;max-width:100%}
+.subtabs{grid-column:span 12}
+.fcard{border-top:6px solid var(--pc);cursor:pointer;text-align:left;font:inherit;color:inherit;width:100%}
+.fcard b{display:block;font-family:var(--display);font-size:2.1rem;line-height:1.1;margin-top:.35rem}
+.fcard ul{list-style:none;margin:.7rem 0 0;padding:0;border-top:1px solid var(--rule2)}
+.fcard li{display:flex;justify-content:space-between;gap:1rem;padding:.35rem 0;border-bottom:1px solid var(--rule2)}
+.fcard .go{display:inline-block;margin-top:.7rem;font-weight:700;text-decoration:underline}
+.fcard:hover{border-color:var(--pc)}
+.heat td.n{border-left:1px solid var(--rule2)}
+.toollinks{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:.25rem 1.75rem}
+.toollinks a{display:block;padding:.6rem 0;border-top:1px solid var(--rule2);font-weight:700;text-decoration:none;color:var(--ink)}
+.toollinks a span{display:block;font-weight:400;color:var(--ink2);font-size:.875rem}
 .foot{color:var(--ink2);font-size:.875rem;padding:1.5rem 0 3rem}
+#report{position:fixed;inset:0;z-index:60;overflow:auto;background:var(--paper)}
+.rbar{position:sticky;top:0;background:var(--sheet);border-bottom:2px solid var(--ink);padding:.7rem 1rem;display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;z-index:2}
+.rdoc{max-width:820px;margin:1.5rem auto 3rem;background:#fff;color:#16233F;padding:2.5rem;border:1px solid #C7D5E8}
+.rdoc h1{font-size:1.9rem;color:#16233F} .rdoc h2{font-size:1.3rem;margin:2rem 0 .5rem;padding-top:1rem;border-top:2px solid #16233F;color:#16233F}
+.rdoc h3{margin:1.2rem 0 .4rem;color:#16233F}
+.rdoc p{margin:.4rem 0} .rdoc .muted{color:#52617E}
+.rdoc table{margin:.6rem 0 1rem} .rdoc th,.rdoc td{border:1px solid #C7D5E8;color:#16233F} .rdoc th{background:#F2F6FB;color:#16233F}
+.rdoc figure{margin:1.2rem 0;break-inside:avoid} .rdoc figure img{width:100%;border:1px solid #E6EDF6;display:block}
+.rdoc .banner{border-left:5px solid #8A5A05;background:#FBF0D6;color:#8A5A05;padding:.5rem .8rem;font-weight:700}
+@media print{body>*:not(#report){display:none!important}#report{position:static!important;overflow:visible!important;background:#fff!important}.rbar{display:none!important}.rdoc{border:0!important;margin:0!important;padding:0!important;max-width:none!important}}
 </style>
 </head>
 <body>
-<div class="bar"><div class="wrap"><div class="brand">Arogya World India Trust <span>Project progress</span></div><div class="small muted" id="asof"></div></div></div>
-<main class="wrap" id="app"></main>
-<script src="../../access.js"></script>
-<script src="../../lib/awit.js"></script>
+<div class="bar"><div class="wrap">
+  <div class="brand">Arogya World India Trust <span>Program MIS</span> <span class="pill sample" id="badge">Sample data</span></div>
+  <div class="slicers">
+    <div class="seg" role="group" aria-label="Year" id="years"></div>
+    <label class="small">State <select data-c="state" id="states"></select></label>
+  </div>
+</div></div>
+<div class="wrap">
+  <div class="tabs" role="tablist" id="tabs" style="margin-top:1rem"></div>
+  <main class="grid" id="app"></main>
+  <p class="foot" id="foot">The charts on the program tabs use illustrative sample data, to show how the MIS will look once the tools and the bot export feed it. Panels marked Live and everything in the Data hub are real records from this device. Arogya Schools students are also Healthy Schools Program students, so totals count them once.</p>
+</div>
+<div id="report" hidden></div>
+<script src="access.js"></script>
+<script src="lib/xlsx.mini.min.js"></script>
+<script src="lib/awit.js"></script>
 <script>
 "use strict";
-const PID="hcltech",esc=AWIT.esc,nf=AWIT.nf,PAL=["var(--c-hsp)","var(--c-sfvt)","var(--c-as)","var(--c-city)"];
-const fmtDate=t=>new Date(t).toLocaleDateString("en-IN",{day:"numeric",month:"long",year:"numeric"});
-const fmtMonth=t=>new Date(t).toLocaleDateString("en-IN",{month:"short",year:"numeric"});
-let DATA=null,local=false,pubAt=null;
-async function load(){
-  let pub=null;try{const r=await AWIT.store.load(PID,"../../");if(r&&r.data)pub=r.data}catch(e){}
-  const H=AWIT.get(AWIT.HUB_KEY);pubAt=pub&&pub.publishedAt;
-  if(H&&H[PID]&&(H[PID].dirty||!pub)){DATA=JSON.parse(JSON.stringify(H[PID]));DATA.datasets=(H.datasets||[]).filter(d=>d.show===PID);DATA.tools=AWIT.snapshot(PID);local=true}
-  else{DATA=pub;local=false}
+const {esc,compact,sum,ch,tile,kpis,rng}=AWIT;
+const nf=n=>Math.round(n).toLocaleString("en-IN");
+const pc=(a,b)=>b?Math.round(a/b*100)+"%":"0%",pct=x=>Math.round(x*100)+"%";
+const $=s=>document.querySelector(s);
+
+/* ---------- sample data model: each block below is replaced by a real feed later ---------- */
+const MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const MONTHS=[];for(let i=0;i<21;i++)MONTHS.push({y:2025+Math.floor(i/12),m:i%12});
+const D={blr:{name:"Bengaluru Urban",st:"Karnataka"},mys:{name:"Mysuru",st:"Karnataka"},mum:{name:"Mumbai",st:"Maharashtra"},vad:{name:"Vadodara",st:"Gujarat"},nar:{name:"Narmada",st:"Gujarat"},web:{name:"Online, all India",st:"Online"}};
+const FAM={hsp:{name:"Healthy Schools Program",c:"var(--c-hsp)",subs:["hsp","as"]},my:{name:"MyThali",c:"var(--c-my)",subs:["sfvt","out","bot"]},city:{name:"Arogya City",c:"var(--c-city)",subs:["city"]}};
+const SUB={
+  hsp:{fam:"hsp",name:"HSP",full:"Healthy Schools Program",unit:"students",site:"schools",aud:"School students"},
+  as:{fam:"hsp",name:"Arogya Schools",full:"Arogya Schools",unit:"students in nominee schools",site:"nominee schools"},
+  sfvt:{fam:"my",name:"Street Food Vendor Training",full:"Street Food Vendor Training",unit:"vendors",site:"stalls",aud:"Street food vendors"},
+  out:{fam:"my",name:"Nutrition outreach",full:"Nutrition outreach to women and adolescents",unit:"women and adolescents",site:"sessions",aud:"Women and adolescents"},
+  bot:{fam:"my",name:"WhatsApp challenge",full:"21-day WhatsApp challenge",unit:"participants",site:"editions",aud:"WhatsApp challenge participants"},
+  city:{fam:"city",name:"Arogya City",full:"Arogya City",unit:"people covered by delivered pledges",site:"pledgemakers",aud:"City residents covered by pledges"}};
+const R0=rng(5102026);
+/* [program, district, people, sites, partner, first month, months it runs in (challenge only)] */
+const ROWS=[
+ ["hsp","blr",52000,210,"MAMTA",0],["hsp","mys",18000,80,"MAMTA",5],["hsp","mum",24000,95,"Arogya World, direct",12],["hsp","vad",61000,260,"CINI",0],["hsp","nar",33000,150,"CINI",2],
+ ["as","blr",6100,18,"MAMTA",6],["as","mys",2300,8,"MAMTA",9],["as","vad",7900,22,"CINI",6],["as","nar",3800,12,"CINI",8],
+ ["sfvt","blr",780,780,"NASVI",2],["sfvt","mum",340,340,"NASVI",17],
+ ["out","vad",3100,118,"Arogya World, direct",3],["out","blr",2300,88,"Arogya World, direct",7],["out","mum",420,16,"Arogya World, direct",19],
+ ["bot","web",4800,2,"Turn.io",9,{9:2100,13:2700}],
+ ["city","blr",96000,64,"Arogya City partners",0],["city","mum",8500,21,"Arogya City partners",16]
+].map(([p,d,people,sites,partner,start,only])=>{
+  let mon;
+  if(only)mon=MONTHS.map((_,i)=>only[i]||0);
+  else{const w=MONTHS.map((mo,i)=>i<start?0:((p==="hsp"||p==="as")&&(mo.m===3||mo.m===4)?.2:1)*(.65+.7*R0())*(1+i/40)),tw=sum(w);mon=w.map(x=>Math.round(people*x/tw));mon[20]+=people-sum(mon)}
+  return{p,d,people,sites,partner,start,mon};
+});
+const TARGET26={hsp:150000,sfvt:1500,out:6000,bot:6000,city:120000};
+const WOMEN={hsp:.49,sfvt:.6,out:1,bot:.71,city:.47};
+const HSPD={blr:{c:[.97,.58],att:.91,k:[[46,72],[51,70],[60,84]]},mys:{c:[.98,.66],att:.93,k:[[44,74],[50,73],[58,85]]},mum:{c:[.90,.22],att:.86,k:[[47,58],[52,60],[62,70]]},vad:{c:[.98,.71],att:.92,k:[[42,75],[49,72],[57,86]]},nar:{c:[.95,.55],att:.89,k:[[39,70],[47,69],[55,82]]}};
+const ASMAX=[12,15,3,10,10,10,5,10],ASLAB=["School Health Committee formed","HSP activities completed","HSP manuals in the library","KAP baseline and endline surveys","Annual sports event","Sugar and Oil boards","School demographic survey","Objective measurements"];
+const ASS=[];(()=>{const r=rng(8080);for(const row of ROWS.filter(x=>x.p==="as"))for(let i=1;i<=row.sites;i++){
+  const m=.35+.65*r(),b=x=>r()<x?1:0;let e,p;
+  if(m>=.9){e=ASMAX.slice();p=5+Math.floor(r()*18)}
+  else{e=[12*b(m+.15),1.5*Math.min(10,Math.round(10*m*(.85+.3*r()))),1.5*(b(m)+b(m)),2.5*(b(m)+b(m)+b(m)+b(m)),10*b(m-.1),5*(b(m+.1)+b(m)),5*b(m+.2),5*(b(m)+b(m-.25))];p=Math.round(25*m*(.3+.5*r()))}
+  const es=sum(e);ASS.push({name:D[row.d].name+" school "+String(i).padStart(2,"0"),d:row.d,e,es,p,total:es+p,seal:es===75&&p>=5})}})();
+const SFSTEPS=["Registered","Invited","Attended","Screened","Trained","Visit 1","Visit 2","Visit 3"];
+const SFSEC=["Oil","Salt","Food colour","Personal hygiene","Food and stall hygiene","Ask the vendor"];
+const SF={blr:{st:[1,.93,.61,.56,.6,.52,.41,.3],sec:[[52,66,78],[48,60,71],[61,72,83],[44,58,70],[50,63,74],[55,69,80]],rate:[[.18,.47,.35],[.36,.46,.18],[.58,.34,.08]],women:.58,scr:[.27,.19],ref:.86,fostac:.12},
+          mum:{st:[1,.9,.55,.5,.55,.38,.12,0],sec:[[47,58,0],[45,55,0],[58,66,0],[40,52,0],[46,57,0],[50,62,0]],rate:[[.12,.44,.44],[.27,.48,.25],[0,0,0]],women:.64,scr:[.31,.22],ref:.78,fostac:.08}};
+const WARDS=[["Shivajinagar","blr",310,.66],["KR Market","blr",290,.61],["Johnson Market","blr",180,.5],["Govandi","mum",340,.55]];
+const OUTQ=[[52,81],[48,79],[57,86],[41,73],[55,84],[50,77],[61,88],null,[46,75],[38,69]];
+const VAADA=[["Less oil (kam tel)",.24],["Fruit every day (roz phal)",.19],["Less sugar (kam cheeni)",.18],["Less salt (kam namak)",.17],["Tea apart from meals (chai alag)",.13],["Brown rice (brown chawal)",.09]];
+const BOT={funnel:[["Said yes to the challenge",1],["Finished onboarding",.82],["Completed the baseline",.76],["Still active on day 7",.54],["Still active on day 14",.41],["Finished all 21 days",.33],["Completed the endline",.27]],
+  habits:[["Had a fruit",.71],["At most 1 sweet or sugary drink",.58],["More than 2 protein-rich meals",.49],["2 to 3 litres of water",.66],["30 minutes or more of exercise",.44]],
+  bands:[["Just starting out (0 to 3)",.34,.14],["Building balance (4 to 6)",.45,.41],["Festive ready (7 to 10)",.21,.45]],age:[["18 to 25",.22],["26 to 35",.37],["36 to 45",.26],["Above 45",.15]],score:[4.6,6.3],streak:9.4,points:24.8,returning:.31};
+const CITY={blr:{name:"Bengaluru",base:[54,38,41,47,33,44,68,39,42],mirror:[[250000,82000,57000],[180000,34000,22500],[150000,21000,13500],[90000,5000,3000]],close:[41,15,8],sect:[20,10,9,8,7,6,4]},
+            mum:{name:"Mumbai",base:[46,22,49,40,29,41,61,36,38],mirror:[[300000,18000,6000],[200000,7000,1500],[170000,5000,1000],[100000,1000,0]],close:[6,9,6],sect:[4,4,3,3,2,2,3]}};
+const BASELAB=["Air quality","Public open space","Walkability","Food environment","Screening coverage","Physical activity","Tobacco-free living","Diabetes burden","Hypertension burden"];
+const CAUSES=["Health screening","Physical activity","Healthy food","Tobacco-free campuses"];
+const SECT=["IT and technology","Healthcare","Education","Manufacturing","Housing societies","Food and hospitality","Government and public sector"];
+const PLEDGERS=[["IT services firm","blr",18000,16900],["Hospital group","blr",15000,12600],["Technology park","blr",12000,11400],["University","blr",9000,5200],["Apartment federation","blr",8000,6900],["Garment exporter","blr",7000,2100],["Restaurant chain","blr",6000,5700],["Public sector unit","blr",5000,1500],["Bank, regional office","mum",6000,2900],["Pharma company","mum",5000,1800],["Hotel group","mum",4000,900],["Housing society cluster","mum",3000,1400]];
+/* Projects a funder report can be made for. Replace the sample funders with your own. */
+const PROJECTS=[
+ {id:"govandi",name:"Nourishing Govandi",funder:"Godrej",state:"Maharashtra",subs:["hsp","out","sfvt"]},
+ {id:"hsp-guj",name:"Healthy Schools, Gujarat",funder:"Funder A (sample)",state:"Gujarat",subs:["hsp","as"]},
+ {id:"hsp-kar",name:"Healthy Schools, Karnataka",funder:"Funder B (sample)",state:"Karnataka",subs:["hsp","as"]},
+ {id:"sfvt-blr",name:"Street food vendors, Bengaluru",funder:"Funder C (sample)",state:"Karnataka",subs:["sfvt"]},
+ {id:"city-blr",name:"Arogya City Bengaluru",funder:"City partners (sample)",state:"Karnataka",subs:["city"]}];
+const TOOLS={hsp:[["Arogya SchoolTrack dashboard","Review, activity register, school master and team","schooltrack/dashboard/"]],
+  sfvt:[["Street Food Vendor Training dashboard","Training days, monitoring visits, screening and review","sfvt/dashboard/"]],
+  funder:[["Nourishing Govandi funder dashboard","What the funding team sees for this project","funders/govandi/"]],
+  city:[["Arogya City pledge closeout","Organisation-wise closeout progress","https://drnithin.github.io/arogya-city2026/admin/dashboard.html"],["Arogya City Impact Wall","Public page of pledges delivered","https://drnithin.github.io/arogya-city2026/wall.html"]]};
+
+/* ---------- helpers ---------- */
+const ui={tab:"overview",sub:{hsp:"hsp",my:"sfvt",city:"city"},year:"all",state:"all"};
+const inPeriod=i=>ui.year==="all"||String(MONTHS[i].y)===ui.year;
+const inState=d=>ui.state==="all"||D[d].st===ui.state;
+function periodText(){if(REAL)return(ui.year==="all"?"all years to date":ui.year)+(ui.state==="all"?"":", "+ui.state);const ix=MONTHS.map((_,i)=>i).filter(inPeriod);if(!ix.length)return"";const a=MONTHS[ix[0]],b=MONTHS[ix[ix.length-1]],F=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  const t=a.y===b.y&&a.m===b.m?F[a.m]+" "+a.y:a.y===b.y?F[a.m]+" to "+F[b.m]+" "+b.y:F[a.m]+" "+a.y+" to "+F[b.m]+" "+b.y;return t+(ui.state==="all"?"":", "+ui.state)}
+const monthLabels=()=>MONTHS.map((m,i)=>i).filter(inPeriod).map(i=>MN[MONTHS[i].m]+" "+String(MONTHS[i].y).slice(2));
+const inP=vals=>vals.filter((_,i)=>inPeriod(i));
+function sel(p){if(REAL)return rsel(p);return ROWS.filter(r=>(!p||r.p===p)&&inState(r.d)).map(r=>{const mon=r.mon.map((v,i)=>inPeriod(i)?v:0),people=sum(mon),frac=r.people?people/r.people:0;
+  const o=Object.assign({},r,{monF:mon,peopleF:people,frac,sitesF:r.smon?sum(r.smon.filter((_,i)=>inPeriod(i))):people?Math.max(1,Math.round(r.sites*frac)):0});
+  if(r.wmon){o.wF=0;o.wP=0;r.wmon.forEach((w,i)=>{if(w!=null&&inPeriod(i)){o.wF+=w;o.wP+=r.mon[i]}});o.sessF=sum(r.emon.filter((_,i)=>inPeriod(i)))}
+  return o}).filter(r=>r.peopleF>0)}
+const wavg=(rows,f)=>{const w=sum(rows.map(r=>r.peopleF));return w?sum(rows.map(r=>f(r)*r.peopleF))/w:0};
+const monthly=rows=>MONTHS.map((_,i)=>sum(rows.map(r=>r.monF[i])));
+const lead=(h,p)=>'<div class="lead"><h1 class="big">'+h+"</h1><p>"+p+"</p></div>";
+const noWork=what=>({empty:what+" has no work "+(ui.state==="all"?"":"in "+ui.state+" ")+"in this period. Change the state or year above."});
+const toolsTile=(span,keys)=>[span,"Open the dashboards","Where the records behind these numbers are reviewed.",'<div class="toollinks">'+keys.flatMap(k=>TOOLS[k]).map(([n,d,u])=>'<a href="'+u+'"'+(/^https/.test(u)?' target="_blank" rel="noopener"':"")+">"+esc(n)+"<span>"+esc(d)+"</span></a>").join("")+"</div>",{report:false}];
+const table=(head,rows)=>'<div class="scroll"><table><thead><tr>'+head.map((h,i)=>"<th"+(i?' class="n"':"")+">"+h+"</th>").join("")+"</tr></thead><tbody>"+rows.map(r=>"<tr>"+r.map((c,i)=>"<td"+(i?' class="n"':"")+">"+c+"</td>").join("")+"</tr>").join("")+"</tbody></table></div>";
+
+/* ---------- live figures from the two tools on this device ---------- */
+const LIVE=n=>n+' <span class="pill ok">Live</span>';
+function liveHsp(){
+  const d=AWIT.get("schooltrack.v2");if(!d||!d.sessions||!Object.keys(d.sessions).length)return"";
+  const ss=Object.values(d.sessions),cnt=ss.filter(s=>s.status==="counted");let reach=0,schools=0;
+  for(const sc of Object.values(d.schools||{})){let any=false;for(const c of sc.classes||[])if(cnt.some(s=>s.schoolId===sc.id&&s.classId===c.id)){reach+=c.enrol;any=true}if(any)schools++}
+  return tile("",LIVE("From SchoolTrack on this device"),"Real records from the field tool, not sample data.",kpis([[schools,"schools with sessions"],[nf(reach),"students reached"],[cnt.length,"sessions delivered"],[nf(sum(cnt.map(s=>s.boys+s.girls))),"session attendances"],[Object.keys(d.misses||{}).length,Object.keys(d.misses||{}).length===1?"session that could not be held":"sessions that could not be held"]]));
+}
+function liveSfvt(){
+  const d=AWIT.get("sfvt.v3");if(!d||!d.vendors||!Object.keys(d.vendors).length)return"";
+  const vs=Object.values(d.vendors).filter(v=>v.review!=="rejected"),xs=Object.values(d.visits||{}).filter(x=>x.status==="counted");
+  return tile("",LIVE("From the vendor training tool on this device"),"Real records from the field tool, not sample data.",kpis([[vs.length,"vendors registered"],[vs.filter(v=>v.att).length,"came to a training"],[vs.filter(v=>v.scr&&!v.scr.declined).length,"screened"],[vs.filter(v=>v.kit&&v.kit.trained).length,"trained"],[xs.length,"monitoring visits"]]));
+}
+
+/* ---------- views: each returns {title, color, lead, kpis, tiles, live} ---------- */
+function vOverview(){
+  const rows=sel(),direct=rows.filter(r=>r.p!=="as"),total=sum(direct.map(r=>r.peopleF));if(!rows.length)return noWork("The organisation");
+  const dists=[...new Set(rows.map(r=>r.d))].filter(d=>d!=="web"),subs=Object.keys(SUB).filter(p=>rows.some(r=>r.p===p)),W=sum(direct.map(r=>r.peopleF*WOMEN[r.p]));
+  const b={title:"Organisation overview",color:"var(--ink)",lead:[nf(total)+" people reached","Across "+Object.keys(FAM).filter(f=>FAM[f].subs.some(s=>subs.includes(s))).length+" programs and "+dists.length+" districts, "+periodText()+"."],
+    kpis:[[nf(total),"people reached"],[subs.length,"program components running"],[dists.length,"districts"],[nf(sum(rows.filter(r=>r.p==="hsp").map(r=>r.sitesF))),"schools"],[pc(W,total),"of those reached are women and girls"]],tiles:[]};
+  let cards="";
+  for(const f of Object.keys(FAM)){const fr=direct.filter(r=>SUB[r.p].fam===f),people=sum(fr.map(r=>r.peopleF));
+    cards+='<button class="tile '+(Object.keys(FAM).length===3?"s4":"s3")+' fcard" style="--pc:'+FAM[f].c+'" data-a="tab" data-v="'+f+'"><h2>'+FAM[f].name+'</h2><b class="num">'+nf(people)+'</b><span class="muted small">people reached</span><ul class="small">'+
+      FAM[f].subs.map(s=>{const sr=rows.filter(r=>r.p===s);return"<li><span>"+SUB[s].name+'</span><span class="num"><strong>'+nf(sum(sr.map(r=>r.peopleF)))+"</strong> "+SUB[s].unit.split(" ")[0]+"</span></li>"}).join("")+'</ul><span class="go">Open '+FAM[f].name+"</span></button>"}
+  b.cards=cards;
+  b.tiles.push(["s8","People reached each month","New people reached, by program.",ch.stacked(monthLabels(),Object.keys(FAM).map(f=>({name:FAM[f].name,color:FAM[f].c,values:inP(monthly(direct.filter(r=>SUB[r.p].fam===f)))})),{w:820})]);
+  b.tiles.push(["s4","Who we reach","People reached, by audience.",ch.hbar(Object.keys(SUB).filter(s=>s!=="as").map(s=>({label:SUB[s].aud,value:sum(direct.filter(r=>r.p===s).map(r=>r.peopleF)),color:FAM[SUB[s].fam].c})).filter(x=>x.value>0).sort((a,c)=>c.value-a.value),{w:400,labelW:150,fmt:compact})]);
+  if(ui.state==="all"&&ui.year!=="2025"){const ach=s=>sum(ROWS.filter(r=>r.p===s).map(r=>sum(r.mon.filter((_,i)=>MONTHS[i].y===2026))));
+    b.tiles.push(["s6","2026 so far, against the year's target","January to September. The line marks how much of the year has passed.",ch.hbar(Object.keys(TARGET26).map(s=>({label:SUB[s].full,value:Math.min(100,ach(s)/TARGET26[s]*100),text:compact(ach(s))+" of "+compact(TARGET26[s])+", "+pc(ach(s),TARGET26[s]),color:FAM[SUB[s].fam].c})),{w:540,max:100,mark:75,markLabel:"75% of the year gone",labelW:170})])}
+  const hr=rows.filter(r=>r.p==="hsp"),kb=hr.length?[0,1,2].map(j=>wavg(hr,r=>HSPD[r.d].k[j][0])):[0],ke=hr.length?[0,1,2].map(j=>wavg(hr,r=>HSPD[r.d].k[j][1])):[0];
+  const sr=rows.filter(r=>r.p==="sfvt"),s1=sr.length?wavg(sr,r=>sum(SF[r.d].sec.map(x=>x[0]))/6):0,s2=sr.length?wavg(sr,r=>sum(SF[r.d].sec.map(x=>x[1]))/6):0,oq=OUTQ.filter(Boolean);
+  const chg=[["Students' health knowledge (HSP)",sum(kb)/kb.length,sum(ke)/ke.length,hr.length],["Vendors' checklist score, visit 1 to 2",s1,s2,sr.length],["Women's knowledge at a session",sum(oq.map(x=>x[0]))/oq.length,sum(oq.map(x=>x[1]))/oq.length,rows.some(r=>r.p==="out")],["Challenge habit score, start to end",BOT.score[0]*10,BOT.score[1]*10,rows.some(r=>r.p==="bot")]].filter(x=>x[3]);
+  b.tiles.push(["s6","What is changing","Average score before and after, as a percentage.",ch.grouped(chg.map(x=>x[0]),[{name:"Before",color:"var(--mute)",values:chg.map(x=>x[1])},{name:"After",color:"var(--ink)",values:chg.map(x=>x[2])}],{w:540,max:100,fmt:v=>Math.round(v)+"%"})]);
+  const all=[...new Set(rows.map(r=>r.d))],colMax={};for(const p of subs)colMax[p]=Math.max(1,...rows.filter(r=>r.p===p).map(r=>r.peopleF));
+  let t='<div class="scroll"><table class="heat"><thead><tr><th>District</th>'+subs.map(p=>'<th class="n">'+SUB[p].name+"</th>").join("")+"</tr></thead><tbody>";
+  for(const d of all){t+="<tr><td>"+D[d].name+(D[d].st!=="Online"?'<br><span class="small muted">'+D[d].st+"</span>":"")+"</td>";for(const p of subs){const r=rows.find(x=>x.p===p&&x.d===d);t+=r?'<td class="n" style="background:color-mix(in srgb,'+FAM[SUB[p].fam].c+" "+Math.round(8+30*r.peopleF/colMax[p])+'%,transparent)">'+nf(r.peopleF)+"</td>":'<td class="n muted">none</td>'}t+="</tr>"}
+  b.tiles.push(["s7","Where we work","People reached in each district, by program component.",t+"</tbody></table></div>"]);
+  b.tiles.push(["s5","Women and girls among those reached","Share of each audience.",ch.hbar(Object.keys(SUB).filter(s=>s!=="as"&&rows.some(r=>r.p===s)).map(s=>({label:SUB[s].aud,value:WOMEN[s]*100,text:pct(WOMEN[s]),color:FAM[SUB[s].fam].c})),{w:440,max:100,labelW:170})]);
+  b.tiles.push(toolsTile("",["hsp","sfvt","funder","city"]));
+  return b;
+}
+function vHsp(){
+  const rows=sel("hsp");if(!rows.length)return noWork("The Healthy Schools Program");
+  const C="var(--c-hsp)",students=sum(rows.map(r=>r.peopleF)),schools=sum(rows.map(r=>r.sitesF)),sess=students/38*6.2;
+  const comp=[];for(let a=0;a<10;a++)comp.push(wavg(rows,r=>{const c=HSPD[r.d].c;return c[0]+(c[1]-c[0])*a/9})*100);
+  const k=[0,1,2].map(j=>[wavg(rows,r=>HSPD[r.d].k[j][0]),wavg(rows,r=>HSPD[r.d].k[j][1])]),gain=sum(k.map(x=>x[1]-x[0]))/3,partners=[...new Set(rows.map(r=>r.partner))];
+  return{title:"Healthy Schools Program",color:C,lead:[nf(students)+" students in "+nf(schools)+" schools","Healthy Schools Program, "+periodText()+"."+(partners.some(p=>!/direct/.test(p))?" Delivered with "+partners.filter(p=>!/direct/.test(p)).join(" and ")+".":"")],
+   kpis:[[nf(students),"students reached"],[nf(schools),"schools"],[nf(sess),"sessions delivered"],[nf(schools*2.1),"teachers trained"],[pct(comp[9]/100),"of classes finished all 10 activities"],["+"+Math.round(gain),"points gained in KAP scores"]],live:liveHsp(),
+   tiles:[["s8","Sessions delivered each month","School holidays in April and May show as the dip.",ch.line(monthLabels(),[{name:"Sessions",color:C,values:inP(monthly(rows)).map(v=>v/38*6.2)}],{w:820,area:true})],
+    ["s4","Students reached, by partner","",ch.hbar(partners.map(p=>({label:p,value:sum(rows.filter(r=>r.partner===p).map(r=>r.peopleF))})).sort((a,b)=>b.value-a.value),{w:400,color:C,fmt:compact,labelW:150})],
+    ["s6","Activity completion","Share of classes that completed each of the 10 activities.",ch.vbar(["1","2","3","4","5","6","7","8","9","10"],comp,{w:540,max:100,color:C,fmt:v=>Math.round(v)+"%"})],
+    ["s6","What students know and do","KAP survey scores at baseline and endline.",ch.grouped(["Healthy eating","Physical activity","Tobacco avoidance"],[{name:"Baseline",color:"var(--mute)",values:k.map(x=>x[0])},{name:"Endline",color:C,values:k.map(x=>x[1])}],{w:540,max:100,fmt:v=>Math.round(v)})],
+    ["s7","District by district","",table(["District","Partner","Schools","Students","Attendance","All 10 activities done","KAP gain"],rows.slice().sort((a,b)=>b.peopleF-a.peopleF).map(r=>[D[r.d].name,r.partner,nf(r.sitesF),nf(r.peopleF),pct(HSPD[r.d].att),pct(HSPD[r.d].c[1]),"+"+Math.round(sum(HSPD[r.d].k.map(x=>x[1]-x[0]))/3)]))],
+    ["s5","Girls and boys","Students reached.",ch.donut([{label:"Girls",value:students*WOMEN.hsp,color:C},{label:"Boys",value:students*(1-WOMEN.hsp),color:"var(--mute)"}],pct(WOMEN.hsp),"are girls",{w:440})],
+    toolsTile("",["hsp"])]};
+}
+function vAs(){
+  const list=ASS.filter(s=>inState(s.d)).sort((a,b)=>b.total-a.total);if(!list.length)return noWork("Arogya Schools");
+  const C="var(--c-hsp)",seal=list.filter(s=>s.seal).length,avg=sum(list.map(s=>s.total))/list.length,bk=[["80 and above",s=>s.total>=80],["60 to 79",s=>s.total>=60&&s.total<80],["40 to 59",s=>s.total>=40&&s.total<60],["Below 40",s=>s.total<40]];
+  return{title:"Arogya Schools",color:C,lead:[seal+" of "+list.length+" nominee schools have earned the Seal","Arogya Schools accreditation, current status"+(ui.state==="all"?"":" in "+ui.state)+". The Seal needs 80 points: all 75 essential and at least 5 preferred."],
+   kpis:[[list.length,"nominee schools"],[seal,"eligible for the Seal"],[Math.round(avg),"average score out of 100"],[list.filter(s=>!s.seal&&s.total>=65).length,"schools within reach, 65 points or more"],[pc(sum(list.map(s=>s.es)),75*list.length),"of essential points earned"]],
+   tiles:[["s7","School leaderboard","Top 12 schools by score. The line marks the 80 points the Seal needs.",ch.hbar(list.slice(0,12).map(s=>({label:s.name,sub:s.seal?"Seal earned":"",value:s.total,text:String(s.total),color:s.seal?C:"var(--mute)"})),{w:640,max:100,mark:80,markLabel:"80 points",rank:true,legend:[{label:"Seal earned",color:C},{label:"Not yet",color:"var(--mute)"}]})],
+    ["s5","From nomination to the Seal","",ch.funnel([{label:"Nominated",value:list.length},{label:"Health committee formed",value:list.filter(s=>s.e[0]>0).length},{label:"All 10 activities done",value:list.filter(s=>s.e[1]===15).length},{label:"All essential points",value:list.filter(s=>s.es===75).length},{label:"Seal earned",value:seal}],{w:440,color:C})],
+    ["s7","Where schools lose points","Share of available points earned on each essential criterion.",ch.hbar(ASLAB.map((l,i)=>({label:l,value:sum(list.map(s=>s.e[i]))/(ASMAX[i]*list.length)*100})).sort((a,b)=>a.value-b.value).map(x=>Object.assign(x,{text:Math.round(x.value)+"%"})),{w:640,max:100,color:C,labelW:260})],
+    ["s5","Score spread","Number of schools in each score band.",ch.vbar(bk.map(b=>b[0]),bk.map(b=>list.filter(b[1]).length),{w:440,color:C,fmt:v=>String(Math.round(v))})],
+    ["","District by district","",table(["District","Nominee schools","Seal earned","Average score"],Object.keys(D).filter(d=>list.some(s=>s.d===d)).map(d=>{const l=list.filter(s=>s.d===d);return[D[d].name,l.length,l.filter(s=>s.seal).length,Math.round(sum(l.map(s=>s.total))/l.length)]}))],
+    toolsTile("",["hsp"])]};
+}
+function vSfvt(){
+  const rows=sel("sfvt");if(!rows.length)return noWork("Street Food Vendor Training");
+  const C="var(--c-my)",VC=["var(--v1)","var(--v2)","var(--v3)"],vendors=sum(rows.map(r=>r.peopleF)),st=SFSTEPS.map((_,i)=>sum(rows.map(r=>r.peopleF*SF[r.d].st[i])));
+  const have=[0,1,2].filter(j=>rows.some(r=>SF[r.d].st[5+j]>0)),secAvg=j=>SFSEC.map((_,s)=>{const rs=rows.filter(r=>SF[r.d].sec[s][j]>0);return rs.length?wavg(rs,r=>SF[r.d].sec[s][j]):0}),tot=have.map(j=>sum(secAvg(j))/6);
+  const scr=[0,1].map(j=>wavg(rows,r=>SF[r.d].scr[j])*100),wl=WARDS.filter(w=>rows.some(r=>r.d===w[1])).map(([n,d,v,tr])=>{const r=rows.find(x=>x.d===d),val=v*r.frac;return{label:n,sub:d==="blr"?"Bengaluru":"Mumbai",value:val,value2:val*tr,text:nf(val)+", "+pct(tr)+" trained"}}).sort((a,b)=>b.value-a.value);
+  return{title:"Street Food Vendor Training",color:C,lead:[nf(vendors)+" vendors registered at their stalls","Street Food Vendor Training under MyThali, "+periodText()+". NASVI mobilises and registers vendors; Arogya World screens, trains and monitors."],
+   kpis:[[nf(vendors),"vendors registered"],[nf(st[4]),"vendors trained"],[nf(st[3]),"screened for blood pressure and sugar"],[nf(st[5]+st[6]+st[7]),"monitoring visits"],[pct(wavg(rows,r=>SF[r.d].women)),"of vendors are women"],[have.length>1?"+"+Math.round(tot[have.length-1]-tot[0]):"0","points gained on the checklist"]],live:liveSfvt(),
+   tiles:[["s7","The vendor's journey","Each vendor is followed from registration to the third stall visit.",ch.funnel(SFSTEPS.map((l,i)=>({label:l,value:st[i]})),{w:640,color:C})],
+    ["s5","Checklist score, by visit","Average score on the 27-item monitoring checklist.",ch.vbar(have.map(j=>"Visit "+(j+1)),tot,{w:440,max:100,colors:have.map(j=>VC[j]),fmt:v=>Math.round(v)+"%"})],
+    ["s7","Score by section, by visit","Average share of each section's points.",ch.grouped(SFSEC,have.map(j=>({name:"Visit "+(j+1),color:VC[j],values:secAvg(j)})),{w:640,max:100,fmt:v=>Math.round(v)+"%"})],
+    ["s5","Ratings at each visit","Green is 40 or more of 54, Yellow is 30 to 39, Red is below 30.",ch.stacked(have.map(j=>"Visit "+(j+1)),[["Green","var(--ok)",0],["Yellow","var(--warn)",1],["Red","var(--bad)",2]].map(([n,c,k])=>({name:n,color:c,values:have.map(j=>sum(rows.map(r=>r.peopleF*SF[r.d].st[5+j]*SF[r.d].rate[j][k])))})),{w:440,h:190,fmt:nf})],
+    ["s6","Vendors by ward","Registered, with the dark bar showing those trained.",ch.hbar(wl,{w:540,color:C,legend:[{label:"Registered",color:C},{label:"Trained",color:"var(--ink)"}]})],
+    ["s6","Health screening on training day","Share of the "+nf(st[3])+" screened vendors with a raised reading.",ch.hbar([{label:"Raised blood pressure",value:scr[0],text:Math.round(scr[0])+"%"},{label:"Raised blood sugar",value:scr[1],text:Math.round(scr[1])+"%"},{label:"Of those with a raised reading, referred",value:wavg(rows,r=>SF[r.d].ref)*100,text:pct(wavg(rows,r=>SF[r.d].ref)),color:"var(--ok)"}],{w:540,max:100,color:"var(--bad)",labelW:230})],
+    ["s8","Vendors registered each month","",ch.line(monthLabels(),[{name:"Vendors",color:C,values:inP(monthly(rows))}],{w:820,area:true,fmt:nf,axisFmt:compact})],
+    ["s4","Trained before by FoSTaC or FSSAI","Asked at registration.",ch.donut([{label:"Yes",value:vendors*wavg(rows,r=>SF[r.d].fostac),color:C},{label:"No or not sure",value:vendors*(1-wavg(rows,r=>SF[r.d].fostac)),color:"var(--mute)"}],pct(wavg(rows,r=>SF[r.d].fostac)),"said yes",{w:400})],
+    toolsTile("",["sfvt"])]};
+}
+function vOut(){
+  const rows=sel("out");if(!rows.length)return noWork("Nutrition outreach");
+  const C="var(--c-my)",people=sum(rows.map(r=>r.peopleF)),sessions=sum(rows.map(r=>r.sitesF)),q=OUTQ.map((x,i)=>x?{l:"Q"+(i+1),b:x[0],a:x[1]}:null).filter(Boolean),gain=sum(q.map(x=>x.a-x.b))/q.length;
+  return{title:"Nutrition outreach to women and adolescents",color:C,lead:[nf(people)+" women and adolescents reached","Nutrition outreach under MyThali, "+periodText()+". Community sessions with a question round before and after, answered by raised cards."],
+   kpis:[[nf(people),"women and adolescents reached"],[nf(sessions),"community sessions"],[Math.round(people/sessions),"people in an average session"],[nf(sessions*.38),"follow-up group discussions"],["+"+Math.round(gain),"points gained in knowledge"],[nf(people*.83),"pledges made"]],
+   tiles:[["s8","Women and adolescents reached each month","",ch.line(monthLabels(),[{name:"People",color:C,values:inP(monthly(rows))}],{w:820,area:true,fmt:nf,axisFmt:compact})],
+    ["s4","Who came","",ch.donut([{label:"Women",value:people*.68,color:C},{label:"Adolescent girls",value:people*.32,color:"var(--mute)"}],pct(.68),"are adult women",{w:400})],
+    ["s7","Knowledge before and after the session","Share answering each question correctly. Question 8 asks about readiness, so it is not scored.",ch.grouped(q.map(x=>x.l),[{name:"Before",color:"var(--mute)",values:q.map(x=>x.b)},{name:"After",color:C,values:q.map(x=>x.a)}],{w:640,max:100,fmt:v=>Math.round(v)})],
+    ["s5","The promise each woman chose","Share of pledges, by the change card picked.",ch.hbar(VAADA.map(([l,v])=>({label:l,value:v*100,text:pct(v)})),{w:440,color:C,labelW:210})],
+    ["s6","Reached, by district","",ch.hbar(rows.map(r=>({label:D[r.d].name,value:r.peopleF})).sort((a,b)=>b.value-a.value),{w:540,color:C})],
+    ["s6","District by district","",table(["District","Sessions","People reached","Average per session"],rows.map(r=>[D[r.d].name,nf(r.sitesF),nf(r.peopleF),Math.round(r.peopleF/r.sitesF)]))]]};
+}
+function vBot(){
+  const rows=sel("bot");if(!rows.length)return noWork("The WhatsApp challenge");
+  const C="var(--c-my)",n=sum(rows.map(r=>r.peopleF)),days=[];for(let d=1;d<=21;d++)days.push(n*(.78*Math.exp(-(d-1)/17)-.02*(d%7===0?1:0)));
+  return{title:"21-day WhatsApp challenge",color:C,lead:[nf(n)+" people joined the 21-day challenge","WhatsApp challenge under MyThali, "+periodText()+". A daily quiz and habit check-in for 21 days, with a baseline and an endline. Healthy Wali Diwali 2026 is running now and will show here from the bot export."],
+   kpis:[[nf(n),"said yes to the challenge"],[nf(n*BOT.funnel[5][1]),"finished all 21 days"],[BOT.streak,"days, average streak"],[BOT.points+" of 42","average quiz points"],[BOT.score[0]+" to "+BOT.score[1],"habit score out of 10, start to end"],[pct(BOT.returning),"had joined an earlier challenge"]],
+   tiles:[["s6","From joining to finishing","",ch.funnel(BOT.funnel.map(([l,f])=>({label:l,value:n*f})),{w:540,color:C})],
+    ["s6","People taking part each day","Participants who answered the day's quiz and check-in.",ch.line(days.map((_,i)=>"Day "+(i+1)),[{name:"Participants",color:C,values:days}],{w:540,h:190,area:true,fmt:nf,axisFmt:compact})],
+    ["s6","Healthy habits kept","Share of daily check-ins where each habit was ticked.",ch.hbar(BOT.habits.map(([l,v])=>({label:l,value:v*100,text:pct(v)})),{w:540,max:100,color:C,labelW:230})],
+    ["s6","Habit score, at the start and at the end","Share of participants in each band, among those who did both surveys.",ch.grouped(BOT.bands.map(b=>b[0]),[{name:"Baseline",color:"var(--mute)",values:BOT.bands.map(b=>b[1]*100)},{name:"Endline",color:C,values:BOT.bands.map(b=>b[2]*100)}],{w:540,max:100,fmt:v=>Math.round(v)+"%"})],
+    ["s6","Age of participants","",ch.vbar(BOT.age.map(a=>a[0]),BOT.age.map(a=>a[1]*100),{w:540,max:100,color:C,fmt:v=>Math.round(v)+"%"})],
+    ["s6","Who took part","",ch.donut([{label:"Women",value:n*WOMEN.bot,color:C},{label:"Men and others",value:n*(1-WOMEN.bot),color:"var(--mute)"}],pct(WOMEN.bot),"are women",{w:540})]]};
+}
+function vCity(){
+  const rows=sel("city");if(!rows.length)return noWork("Arogya City");
+  const C="var(--c-city)",cs=rows.map(r=>r.d),makers=sum(rows.map(r=>r.sites)),mir=CAUSES.map((_,i)=>[0,1,2].map(j=>sum(cs.map(c=>CITY[c].mirror[i][j])))),pledged=sum(mir.map(m=>m[1])),delivered=sum(mir.map(m=>m[2])),cl=[0,1,2].map(j=>sum(cs.map(c=>CITY[c].close[j])));
+  const b={title:"Arogya City",color:C,lead:[nf(delivered)+" people covered by pledges delivered","Arogya City in "+cs.map(c=>CITY[c].name).join(" and ")+", current status. Each pledge is tied to one measurable cause from the city's NCD baseline."],
+   kpis:[[makers,"pledgemakers"],[nf(pledged),"people pledged"],[nf(delivered),"people delivered"],[pc(delivered,pledged),"of pledges delivered"],[pc(cl[0],sum(cl)),"of organisations closed out"]],tiles:[]};
+  b.tiles.push(["s7","City need, pledged and delivered","For each cause: people pledged, with the dark bar showing people delivered, and how much of the city's gap the pledges cover.",ch.hbar(CAUSES.map((l,i)=>({label:l,value:mir[i][1],value2:mir[i][2],text:compact(mir[i][2])+" of "+compact(mir[i][1])+", "+pc(mir[i][1],mir[i][0])+" of gap"})),{w:640,color:C,legend:[{label:"Pledged",color:C},{label:"Delivered",color:"var(--ink)"}]})]);
+  b.tiles.push(["s5","Closeout progress","Organisations by closeout status.",ch.donut([["Submitted","var(--ok)"],["In progress","var(--warn)"],["Not opened","var(--mute)"]].map(([l,c],i)=>({label:l,color:c,value:cl[i]})),String(sum(cl)),"organisations",{w:440})]);
+  for(const c of cs)b.tiles.push([cs.length>1?"s6":"s7",CITY[c].name+" NCD baseline","Score out of 100 on each measurable cause. Higher is healthier.",ch.hbar(BASELAB.map((l,i)=>({label:l,value:CITY[c].base[i],text:String(CITY[c].base[i]),color:CITY[c].base[i]<40?"var(--bad)":CITY[c].base[i]<55?"var(--warn)":"var(--ok)"})),{w:cs.length>1?540:640,max:100,mark:70,markLabel:"Target of 70"})]);
+  const pm=PLEDGERS.filter(p=>cs.includes(p[1])).map(([n,d,pl,dl])=>({label:n,sub:CITY[d].name,value:pl,value2:dl,text:pc(dl,pl)+" of "+compact(pl),r:dl/pl})).sort((a,b)=>b.r-a.r);
+  b.tiles.push([cs.length>1?"s7":"s5","Pledgemaker leaderboard","Ranked by share of the pledge delivered.",ch.hbar(pm,{w:cs.length>1?640:440,rank:true,color:C,legend:[{label:"Pledged",color:C},{label:"Delivered",color:"var(--ink)"}]})]);
+  b.tiles.push(["s5","Who is pledging","Pledgemakers by sector.",ch.hbar(SECT.map((l,i)=>({label:l,value:sum(cs.map(c=>CITY[c].sect[i]))})).sort((a,b)=>b.value-a.value),{w:440,color:C,labelW:190})]);
+  b.tiles.push(["s7","People covered each month","People covered by pledges as organisations report delivery.",ch.line(monthLabels(),[{name:"People",color:C,values:inP(monthly(rows))}],{w:640,area:true})]);
+  b.tiles.push(toolsTile("",["city"]));
+  return b;
+}
+const BUILD={hsp:vHsp,as:vAs,sfvt:vSfvt,out:vOut,bot:vBot,city:vCity};
+
+/* ---------- real figures: yearly totals by program, state, partner (social media monthly).
+   When the team has saved its own figures they replace the sample model above. ---------- */
+let REAL=null,RROWS=[],SOC=[],PERIODS=[];const DONORS={},TGT={},OUTC=[];
+const FULLM=["January","February","March","April","May","June","July","August","September","October","November","December"];
+const slug=t=>String(t||"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+const cap=t=>String(t).replace(/^./,c=>c.toUpperCase());
+const LABELS={hsp:["students reached","schools","sessions held"],as:["students in nominee schools","nominee schools","sessions held"],sfvt:["vendors trained","stalls","training sessions"],
+  out:["women and adolescents reached","community sessions","sessions held"],bot:["participants","challenge editions","messages sent"],mdb:["people enrolled","sites","sessions held"],city:["people covered by delivered pledges","pledgemakers","activities"],soc:["people reached on social media","posts","engagements"]};
+const pKey=t=>{const m=/(\d{4})/.exec(String(t));return(m?m[1]:"9999")+"|"+String(t)};
+const dkOf=r=>slug((r.state||"")+"-"+(r.district||""))||"not-given";
+const isCum=r=>r.counting==="total";
+const rIn=r=>ui.year==="all"||String(r.period)===ui.year;
+function applyReal(R){
+  const rows=(R&&R.rows||[]).filter(r=>LABELS[r.p]&&r.p!=="soc"&&String(r.period||"").trim()&&r.people>=0);
+  const soc=(R&&R.social||[]).filter(s=>/^\d{4}-\d{2}$/.test(s.month)&&s.reach>=0);
+  if(!rows.length&&!soc.length){REAL=null;return false}
+  REAL=R;RROWS=rows;SOC=soc;
+  FAM.mdb={name:"mDiabetes",c:"var(--c-mdb)",subs:["mdb"]};
+  SUB.mdb={fam:"mdb",name:"mDiabetes",full:"mDiabetes",unit:"people",site:"sites",aud:"People in mDiabetes"};
+  SUB.soc={fam:"my",name:"Social media",full:"MyThali on social media",unit:"people reached",site:"posts",aud:"Social media audience"};
+  if(!FAM.my.subs.includes("soc"))FAM.my.subs.push("soc");
+  for(const p of Object.keys(LABELS))SUB[p].unit=LABELS[p][0];
+  PERIODS=[...new Set(rows.map(r=>String(r.period).trim()))].sort((a,b)=>pKey(a).localeCompare(pKey(b)));
+  for(const k of Object.keys(D))delete D[k];
+  for(const r of rows){const k=dkOf(r);if(!D[k])D[k]={name:r.district||r.state||"Not given",st:r.state||"Not given",hasDistrict:!!r.district}}
+  for(const k of Object.keys(TGT))delete TGT[k];for(const t of R.targets||[]){if(!LABELS[t.p]||!(t.target>0))continue;(TGT[t.p]=TGT[t.p]||{})[String(t.year)]=t.target}
+  OUTC.length=0;for(const o of R.outcomes||[])if(LABELS[o.p]&&o.measure)OUTC.push(o);
+  return true;
+}
+/* add up "added" rows; for running totals (Arogya City) take the latest figure for each place and partner */
+function rsel(p,allYears){
+  const rs=RROWS.filter(r=>(!p||r.p===p)&&inState(dkOf(r))),inY=r=>allYears||rIn(r),cum={};
+  for(const r of rs.filter(r=>isCum(r)&&inY(r))){const k=r.p+"|"+dkOf(r)+"|"+(r.partner||"");if(!cum[k]||pKey(r.period)>pKey(cum[k].period))cum[k]=r}
+  const g={};
+  for(const r of rs.filter(r=>!isCum(r)&&inY(r)).concat(Object.values(cum))){const k=r.p+"|"+dkOf(r)+"|"+(r.partner||"");
+    const x=g[k]||(g[k]={p:r.p,d:dkOf(r),partner:r.partner||"Arogya World India Trust, direct",peopleF:0,sitesF:0,sessF:0,wF:0,wP:0,hasS:false,hasE:false,cum:isCum(r),asOf:""});
+    x.peopleF+=r.people;if(r.sites!=null){x.sitesF+=r.sites;x.hasS=true}if(r.sessions!=null){x.sessF+=r.sessions;x.hasE=true}if(r.women!=null){x.wF+=r.women;x.wP+=r.people}if(isCum(r)&&pKey(r.period)>pKey(x.asOf||""))x.asOf=r.period}
+  return Object.values(g).filter(x=>x.peopleF>0);
+}
+const periodsOf=p=>PERIODS.filter(per=>RROWS.some(r=>r.p===p&&String(r.period)===per&&inState(dkOf(r))));
+function byPeriod(p){return periodsOf(p).map(per=>{const rs=RROWS.filter(r=>r.p===p&&String(r.period)===per&&inState(dkOf(r)));
+  if(rs.some(isCum)){const last={};for(const r of RROWS.filter(r=>r.p===p&&isCum(r)&&inState(dkOf(r))&&pKey(r.period)<=pKey(per))){const k=dkOf(r)+"|"+(r.partner||"");if(!last[k]||pKey(r.period)>pKey(last[k].period))last[k]=r}return{label:per,value:sum(Object.values(last).map(r=>r.people))}}
+  return{label:per,value:sum(rs.map(r=>r.people))}})}
+function byEdition(p){const ed=[];for(const r of RROWS.filter(r=>r.p===p&&r.edition&&rIn(r)&&inState(dkOf(r))).sort((a,b)=>pKey(a.period).localeCompare(pKey(b.period)))){const l=String(r.edition);let x=ed.find(e=>e.label===l);if(!x)ed.push(x={label:l,value:0});x.value+=r.people}return ed}
+const famSubs=f=>REAL?FAM[f].subs.filter(s=>s==="soc"?SOC.length>0:RROWS.some(r=>r.p===s)):FAM[f].subs;
+const yearsIn=()=>REAL?PERIODS:[...new Set(MONTHS.map(m=>String(m.y)))];
+const focusYear=p=>{if(ui.year!=="all")return ui.year;const ys=Object.keys(p?TGT[p]||{}:Object.assign({},...Object.values(TGT))).filter(y=>PERIODS.includes(y)||/^\d{4}$/.test(y)).sort((a,b)=>pKey(a).localeCompare(pKey(b)));return ys.at(-1)||PERIODS.at(-1)};
+const yearGone=y=>{if(!/^\d{4}$/.test(String(y)))return 0;const d=new Date(),n=+y;return n<d.getFullYear()?100:n>d.getFullYear()?0:Math.round((d.getMonth()+1)/12*100)};
+function wShare(rows){const w=rows.filter(r=>r.wP>0);return w.length?sum(w.map(r=>r.wF))/sum(w.map(r=>r.wP)):null}
+function achYear(p,y){const rs=RROWS.filter(r=>r.p===p&&String(r.period)===String(y)&&inState(dkOf(r)));if(rs.some(isCum)){const last={};for(const r of rs)last[dkOf(r)+"|"+(r.partner||"")]=r;return sum(Object.values(last).map(r=>r.people))}return sum(rs.map(r=>r.people))}
+const outcomesIn=p=>OUTC.filter(o=>(!p||o.p===p)&&(ui.state==="all"||!o.district||Object.values(D).some(d=>d.name.toLowerCase()===String(o.district).toLowerCase()&&d.st===ui.state)));
+const statesOf=rows=>[...new Set(rows.map(r=>D[r.d].st))];
+const realStates=rows=>statesOf(rows).filter(x=>!/^(online|all india|national)$/i.test(x));
+/* half-width tiles side by side; a lone one is drawn again at full width */
+const pairUp=list=>list.map((t,i)=>{const lone=i===list.length-1&&list.length%2,body=typeof t[3]==="function"?t[3](lone?980:540):t[3];return[lone?"":t[0],t[1],t[2],body]});
+function placeTable(rows,cols){const anyD=rows.some(r=>D[r.d].hasDistrict);
+  const head=["State"].concat(anyD?["District"]:[]).concat(cols.map(c=>c[0])),body=rows.slice().sort((a,b)=>D[a.d].st.localeCompare(D[b.d].st)||b.peopleF-a.peopleF).map(r=>[esc(D[r.d].st)].concat(anyD?[D[r.d].hasDistrict?esc(D[r.d].name):""]:[]).concat(cols.map(c=>c[1](r))));
+  return table(head,body)}
+function rOverview(){
+  const rows=sel(),direct=rows.filter(r=>r.p!=="as"),total=sum(direct.map(r=>r.peopleF));if(!rows.length)return noWork("The organisation");
+  const subs=Object.keys(SUB).filter(p=>rows.some(r=>r.p===p)),fams=Object.keys(FAM).filter(f=>FAM[f].subs.some(s=>subs.includes(s))),sts=statesOf(rows),rst=realStates(direct),ws=wShare(direct),schools=sum(rows.filter(r=>r.p==="hsp").map(r=>r.sitesF)),partners=[...new Set(rows.map(r=>r.partner))];
+  const b={title:"Organisation overview",color:"var(--ink)",lead:[nf(total)+" people reached","Across "+fams.length+(fams.length===1?" program":" programs")+" in "+rst.length+(rst.length===1?" state":" states")+(rst.length<sts.length?" and online":"")+", "+periodText()+"."],
+    kpis:[[nf(total),"people reached"],[subs.length,subs.length===1?"program component":"program components"],[rst.length,rst.length===1?"state":"states"]].concat(schools?[[nf(schools),"schools"]]:[]).concat([[partners.length,partners.length===1?"delivery partner":"delivery partners"]]).concat(ws!=null?[[pct(ws),"of those reached are women and girls"]]:[]),tiles:[]};
+  const span=fams.length>=4?"s3":fams.length===3?"s4":"s6";
+  b.cards=fams.map(f=>{const fr=direct.filter(r=>SUB[r.p].fam===f),people=sum(fr.map(r=>r.peopleF));
+    return'<button class="tile '+span+' fcard" style="--pc:'+FAM[f].c+'" data-a="tab" data-v="'+f+'"><h2>'+FAM[f].name+'</h2><b class="num">'+nf(people)+'</b><span class="muted small">people reached</span><ul class="small">'+
+      FAM[f].subs.filter(s=>subs.includes(s)).map(s=>"<li><span>"+SUB[s].name+'</span><span class="num"><strong>'+nf(sum(rows.filter(r=>r.p===s).map(r=>r.peopleF)))+"</strong></span></li>").join("")+'</ul><span class="go">Open '+FAM[f].name+"</span></button>"}).join("");
+  const half=[];
+  const yearly=ui.year==="all"&&PERIODS.length>1?fams.filter(f=>FAM[f].subs.some(s=>subs.includes(s)&&!RROWS.some(r=>r.p===s&&isCum(r)))):[];
+  if(yearly.length)b.tiles.push(["s7","People reached each year","New people reached, by program."+(subs.some(s=>RROWS.some(r=>r.p===s&&isCum(r)))?" Arogya City is a running total, so it is not stacked here.":""),
+    ch.stacked(PERIODS,yearly.map(f=>({name:FAM[f].name,color:FAM[f].c,values:PERIODS.map(per=>sum(RROWS.filter(r=>SUB[r.p].fam===f&&r.p!=="as"&&!isCum(r)&&String(r.period)===per&&inState(dkOf(r))).map(r=>r.people)))})),{w:640})]);
+  b.tiles.push([yearly.length?"s5":"s6","Who we reach","People reached, by audience.",ch.hbar(subs.filter(s=>s!=="as").map(s=>({label:SUB[s].aud,value:sum(direct.filter(r=>r.p===s).map(r=>r.peopleF)),color:FAM[SUB[s].fam].c})).filter(x=>x.value>0).sort((a,c)=>c.value-a.value),{w:yearly.length?440:540,labelW:170,fmt:compact})]);
+  half.push(["s6","Reach by state","People reached in each state, all programs.",w=>ch.hbar(sts.map(st=>({label:st,value:sum(direct.filter(r=>D[r.d].st===st).map(r=>r.peopleF))})).sort((a,c)=>c.value-a.value),{w,color:"var(--ink)",fmt:compact,labelW:150})]);
+  if(partners.length>1)half.push(["s6","Reach by delivery partner","People reached through each partner, all programs.",w=>ch.hbar(partners.map(x=>({label:x,value:sum(direct.filter(r=>r.partner===x).map(r=>r.peopleF))})).sort((a,c)=>c.value-a.value),{w,color:"var(--ink)",fmt:compact,labelW:190})]);
+  const y=focusYear(),ts=Object.keys(TGT).filter(p=>TGT[p][y]);
+  if(ts.length&&ui.state==="all"){const g=yearGone(y);
+    half.push(["s6",y+": reach against the year's target",g>0&&g<100?"The line marks how much of the year has passed.":"Reach in "+y+" against the target set for it.",w=>ch.hbar(ts.map(p=>{const a=achYear(p,y),t=TGT[p][y];return{label:SUB[p].full,value:Math.min(100,a/t*100),text:compact(a)+" of "+compact(t)+", "+pc(a,t),color:FAM[SUB[p].fam].c}}),Object.assign({w,max:100,labelW:170},g>0&&g<100?{mark:g,markLabel:g+"% of the year gone"}:{}))])}
+  const oc=outcomesIn();
+  if(oc.length)half.push(["s6","What is changing","Before and after, as a percentage.",w=>ch.grouped(oc.map(o=>o.measure+" ("+SUB[o.p].name+")"),[{name:"Before",color:"var(--mute)",values:oc.map(o=>o.before)},{name:"After",color:"var(--ink)",values:oc.map(o=>o.after)}],{w,max:100,fmt:v=>Math.round(v)+"%"})]);
+  const wsub=subs.filter(s=>s!=="as"&&wShare(rows.filter(r=>r.p===s))!=null);
+  if(wsub.length)half.push(["s6","Women and girls among those reached","Share of each audience, where it was recorded.",w=>ch.hbar(wsub.map(s=>{const v=wShare(rows.filter(r=>r.p===s));return{label:SUB[s].aud,value:v*100,text:pct(v),color:FAM[SUB[s].fam].c}}),{w,max:100,labelW:170})]);
+  b.tiles=b.tiles.concat(half);
+  const places=[...new Set(rows.map(r=>r.d))].sort((a,c)=>D[a].st.localeCompare(D[c].st)),colMax={};for(const p of subs)colMax[p]=Math.max(1,...rows.filter(r=>r.p===p).map(r=>r.peopleF));
+  let t='<div class="scroll"><table class="heat"><thead><tr><th>State and place</th>'+subs.map(p=>'<th class="n">'+SUB[p].name+"</th>").join("")+"</tr></thead><tbody>";
+  for(const d of places){t+="<tr><td>"+esc(D[d].st)+(D[d].hasDistrict?'<br><span class="small muted">'+esc(D[d].name)+"</span>":"")+"</td>";for(const p of subs){const v=sum(rows.filter(x=>x.p===p&&x.d===d).map(x=>x.peopleF));t+=v?'<td class="n" style="background:color-mix(in srgb,'+FAM[SUB[p].fam].c+" "+Math.round(8+30*v/colMax[p])+'%,transparent)">'+nf(v)+"</td>":'<td class="n muted">none</td>'}t+="</tr>"}
+  b.tiles.push(["","Where we work","People reached in each state, by program component.",t+"</tbody></table></div>"]);
+  b.tiles.push(toolsTile("",["hsp","sfvt","funder","city"]));
+  return b;
+}
+function rSocial(){
+  const S=SOC.filter(s=>ui.year==="all"||s.month.slice(0,4)===ui.year||!/^\d{4}$/.test(ui.year));if(!S.length)return noWork("Social media");
+  const C=FAM.my.c,months=[...new Set(S.map(s=>s.month))].sort(),plats=[...new Set(S.map(s=>s.platform||"All platforms"))],reach=sum(S.map(s=>s.reach)),eng=sum(S.map(s=>s.engagements||0));
+  const lastF=plats.map(pl=>{const r=S.filter(s=>(s.platform||"All platforms")===pl&&s.followers!=null).sort((a,b)=>a.month.localeCompare(b.month)).at(-1);return r?r.followers:0}),fol=sum(lastF);
+  const ml=months.map(m=>MN[+m.slice(5)-1]+" "+m.slice(2,4)),pal=["var(--s2)","var(--s1)","var(--s3)","var(--s4)","var(--s5)"];
+  const k=[[nf(reach),"people reached on social media"]];if(eng)k.push([nf(eng),"engagements"]);if(fol)k.push([nf(fol),"followers now"]);k.push([months.length,months.length===1?"month":"months"],[plats.length,plats.length===1?"platform":"platforms"]);
+  const tiles=[];
+  if(months.length>1)tiles.push(["","Reach each month",plats.length>1?"By platform.":"",ch.line(ml,plats.map((pl,i)=>({name:pl,color:plats.length>1?pal[i%pal.length]:C,values:months.map(m=>sum(S.filter(s=>s.month===m&&(s.platform||"All platforms")===pl).map(s=>s.reach)))})),{w:980,fmt:nf,axisFmt:compact,area:plats.length===1})]);
+  const half=[];
+  if(plats.length>1)half.push(["s6","Reach by platform","",w=>ch.hbar(plats.map(pl=>({label:pl,value:sum(S.filter(s=>(s.platform||"All platforms")===pl).map(s=>s.reach))})).sort((a,b)=>b.value-a.value),{w,color:C,fmt:compact,labelW:150})]);
+  if(fol&&months.length>1)half.push(["s6","Followers at the end of each month","",w=>ch.line(ml,plats.map((pl,i)=>({name:pl,color:plats.length>1?pal[i%pal.length]:C,values:months.map(m=>sum(S.filter(s=>s.month===m&&(s.platform||"All platforms")===pl).map(s=>s.followers||0)))})),{w,fmt:nf,axisFmt:compact})]);
+  return{title:"MyThali on social media",color:C,lead:[nf(reach)+" people reached on social media","MyThali social media, "+periodText()+". Not added to the people reached on the overview, because social media counts people who saw a post."],kpis:k,
+    tiles:tiles.concat(half).concat([["","Month by month","",table(["Month","Platform","People reached","Engagements","Followers"],S.slice().sort((a,b)=>b.month.localeCompare(a.month)).map(s=>[esc(FULLM[+s.month.slice(5)-1]+" "+s.month.slice(0,4)),esc(s.platform||"All platforms"),nf(s.reach),s.engagements==null?"":nf(s.engagements),s.followers==null?"":nf(s.followers)]))]])};
+}
+function rProgram(p){
+  if(p==="soc")return rSocial();
+  const rows=sel(p),S=SUB[p],L=LABELS[p];if(!rows.length)return noWork(S.full);
+  const C=FAM[S.fam].c,people=sum(rows.map(r=>r.peopleF)),sites=sum(rows.map(r=>r.sitesF)),sess=sum(rows.map(r=>r.sessF||0)),sts=statesOf(rows),partners=[...new Set(rows.map(r=>r.partner))],ws=wShare(rows),cum=rows.some(r=>r.cum);
+  const hasS=rows.some(r=>r.hasS),hasE=rows.some(r=>r.hasE),y=focusYear(p),tg=TGT[p]&&TGT[p][y],ach=tg?achYear(p,y):0,named=partners.filter(x=>!/direct/i.test(x)),asOf=rows.map(r=>r.asOf).filter(Boolean).sort((a,b)=>pKey(a).localeCompare(pKey(b))).at(-1);
+  const k=[[nf(people),L[0]+(cum?" so far":"")]];if(hasS)k.push([nf(sites),L[1]]);if(hasE)k.push([nf(sess),L[2]]);{const rs=realStates(rows);if(rs.length)k.push([rs.length,rs.length===1?"state":"states"])}
+  if(named.length)k.push([partners.length,partners.length===1?"delivery partner":"delivery partners"]);if(ws!=null)k.push([pct(ws),p==="hsp"||p==="as"?"are girls":"are women and girls"]);if(tg&&ui.state==="all")k.push([pc(ach,tg),"of the "+y+" target"]);
+  const half=[],bp=ui.year==="all"?byPeriod(p):[],ed=byEdition(p);
+  half.push(["s6","By state","",w=>ch.hbar(sts.map(st=>({label:st,value:sum(rows.filter(r=>D[r.d].st===st).map(r=>r.peopleF))})).sort((a,b)=>b.value-a.value),{w,color:C,fmt:compact,labelW:150})]);
+  if(bp.length>1)half.push(["s6",cum?"Running total, by year":"By year",cum?"People covered as of each year.":"",w=>ch.vbar(bp.map(x=>x.label),bp.map(x=>x.value),{w,color:C,fmt:nf,axisFmt:compact})]);
+  if(ed.length>1||(p==="bot"&&ed.length))half.push(["s6","By edition","Each run of the challenge.",w=>ch.vbar(ed.map(x=>x.label),ed.map(x=>x.value),{w,color:C,fmt:nf,axisFmt:compact})]);
+  if(partners.length>1||named.length)half.push(["s6","By delivery partner","",w=>ch.hbar(partners.map(x=>({label:x,value:sum(rows.filter(r=>r.partner===x).map(r=>r.peopleF))})).sort((a,b)=>b.value-a.value),{w,color:C,fmt:compact,labelW:190})]);
+  if(tg&&ui.state==="all"){const g=yearGone(y);half.push(["s6",y+": against the target",g>0&&g<100?"The line marks how much of the year has passed.":"",w=>ch.hbar([{label:S.full,value:Math.min(100,ach/tg*100),text:compact(ach)+" of "+compact(tg)+", "+pc(ach,tg),color:C}],Object.assign({w,max:100,labelW:170},g>0&&g<100?{mark:g,markLabel:g+"% of the year gone"}:{}))])}
+  const oc=outcomesIn(p);
+  if(oc.length)half.push(["s6","What is changing","Before and after, as a percentage.",w=>ch.grouped(oc.map(o=>o.measure+(o.district?", "+o.district:"")),[{name:"Before",color:"var(--mute)",values:oc.map(o=>o.before)},{name:"After",color:C,values:oc.map(o=>o.after)}],{w,max:100,fmt:v=>Math.round(v)+"%"})]);
+  const cols=[["Partner",r=>esc(r.partner)],[cap(L[0]),r=>nf(r.peopleF)]].concat(hasS?[[cap(L[1]),r=>r.hasS?nf(r.sitesF):""]]:[]).concat(hasE?[[cap(L[2]),r=>r.hasE?nf(r.sessF):""]]:[]).concat(ws!=null?[["Women and girls",r=>r.wP?pc(r.wF,r.wP):""]]:[]);
+  const tool=p==="hsp"||p==="as"?"hsp":p==="sfvt"?"sfvt":p==="city"?"city":"";
+  return{title:S.full,color:C,lead:[nf(people)+" "+L[0]+(cum?" so far":""),S.full+", "+(cum&&asOf&&ui.year==="all"?"running total as of "+asOf:periodText())+"."+(named.length?" Delivered with "+named.join(" and ")+".":"")],kpis:k,live:p==="hsp"?liveHsp():p==="sfvt"?liveSfvt():"",
+    tiles:half.concat([["","State by state","",placeTable(rows,cols)]]).concat(tool?[toolsTile("",[tool])]:[])};
+}
+const buildFor=s=>REAL?()=>rProgram(s):BUILD[s];
+const subsWithData=()=>REAL?Object.keys(SUB).filter(s=>s==="soc"?SOC.length>0:RROWS.some(r=>r.p===s)):Object.keys(BUILD);
+/* ---------- page edits: hide tiles and key numbers, add numbers, notes and charts ---------- */
+const LAY=()=>(REAL&&REAL.layout)||{hidden:[],hiddenKpis:[],items:[]};
+const tileId=(page,title)=>page+":"+slug(String(title).replace(/<[^>]+>/g,""));
+function applyLayout(b,page){
+  if(!REAL||b.empty)return b;const L=LAY(),items=(L.items||[]).filter(x=>x.page===page);
+  b=Object.assign({},b);b.allTiles=b.tiles;b.allKpis=b.kpis;
+  b.kpis=b.kpis.filter(k=>!(L.hiddenKpis||[]).includes(page+":"+slug(k[1]))).concat(items.filter(x=>x.type==="kpi").map(x=>[esc(x.value),x.label,x.id]));
+  b.tiles=b.tiles.filter(t=>!(L.hidden||[]).includes(tileId(page,t[1])));
+  /* pair the half-width charts that are left, so hiding one does not leave a gap */
+  const out=[];let run=[];const flush=()=>{out.push(...pairUp(run));run=[]};
+  for(const t of b.tiles){if(typeof t[3]==="function")run.push(t);else{flush();out.push(t)}}flush();
+  b.tiles=out.concat(items.filter(x=>x.type!=="kpi").map(x=>[x.type==="chart"?"s6":"",esc(x.title),x.type==="note"?"":x.sub||"",x.type==="note"?'<p style="white-space:pre-wrap">'+esc(x.text)+"</p>":AWIT.render(x.ds),{custom:x.id}]));
+  return b;
+}
+function editPanel(b,page){
+  const L=LAY(),hidT=(L.hidden||[]).filter(h=>h.startsWith(page+":")),hidK=(L.hiddenKpis||[]).filter(h=>h.startsWith(page+":")),names=(b.allTiles||[]).reduce((m,t)=>(m[tileId(page,t[1])]=String(t[1]).replace(/<[^>]+>/g,""),m),{}),kn=(b.allKpis||[]).reduce((m,k)=>(m[page+":"+slug(k[1])]=k[1],m),{});
+  return'<section class="tile" style="border:2px dashed var(--ink)"><h2>Editing this page</h2><p class="small muted">Hide what you do not need, and add key numbers, text boxes or charts. Changes are saved for everyone when you are signed in to the online store, otherwise on this device.</p>'+
+   '<div class="row" style="flex-wrap:wrap;gap:.4rem;margin:.6rem 0"><strong class="small">Key numbers:</strong>'+b.kpis.map(k=>k[2]?'<button class="btn quiet sm" data-a="delitem" data-id="'+esc(k[2])+'">Delete “'+esc(k[1])+'”</button>':'<button class="btn quiet sm" data-a="hidekpi" data-id="'+esc(page+":"+slug(k[1]))+'">Hide “'+esc(k[1])+'”</button>').join("")+"</div>"+
+   (hidT.length||hidK.length?'<div class="row" style="flex-wrap:wrap;gap:.4rem;margin:.6rem 0"><strong class="small">Hidden on this page:</strong>'+hidT.map(h=>'<button class="btn sm" data-a="showtile" data-id="'+esc(h)+'">Show “'+esc(names[h]||h.split(":")[1])+'” again</button>').join("")+hidK.map(h=>'<button class="btn sm" data-a="showkpi" data-id="'+esc(h)+'">Show “'+esc(kn[h]||h.split(":")[1])+'” again</button>').join("")+"</div>":"")+
+   '<div class="two" style="margin-top:.8rem"><div class="stack tight"><h3>Add a key number</h3><div class="field"><label for="ek-value">Number or short value</label><input id="ek-value" placeholder="1,670"></div><div class="field"><label for="ek-label">What it is</label><input id="ek-label" placeholder="teachers trained"></div><button class="btn" data-a="addkpi">Add the number</button></div>'+
+   '<div class="stack tight"><h3>Add a text box</h3><div class="field"><label for="en-title">Title</label><input id="en-title" placeholder="Highlights this year"></div><div class="field"><label for="en-text">Text</label><textarea id="en-text" rows="3"></textarea></div><button class="btn" data-a="addnote">Add the text box</button></div></div>'+
+   '<p class="small" style="margin-top:.8rem">To add a chart, open the Data hub, use “Turn any Excel sheet into an infographic”, and choose this page under “Show it on”.</p>'+hmsg("edit")+'<button class="btn primary" data-a="editdone" style="margin-top:.6rem">Done editing</button></section>';
+}
+function donorData(id){const H=hubLoad();return H[id]||DONORS[id]||null}
+function projects(){
+  const donors=["govandi","hcltech"].map(id=>{const g=donorData(id);return g&&g.project?{id,name:g.project.name,funder:g.project.funder,donor:true}:null}).filter(Boolean);
+  return REAL?donors:donors.concat(PROJECTS.filter(p=>!donors.some(d=>d.id===p.id)));
+}
+async function loadReal(){
+  let best=AWIT.get("awit.real.mis");
+  try{const on=await AWIT.store.load("mis","");if(on&&on.data&&(on.data.rows||on.data.social)&&(!best||String(on.data.updatedAt||"")>=String(best.updatedAt||"")))best=on.data}catch(e){}
+  if(best)applyReal(best);
+  for(const id of ["govandi","hcltech"]){try{const r=await AWIT.store.load(id,"");if(r&&r.data)DONORS[id]=r.data}catch(e){}}
+}
+
+/* ---------- page ---------- */
+function viewHtml(b,subKey,famKey){
+  if(b.empty)return'<div class="tile"><p class="muted" style="padding:1rem 0">'+esc(b.empty)+"</p></div>";
+  const page=subKey||"overview";b=applyLayout(b,page);
+  const projs=projects().filter(p=>p.donor||(famKey?p.subs.some(s=>FAM[famKey].subs.includes(s)):true)),ed=REAL&&ui.edit;
+  const tileHtml=t=>{const id=t[4]&&t[4].custom,body=String(t[3]),isChart=/^<svg class="chart"/.test(body);
+    return tile(t[0],t[1],t[2],body+(ed&&!(t[4]&&t[4].report===false&&!id)?'<div class="row" style="margin-top:.6rem">'+(id?'<button class="btn quiet sm danger" data-a="delitem" data-id="'+esc(id)+'">Delete this '+(isChart?"chart":"box")+"</button>":'<button class="btn quiet sm" data-a="hidetile" data-id="'+esc(tileId(page,t[1]))+'">Hide this '+(isChart?"chart":"box")+"</button>")+"</div>":""))};
+  return lead(b.lead[0],b.lead[1])+'<div class="actions"><button class="btn primary" data-a="report" data-sub="'+(subKey||"")+'">Generate report</button>'+
+   '<select data-c="funder" aria-label="Make a funder report"><option value="">Funder report for\u2026</option>'+projs.map(p=>'<option value="'+p.id+'">'+esc(p.funder+": "+p.name)+"</option>").join("")+"</select>"+
+   '<button class="btn" data-a="kpiimg" data-sub="'+(subKey||"")+'">Save key numbers as an image</button>'+(REAL&&!ed?'<button class="btn quiet" data-a="editpage">Edit this page</button>':"")+"</div>"+
+   (ed?editPanel(b,page):"")+(b.cards||"")+kpis(b.kpis.map(k=>[k[0],k[1]]))+(b.live||"")+b.tiles.map(tileHtml).join("");
+}
+const tabsNow=()=>[["overview","Organisation overview","var(--ink)"]].concat((REAL?Object.keys(FAM).filter(f=>famSubs(f).length):["hsp","my","city"]).map(f=>[f,FAM[f].name,FAM[f].c])).concat([["hub","Data hub","var(--ink)"]]);
+let unlocked=false;
+function current(){if(ui.tab==="overview")return{b:REAL?rOverview():vOverview(),sub:"",fam:""};const subs=famSubs(ui.tab);if(!subs.includes(ui.sub[ui.tab]))ui.sub[ui.tab]=subs[0];const s=ui.sub[ui.tab];return{b:buildFor(s)(),sub:s,fam:ui.tab}}
+function render(){
+  const TB=tabsNow();if(!TB.some(t=>t[0]===ui.tab))ui.tab="overview";
+  const yrs=yearsIn().map(String);if(ui.year!=="all"&&!yrs.includes(ui.year))ui.year="all";
+  $("#years").innerHTML=[["all","All time"]].concat(yrs.map(y=>[y,y])).map(([v,l])=>'<button data-a="year" data-v="'+v+'" aria-pressed="'+(ui.year===v)+'">'+l+"</button>").join("");
+  const sts=[...new Set(Object.values(D).map(d=>d.st))].filter(x=>x&&x!=="Online");if(ui.state!=="all"&&!sts.includes(ui.state))ui.state="all";
+  $("#states").innerHTML='<option value="all">All states</option>'+sts.map(x=>"<option"+(ui.state===x?" selected":"")+">"+esc(x)+"</option>").join("");
+  const bd=$("#badge");bd.className="pill "+(REAL?"real":"sample");bd.textContent=REAL?"Real figures"+(REAL.updatedAt?", updated "+AWIT.fmtDate(REAL.updatedAt):""):"Sample data";
+  $("#foot").textContent=REAL?"Figures entered or uploaded by the Arogya World India Trust team in the Data hub. Panels marked Live are records from the field tools on this device. Arogya Schools students are also Healthy Schools Program students, so totals count them once.":"The charts on the program tabs use illustrative sample data, to show how the MIS will look once real figures are added in the Data hub. Panels marked Live are real records from this device. Arogya Schools students are also Healthy Schools Program students, so totals count them once.";
+  $("#tabs").innerHTML=TB.map(([k,l,c])=>'<button role="tab" data-a="tab" data-v="'+k+'" aria-selected="'+(ui.tab===k)+'" style="--tc:'+c+'">'+l+"</button>").join("");
+  document.querySelectorAll('[data-a="year"]').forEach(b=>b.setAttribute("aria-pressed",b.dataset.v===ui.year));
+  if(ui.tab==="hub"){$("#app").innerHTML=hub();return}
+  const cur=current(),subs=cur.fam?famSubs(cur.fam):[];ui.lastPage=cur.sub||"overview";
+  $("#app").innerHTML=(subs.length>1?'<div class="subtabs"><div class="seg" role="group" aria-label="Part of '+FAM[cur.fam].name+'">'+subs.map(s=>'<button data-a="sub" data-v="'+s+'" aria-pressed="'+(cur.sub===s)+'">'+SUB[s].name+"</button>").join("")+"</div></div>":"")+viewHtml(cur.b,cur.sub,cur.fam)+(ui.tab==="overview"?linksTile(""):"");
+}
+
+/* ---------- reports ---------- */
+const FOOT=()=>"Arogya World India Trust, Program MIS. "+(REAL?"":"Sample data. ")+AWIT.fmtDate(Date.now());
+function chartCard(svg,title,sub){const m=/viewBox="0 0 ([\d.]+) ([\d.]+)"/.exec(svg),inner=svg.slice(svg.indexOf(">")+1,svg.lastIndexOf("</svg>")).replace(/ data-tip="[^"]*"/g,"");return AWIT.img.compose(inner,+m[1],+m[2],title,sub,FOOT())}
+async function sectionHtml(b,level){
+  if(b.empty)return"";
+  let h="<h2>"+esc(b.title)+"</h2><p><strong>"+esc(b.lead[0])+".</strong> "+esc(b.lead[1])+"</p><table><thead><tr><th>Indicator</th><th>Value</th></tr></thead><tbody>"+b.kpis.map(([v,l])=>"<tr><td>"+esc(String(l).replace(/^./,c=>c.toUpperCase()))+"</td><td>"+esc(String(v))+"</td></tr>").join("")+"</tbody></table>";
+  if(level==="brief")return h;
+  for(const t of b.tiles){if(t[4]&&t[4].report===false)continue;const body=String(t[3]);
+    if(/^<svg class="chart"/.test(body))h+='<figure><img alt="'+esc(t[1])+'" src="'+await AWIT.img.toDataUrl(chartCard(body,t[1],t[2]),2)+'"></figure>';
+    else if(/^<p/.test(body))h+="<h3>"+esc(String(t[1]))+"</h3>"+body;
+    else if(/<table/.test(body))h+="<h3>"+esc(t[1])+"</h3>"+body.replace(/ style="background:[^"]*"/g,"").replace(/<br>/g," ")}
+  return h;
+}
+async function openReport(title,sub,forWhom,makeBody,sample){
+  const el=$("#report");el.hidden=false;el.innerHTML='<div class="rbar"><strong>Preparing the report\u2026</strong></div>';document.body.style.overflow="hidden";
+  let body;try{body=await makeBody()}catch(e){body='<p>The report could not be prepared.</p>'}
+  el.innerHTML='<div class="rbar"><button class="btn primary" data-a="rprint">Print or save as PDF</button><button class="btn" data-a="rword">Download as Word</button><button class="btn quiet" data-a="rclose">Close</button><span class="small muted">The Word file can be edited before you send it.</span></div>'+
+   '<article class="rdoc" id="rdoc" data-name="'+esc(title.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,""))+'"><p class="muted">Arogya World India Trust</p><h1>'+esc(title)+'</h1><p class="muted">'+esc(sub)+"</p>"+(forWhom?"<p>Prepared for <strong>"+esc(forWhom)+"</strong></p>":"")+
+   (sample?'<p class="banner">These figures are samples for demonstration. They are not actual program results.</p>':"")+body+'<p class="muted" style="margin-top:2rem">Prepared on '+AWIT.fmtDate(Date.now())+" from the Program MIS.</p></article>";
+  el.scrollTop=0;
+}
+function withState(state,fn){const keep=ui.state;ui.state=state;try{return fn()}finally{ui.state=keep}}
+function programReport(subKey){
+  if(!subKey)return openReport("Organisation report",periodText(),"",async()=>{let h=await sectionHtml(applyLayout(REAL?rOverview():vOverview(),"overview"),"full");for(const s of subsWithData())h+=await sectionHtml(applyLayout(buildFor(s)(),s),"brief");return h},!REAL);
+  const b=applyLayout(buildFor(subKey)(),subKey);openReport(b.title+": program report",periodText(),"",()=>sectionHtml(b,"full"),!REAL);
+}
+function funderReport(id){
+  const p=projects().find(x=>x.id===id);if(!p)return;const g=p.donor?donorData(id):null;
+  if(g){const snap=AWIT.snapshot(id),comps=[...new Set(g.indicators.map(r=>r.comp||"Other"))],ds=(g.datasets||[]).concat(hubLoad().datasets.filter(d=>d.show===id&&!(g.datasets||[]).some(x=>x.id===d.id)));
+    return openReport(g.project.name+": progress report",g.project.place+", "+AWIT.fmtDate(g.project.start)+" to "+AWIT.fmtDate(g.project.end),g.project.funder,async()=>{
+      let h="<h2>Progress against targets</h2><table><thead><tr><th>Component</th><th>Indicator</th><th>Target</th><th>Achieved</th><th>Share of target</th></tr></thead><tbody>"+g.indicators.filter(r=>r.name).map(r=>"<tr><td>"+esc(r.comp)+"</td><td>"+esc(r.name)+"</td><td>"+(r.target?nf(r.target):"")+"</td><td>"+nf(r.achieved)+" "+esc(r.unit||"")+"</td><td>"+(r.target?pc(r.achieved,r.target):"")+"</td></tr>").join("")+"</tbody></table>";
+      const tg=g.indicators.filter(r=>r.name&&r.target>0);
+      if(tg.length)h+='<figure><img alt="Progress against targets" src="'+await AWIT.img.toDataUrl(chartCard(ch.hbar(tg.map(r=>({label:r.name,sub:r.comp,value:Math.min(100,r.achieved/r.target*100),text:nf(r.achieved)+" of "+nf(r.target)+", "+pc(r.achieved,r.target)})),{w:720,max:100,color:"var(--c-hsp)",labelW:250}),"Progress against targets","Share of each target achieved so far."),2)+'"></figure>';
+      if(snap.schools.length)h+="<h2>Healthy Schools Program</h2><table><thead><tr><th>School and class</th><th>Students</th><th>Activities delivered, of 10</th></tr></thead><tbody>"+snap.schools.flatMap(sc=>sc.classes.map(c=>"<tr><td>"+esc(sc.name)+", "+esc(c.id)+"</td><td>"+c.enrol+"</td><td>"+c.acts.filter(a=>a==="v").length+"</td></tr>")).join("")+"</tbody></table>";
+      if(snap.vendors){const v=snap.vendors;h+="<h2>Street food vendor training</h2><table><thead><tr><th>Step</th><th>Vendors</th></tr></thead><tbody>"+[["Registered at their stall",v.registered],["Came to the training",v.attended],["Screened for blood pressure and sugar",v.screened],["Completed training",v.trained],["Visit 1",v.visit1],["Visit 2",v.visit2],["Visit 3",v.visit3]].map(([l,n])=>"<tr><td>"+l+"</td><td>"+n+"</td></tr>").join("")+"</tbody></table>"}
+      for(const d of ds){const body=AWIT.render(d,{w:720});h+=/^<svg/.test(body)?'<figure><img alt="'+esc(d.title)+'" src="'+await AWIT.img.toDataUrl(chartCard(body,d.title,d.labelName?"By "+String(d.labelName).toLowerCase()+".":""),2)+'"></figure>':"<h3>"+esc(d.title)+"</h3>"+body}
+      const ups=g.updates.filter(u=>u.text).sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+      if(ups.length)h+="<h2>Progress updates</h2>"+ups.map(u=>"<p><strong>"+(u.date?AWIT.fmtDate(u.date):"")+".</strong> "+esc(u.text)+"</p>").join("");
+      return h},!!g.sample)}
+  /* build every section while the project's state is selected, then put the page's own filter back */
+  const builds=withState(p.state,()=>({sub:periodText(),list:p.subs.map(s=>buildFor(s)())}));
+  openReport(p.name+": progress report",builds.sub,p.funder,async()=>{let h="";for(const b of builds.list)h+=await sectionHtml(b,"full");return h||"<p>This project has no records in this period.</p>"},!REAL);
+}
+/* ---------- Word export: a real .docx, written here without any server ---------- */
+const CRC=(()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0}return b=>{let c=~0;for(let i=0;i<b.length;i++)c=t[(c^b[i])&255]^(c>>>8);return(~c)>>>0}})();
+function zipStore(files,type){
+  const enc=new TextEncoder(),chunks=[],central=[];let off=0;
+  for(const[name,data]of files){const nb=enc.encode(name),crc=CRC(data),h=new DataView(new ArrayBuffer(30));
+    h.setUint32(0,0x04034b50,true);h.setUint16(4,20,true);h.setUint16(12,0x21,true);h.setUint32(14,crc,true);h.setUint32(18,data.length,true);h.setUint32(22,data.length,true);h.setUint16(26,nb.length,true);
+    chunks.push(new Uint8Array(h.buffer),nb,data);
+    const c=new DataView(new ArrayBuffer(46));c.setUint32(0,0x02014b50,true);c.setUint16(4,20,true);c.setUint16(6,20,true);c.setUint16(14,0x21,true);c.setUint32(16,crc,true);c.setUint32(20,data.length,true);c.setUint32(24,data.length,true);c.setUint16(28,nb.length,true);c.setUint32(42,off,true);
+    central.push(new Uint8Array(c.buffer),nb);off+=30+nb.length+data.length}
+  const csize=central.reduce((n,x)=>n+x.length,0),e=new DataView(new ArrayBuffer(22));e.setUint32(0,0x06054b50,true);e.setUint16(8,files.length,true);e.setUint16(10,files.length,true);e.setUint32(12,csize,true);e.setUint32(16,off,true);
+  return new Blob([...chunks,...central,new Uint8Array(e.buffer)],{type});
+}
+function wordFile(){
+  const X=t=>String(t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])),enc=new TextEncoder(),media=[],WIDTH=5731510;
+  const runs=(node,bold)=>{let o="";node.childNodes.forEach(n=>{if(n.nodeType===3){const t=n.textContent.replace(/\s+/g," ");if(t)o+="<w:r>"+(bold?"<w:rPr><w:b/></w:rPr>":"")+'<w:t xml:space="preserve">'+X(t)+"</w:t></w:r>"}else if(n.nodeType===1&&n.tagName!=="BUTTON")o+=n.tagName==="BR"?'<w:r><w:t xml:space="preserve"> </w:t></w:r>':runs(n,bold||/^(STRONG|B)$/.test(n.tagName))});return o};
+  const para=(el,style)=>"<w:p>"+(style?'<w:pPr><w:pStyle w:val="'+style+'"/></w:pPr>':"")+runs(el)+"</w:p>";
+  const tbl=t=>{const rows=[...t.querySelectorAll("tr")],cols=Math.max(1,...rows.map(r=>r.children.length)),w=Math.floor(9026/cols);
+    return'<w:tbl><w:tblPr><w:tblW w:w="5000" w:type="pct"/><w:tblBorders>'+["top","left","bottom","right","insideH","insideV"].map(k=>"<w:"+k+' w:val="single" w:sz="4" w:space="0" w:color="C7D5E8"/>').join("")+'</w:tblBorders><w:tblCellMar><w:left w:w="100" w:type="dxa"/><w:right w:w="100" w:type="dxa"/></w:tblCellMar></w:tblPr><w:tblGrid>'+('<w:gridCol w:w="'+w+'"/>').repeat(cols)+"</w:tblGrid>"+
+     rows.map(r=>"<w:tr>"+[...r.children].map(c=>'<w:tc><w:tcPr><w:tcW w:w="'+w+'" w:type="dxa"/>'+(c.tagName==="TH"?'<w:shd w:val="clear" w:color="auto" w:fill="F2F6FB"/>':"")+'</w:tcPr><w:p><w:pPr><w:spacing w:after="0"/></w:pPr>'+runs(c,c.tagName==="TH")+"</w:p></w:tc>").join("")+"</w:tr>").join("")+"</w:tbl><w:p/>"};
+  const pic=im=>{const b=atob(im.getAttribute("src").split(",")[1]),u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);media.push(u);const n=media.length,cy=Math.round(WIDTH*(im.naturalHeight||600)/(im.naturalWidth||800));
+    return'<w:p><w:r><w:drawing><wp:inline distT="0" distB="0" distL="0" distR="0"><wp:extent cx="'+WIDTH+'" cy="'+cy+'"/><wp:docPr id="'+n+'" name="Chart '+n+'" descr="'+X(im.getAttribute("alt")||"Chart")+'"/><a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:pic xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:nvPicPr><pic:cNvPr id="'+n+'" name="chart'+n+'.png"/><pic:cNvPicPr/></pic:nvPicPr><pic:blipFill><a:blip r:embed="rId'+(n+1)+'"/><a:stretch><a:fillRect/></a:stretch></pic:blipFill><pic:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="'+WIDTH+'" cy="'+cy+'"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></pic:spPr></pic:pic></a:graphicData></a:graphic></wp:inline></w:drawing></w:r></w:p>'};
+  let body="";
+  const walk=el=>{for(const c of el.children){const t=c.tagName;
+    if(t==="TABLE")body+=tbl(c);else if(t==="FIGURE"){const im=c.querySelector("img");if(im)body+=pic(im)}
+    else if(t==="H1")body+=para(c,"Title");else if(t==="H2")body+=para(c,"Heading1");else if(t==="H3")body+=para(c,"Heading2");
+    else if(t==="P")body+=para(c,c.classList.contains("banner")?"Notice":c.classList.contains("muted")?"Subtle":"");else walk(c)}};
+  walk($("#rdoc"));
+  const W='xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"',head='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
+  const doc=head+"<w:document "+W+' xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"><w:body>'+body+'<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440" w:header="708" w:footer="708" w:gutter="0"/></w:sectPr></w:body></w:document>';
+  const st=(id,name,based,ppr,rpr)=>'<w:style w:type="paragraph" w:styleId="'+id+'"><w:name w:val="'+name+'"/>'+(based?'<w:basedOn w:val="Normal"/><w:next w:val="Normal"/>':"")+"<w:pPr>"+ppr+"</w:pPr><w:rPr>"+rpr+"</w:rPr></w:style>";
+  const styles=head+"<w:styles "+W+'><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/><w:color w:val="16233F"/><w:sz w:val="22"/><w:szCs w:val="22"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:spacing w:after="120" w:line="264" w:lineRule="auto"/></w:pPr></w:pPrDefault></w:docDefaults>'+
+    '<w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/></w:style>'+st("Title","Title",1,'<w:spacing w:after="120"/>','<w:b/><w:sz w:val="48"/>')+st("Heading1","heading 1",1,'<w:keepNext/><w:spacing w:before="360" w:after="120"/><w:outlineLvl w:val="0"/>','<w:b/><w:sz w:val="32"/>')+st("Heading2","heading 2",1,'<w:keepNext/><w:spacing w:before="240" w:after="80"/><w:outlineLvl w:val="1"/>','<w:b/><w:sz w:val="26"/>')+
+    st("Subtle","Subtle",1,"",'<w:color w:val="52617E"/>')+st("Notice","Notice",1,'<w:shd w:val="clear" w:color="auto" w:fill="FBF0D6"/>','<w:b/><w:color w:val="8A5A05"/>')+"</w:styles>";
+  const R="http://schemas.openxmlformats.org/officeDocument/2006/relationships",files=[
+   ["[Content_Types].xml",head+'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Default Extension="png" ContentType="image/png"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/></Types>'],
+   ["_rels/.rels",head+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="'+R+'/officeDocument" Target="word/document.xml"/></Relationships>'],
+   ["word/document.xml",doc],["word/styles.xml",styles],
+   ["word/_rels/document.xml.rels",head+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="'+R+'/styles" Target="styles.xml"/>'+media.map((_,i)=>'<Relationship Id="rId'+(i+2)+'" Type="'+R+'/image" Target="media/chart'+(i+1)+'.png"/>').join("")+"</Relationships>"]
+  ].map(([n,t])=>[n,enc.encode(t)]).concat(media.map((u,i)=>["word/media/chart"+(i+1)+".png",u]));
+  AWIT.img.save(zipStore(files,"application/vnd.openxmlformats-officedocument.wordprocessingml.document"),($("#rdoc").dataset.name||"report")+".docx");
+}
+/* ---------- data hub: schools from Excel, infographics from any sheet, funder publishing ---------- */
+const hubLoad=()=>AWIT.get(AWIT.HUB_KEY)||{govandi:null,datasets:[]};
+let H=hubLoad();
+const saveH=()=>{if(!AWIT.set(AWIT.HUB_KEY,H))hubS.msg="This browser could not save the change."};
+const hubS={schools:null,ds:null,msg:"",ok:"",at:""};
+const hmsg=at=>hubS.at!==at?"":(hubS.msg?'<p class="note bad small" role="alert">'+esc(hubS.msg)+"</p>":"")+(hubS.ok?'<p class="note ok small" role="status">'+esc(hubS.ok)+"</p>":"");
+const say=(at,ok,msg)=>{hubS.at=at;hubS.ok=ok||"";hubS.msg=msg||""};
+const TEMPLATE='UDISE,School,Block,Partner,Coordinator,Project,Classes\n27220100301,Example Municipal School,Mumbai M East,Arogya World,Priya M,Nourishing Govandi,"6A:44, 6B:41"\n';
+const PARTNERS={aw:"Arogya World",cini:"CINI",mamta:"MAMTA"},partnerId=t=>{const x=String(t||"").toLowerCase();return x.includes("cini")?"cini":x.includes("mamta")?"mamta":"aw"};
+const siteBase=()=>location.origin+location.pathname.replace(/index\.html$/,"");
+function linksTile(span){
+  const L=[["SchoolTrack field app, for Healthy Schools coordinators","schooltrack/field/"],["Street Food Vendor Training field app, for NASVI and Arogya World coordinators","sfvt/field/"]];
+  return tile(span,"Field app links to share","Send these to coordinators. Each link opens the field app only, and the coordinator signs in with their name and PIN.",
+    L.map(([n,p])=>'<div class="row" style="justify-content:space-between;padding:.6rem 0;border-bottom:1px solid var(--rule2)"><div style="min-width:0"><strong>'+n+'</strong><br><span class="small muted" style="word-break:break-all">'+esc(siteBase()+p)+'</span></div><div class="row"><button class="btn quiet" data-a="copy" data-v="'+esc(siteBase()+p)+'">Copy link</button><a class="btn" target="_blank" rel="noopener" href="https://wa.me/?text='+encodeURIComponent(n+": "+siteBase()+p)+'">Send on WhatsApp</a></div></div>').join(""));
+}
+async function readBook(file){
+  if(!window.XLSX)throw new Error("The Excel reader did not load. Check that the lib folder was uploaded.");
+  const wb=XLSX.read(await file.arrayBuffer(),{type:"array",cellDates:true}),sheets={};
+  for(const n of wb.SheetNames)sheets[n]=XLSX.utils.sheet_to_json(wb.Sheets[n],{header:1,defval:"",raw:false}).filter(r=>r.some(c=>String(c).trim()!==""));
+  return sheets;
+}
+/* the sheet whose header row has the column we need; templates start with a "How to fill" sheet */
+const pickSheet=(sh,re)=>{const all=Object.values(sh);return all.find(r=>r.length&&r[0].some(c=>re.test(String(c).toLowerCase())))||all[0]||[]};
+const toNum=v=>{const t=String(v).replace(/[,\s%₹]/g,"");return t!==""&&isFinite(t)?parseFloat(t):null};
+function mapSchools(rows){
+  const head=rows[0].map(h=>String(h).trim().toLowerCase()),at=f=>head.findIndex(f);
+  const iU=at(h=>h.includes("udise")),iN=at(h=>h.includes("school")||h==="name"),iB=at(h=>h.includes("block")||h.includes("ward")),iC=at(h=>h.includes("coordinator")),iP=at(h=>h.includes("project")||h.includes("funder")),iR=at(h=>h.includes("partner")),iK=at(h=>h.includes("classes"));
+  const cc=head.map((h,i)=>/^(class|grade)?\s*\d{1,2}\s*[a-z]?$/.test(h)&&i!==iU?[i,h.replace(/class|grade|\s/g,"").toUpperCase()]:null).filter(Boolean);
+  if(iU<0||iN<0)return{error:"The sheet needs a UDISE column and a School column in its first row."};
+  const st=AWIT.get("schooltrack.v2")||{schools:{}};
+  return{list:rows.slice(1).map(r=>{
+    const id=String(r[iU]).replace(/\D/g,""),name=String(r[iN]).trim();let classes=[];
+    if(iK>=0)classes=String(r[iK]).split(",").map(x=>x.split(":")).filter(x=>x.length===2).map(([c,n])=>({id:c.trim().slice(0,6),enrol:parseInt(n,10)})).filter(c=>c.id&&c.enrol>0);
+    for(const[i,cid]of cc){const n=toNum(r[i]);if(n>0&&!classes.some(c=>c.id===cid))classes.push({id:cid,enrol:Math.round(n)})}
+    const skip=/example/i.test(name)?"example row from the template":id.length!==11?"UDISE code is not 11 digits":!name?"no school name":!classes.length?"no classes with enrolment":"";
+    return{id,name,block:iB>=0?String(r[iB]).trim():"",coord:iC>=0?String(r[iC]).trim():"",project:iP>=0?String(r[iP]).trim():"",partner:iR>=0?partnerId(r[iR]):"",classes,skip,isNew:!st.schools[id]}})};
+}
+function importSchools(){
+  const st=Object.assign({coords:[],schools:{},sessions:{},misses:{},flags:{},as:{}},AWIT.get("schooltrack.v2")||{});let added=0,updated=0,fresh=0;
+  for(const r of hubS.schools.list){if(r.skip)continue;const old=st.schools[r.id];
+    let c=r.coord?st.coords.find(x=>x.name.toLowerCase()===r.coord.toLowerCase()):null;
+    if(r.coord&&!c){const id="c"+Date.now().toString(36)+st.coords.length;c={id,name:r.coord,org:r.partner||"aw",pin:AWIT.pinHash(id,"1234")};st.coords.push(c);fresh++}
+    if(!c&&!old){c=st.coords.find(x=>x.name==="Unassigned");if(!c){c={id:"c-unassigned",name:"Unassigned",org:"aw",pin:""};st.coords.push(c)}}
+    if(old){const keep=old.classes.filter(k=>!r.classes.some(x=>x.id===k.id)&&Object.values(st.sessions).some(s=>s.schoolId===r.id&&s.classId===k.id));
+      Object.assign(old,{name:r.name,block:r.block||old.block,project:r.project||old.project||"",partner:r.partner||old.partner||"aw",coordId:c?c.id:old.coordId,classes:r.classes.concat(keep)});updated++}
+    else{st.schools[r.id]={id:r.id,name:r.name,block:r.block,project:r.project,partner:r.partner||"aw",lat:null,lng:null,coordId:c.id,isAS:false,teacher:"",phone:"",classes:r.classes};added++}}
+  if(!AWIT.set("schooltrack.v2",st))return say("schools","","This browser could not save the schools.");
+  hubS.schools=null;say("schools",added+" schools added and "+updated+" updated."+(fresh?" New coordinators created: "+fresh+". They sign in with the PIN 1234 until you change it in the SchoolTrack dashboard, under Team.":""));
+}
+function schoolsTile(){
+  const st=AWIT.get("schooltrack.v2"),n=st&&st.schools?Object.keys(st.schools).length:0;
+  let b="<p>"+n+' schools are in the school master on this device.</p><div class="row"><span class="btn primary filebtn">Choose an Excel or CSV file<input type="file" accept=".xlsx,.csv" data-c="schoolfile" aria-label="Choose a file of schools"></span><a class="btn quiet" href="templates/HSP-schools-template.xlsx" download>Download the template</a><a class="btn quiet" href="schooltrack/dashboard/">Edit schools one by one</a></div>'+
+    '<p class="small muted">First row: UDISE, School, Block, Partner, Coordinator, Project, Classes. Write classes as 6A:42, 6B:39, or give each class its own column with the enrolment under it.</p>'+hmsg("schools");
+  if(hubS.schools&&hubS.schools.list){const l=hubS.schools.list,ok=l.filter(r=>!r.skip);
+    b+='<div class="scroll"><table><thead><tr><th>UDISE</th><th>School</th><th>Partner</th><th>Coordinator</th><th>Project</th><th>Classes</th><th>Result</th></tr></thead><tbody>'+l.slice(0,12).map(r=>'<tr><td class="num">'+esc(r.id)+"</td><td>"+esc(r.name)+"</td><td>"+esc(PARTNERS[r.partner||"aw"])+"</td><td>"+esc(r.coord)+"</td><td>"+esc(r.project)+'</td><td class="num">'+r.classes.map(c=>esc(c.id)+": "+c.enrol).join(", ")+"</td><td>"+(r.skip?'<span class="pill bad">Skipped: '+esc(r.skip)+"</span>":'<span class="pill ok">'+(r.isNew?"New":"Update")+"</span>")+"</td></tr>").join("")+"</tbody></table></div>"+
+      (l.length>12?'<p class="small muted">Showing the first 12 of '+l.length+" rows.</p>":"")+'<div class="row"><button class="btn primary" data-a="importschools"'+(ok.length?"":" disabled")+">Add or update "+ok.length+' schools</button><button class="btn quiet" data-a="cancelschools">Cancel</button></div>'}
+  return tile("","Schools: add from Excel","A school already in the list is matched by its UDISE code and updated. Its recorded sessions and location are kept.",b);
+}
+function dsBuild(){
+  const d=hubS.ds,rows=d.sheets[d.sheet].slice(1);let labels=[],series=d.values.map(i=>({name:String(d.head[i]),values:[]}));
+  if(d.agg!=="none"){const idx=new Map(),cnt=[];for(const r of rows){const l=String(r[d.label]).trim();if(!l)continue;if(!idx.has(l)){idx.set(l,labels.length);labels.push(l);cnt.push(0);series.forEach(s=>s.values.push(0))}cnt[idx.get(l)]++;d.values.forEach((c,j)=>series[j].values[idx.get(l)]+=toNum(r[c])||0)}
+    if(d.agg==="avg")series.forEach(s=>s.values=s.values.map((v,i)=>Math.round(v/cnt[i]*10)/10))}
+  else for(const r of rows){const l=String(r[d.label]).trim();if(!l)continue;labels.push(l);d.values.forEach((c,j)=>series[j].values.push(toNum(r[c])||0))}
+  labels=labels.slice(0,60);series.forEach(s=>s.values=s.values.slice(0,60));
+  return{id:"d"+Date.now().toString(36),title:d.title.trim()||"Untitled",labelName:String(d.head[d.label]),type:d.type,labels,series,show:d.show,source:d.file};
+}
+function dsSheet(d,name){d.sheet=name;const rows=d.sheets[name];d.head=rows[0]||[];const body=rows.slice(1);
+  d.numeric=d.head.map((_,i)=>{const vals=body.map(r=>r[i]).filter(v=>String(v).trim()!=="");return vals.length>0&&vals.filter(v=>toNum(v)!==null).length/vals.length>=.7});
+  d.label=Math.max(0,d.numeric.findIndex(x=>!x));d.values=d.numeric.map((x,i)=>x&&i!==d.label?i:-1).filter(i=>i>=0).slice(0,2);
+  d.agg=d.values.some(i=>/%|percent|rate|score|average/i.test(String(d.head[i])))?"avg":"sum"}
+function builderTile(){
+  const d=hubS.ds;let b='<div class="row"><span class="btn primary filebtn">Choose an Excel or CSV file<input type="file" accept=".xlsx,.csv" data-c="dsfile" aria-label="Choose a data file"></span></div>'+hmsg("ds");
+  if(d){const names=Object.keys(d.sheets),seg=(k,opts)=>'<div class="seg">'+opts.map(([v,l])=>'<button data-a="dsset" data-k="'+k+'" data-v="'+v+'" aria-pressed="'+(d[k]===v)+'">'+l+"</button>").join("")+"</div>";
+    b+='<div class="stack" style="margin-top:1rem"><div class="field"><label for="ds-title">Title of the infographic</label><input id="ds-title" data-c="dstitle" value="'+esc(d.title)+'"></div>'+
+     '<div class="two">'+(names.length>1?'<div class="field"><label for="ds-sheet">Sheet</label><select id="ds-sheet" data-c="dssheet">'+names.map(n=>"<option"+(n===d.sheet?" selected":"")+">"+esc(n)+"</option>").join("")+"</select></div>":"")+
+     '<div class="field"><label for="ds-label">Labels come from this column</label><select id="ds-label" data-c="dslabel">'+d.head.map((h,i)=>'<option value="'+i+'"'+(i===d.label?" selected":"")+">"+esc(h||"Column "+(i+1))+"</option>").join("")+"</select></div></div>"+
+     '<fieldset style="border:0;padding:0;margin:0"><legend style="font-weight:700;padding:0">Numbers come from these columns</legend>'+(d.numeric.some(x=>x)?d.head.map((h,i)=>d.numeric[i]&&i!==d.label?'<label class="row" style="gap:.5rem;padding:.2rem 0"><input type="checkbox" style="width:22px;height:22px" data-c="dsval" data-i="'+i+'"'+(d.values.includes(i)?" checked":"")+">"+esc(h||"Column "+(i+1))+"</label>":"").join(""):'<p class="note bad small">No column in this sheet holds numbers.</p>')+"</fieldset>"+
+     '<div class="row"><div><p style="font-weight:700">Draw it as</p>'+seg("type",[["bar","Bars"],["line","Line"],["table","Table"]])+'</div><div><p style="font-weight:700">Show it on</p>'+(REAL?'<select data-c="dsshow" aria-label="Show it on">'+[["page:overview","MIS: Organisation overview"]].concat(subsWithData().filter(x=>x!=="soc").map(x=>["page:"+x,"MIS: "+SUB[x].full])).concat([["govandi","Donor page: Nourishing Govandi"],["hcltech","Donor page: HCLTech"]]).map(([v,l])=>'<option value="'+v+'"'+(d.show===v?" selected":"")+">"+esc(l)+"</option>").join("")+"</select>":seg("show",[["mis","This MIS only"],["govandi","Govandi donor page"],["hcltech","HCLTech donor page"]]))+"</div></div>"+
+     '<div><p style="font-weight:700">When several rows share a label</p>'+seg("agg",[["sum","Add them up"],["avg","Average them"],["none","Keep every row"]])+"</div>"+
+     '<div style="border:1.5px dashed var(--rule);border-radius:12px;padding:1rem"><p class="small muted" style="margin-bottom:.5rem">Preview</p><h3 id="ds-ptitle" style="margin-bottom:.6rem">'+esc(d.title||"Untitled")+"</h3>"+(d.values.length?AWIT.render(dsBuild()):'<p class="muted">Tick at least one column of numbers.</p>')+"</div>"+
+     '<div class="row"><button class="btn primary" data-a="dssave"'+(d.values.length?"":" disabled")+'>Save this infographic</button><button class="btn quiet" data-a="dscancel">Cancel</button></div></div>'}
+  return tile("","Turn any Excel sheet into an infographic","Upload a sheet, pick the columns, and the chart is drawn at once. Save it to keep it on the MIS or add it to a funder dashboard.",b);
+}
+const DONOR_NAMES={govandi:"Nourishing Govandi (Godrej)",hcltech:"HCLTech preview"};
+const donorPid=()=>hubS.pid||"govandi";
+const donorEdit=()=>{const g=H[donorPid()];if(g){g.dirty=true;saveH()}};
+function donorTile(){
+  const pid=donorPid(),g=H[pid],online=AWIT.store.configured();
+  let b='<div class="seg" role="group" aria-label="Donor page" style="margin-bottom:1rem">'+Object.keys(DONOR_NAMES).map(k=>'<button data-a="donorpick" data-v="'+k+'" aria-pressed="'+(k===pid)+'">'+DONOR_NAMES[k]+"</button>").join("")+"</div>";
+  b+='<div class="row"><a class="btn" href="funders/'+pid+'/" target="_blank" rel="noopener">Open the donor page</a><button class="btn quiet" data-a="copy" data-v="'+esc(siteBase()+"funders/"+pid+"/")+'">Copy its link</button><a class="btn quiet" href="templates/Donor-project-template.xlsx" download>Download the donor template</a></div>';
+  if(!g)return tile("","Donor pages","What each funder sees on its own page. Fill it from Excel or type it in, then publish.",b+'<p style="margin-top:.8rem">Start from what is published now, from a filled donor template, or empty.</p><div class="row" style="margin-top:.6rem"><button class="btn primary" data-a="donorload">Load the published page</button><span class="btn filebtn">Upload a filled donor template<input type="file" accept=".xlsx,.csv" data-c="donorfile" aria-label="Upload a filled donor template"></span><button class="btn" data-a="donornew">Start empty</button></div>'+hmsg("gov"));
+  const snap=AWIT.snapshot(pid),inp=(i,k,v,w,num)=>'<input class="cellin" style="min-width:'+w+'" data-c="ind" data-i="'+i+'" data-k="'+k+'" value="'+esc(v)+'"'+(num?' inputmode="decimal"':"")+' aria-label="'+k+'">',pf=(k,l,type)=>'<div class="field"><label for="pj-'+k+'">'+l+'</label><input id="pj-'+k+'"'+(type?' type="'+type+'"':"")+' data-c="proj" data-k="'+k+'" value="'+esc(g.project[k]||"")+'"></div>';
+  b+='<p class="small muted" style="margin-top:.6rem">'+(g.dirty?"You have changes that are not published yet. On this device the donor page shows them at once.":"This matches what is published.")+'</p><span class="btn quiet filebtn">Replace from a filled donor template<input type="file" accept=".xlsx,.csv" data-c="donorfile" aria-label="Replace from a filled donor template"></span>';
+  b+='<h3 style="margin-top:1.2rem">Project</h3><div class="two">'+pf("name","Project name")+pf("funder","Funder")+pf("place","Place")+pf("tagline","One line about the project")+pf("start","Start date","date")+pf("end","End date","date")+"</div>";
+  b+='<h3 style="margin-top:1.2rem">Targets and progress</h3><div class="scroll"><table><thead><tr><th>Component</th><th>Indicator</th><th>Unit</th><th>Target</th><th>Achieved</th><th></th></tr></thead><tbody>'+
+    g.indicators.map((r,i)=>"<tr><td>"+inp(i,"comp",r.comp,"170px")+"</td><td>"+inp(i,"name",r.name,"220px")+"</td><td>"+inp(i,"unit",r.unit,"90px")+"</td><td>"+inp(i,"target",r.target,"80px",1)+"</td><td>"+inp(i,"achieved",r.achieved,"80px",1)+'</td><td><button class="btn quiet" data-a="inddel" data-i="'+i+'" aria-label="Remove '+esc(r.name)+'">Remove</button></td></tr>').join("")+'</tbody></table></div><button class="btn quiet" data-a="indadd">Add an indicator</button><p class="small muted">Leave the target at 0 for a figure that has no target.</p>';
+  b+='<h3 style="margin-top:1.2rem">Progress updates</h3>'+g.updates.map((u,i)=>'<div class="row" style="align-items:flex-start;margin:.4rem 0"><input class="cellin" type="date" style="width:170px" data-c="upd" data-i="'+i+'" data-k="date" value="'+esc(u.date)+'" aria-label="Date"><input class="cellin" style="flex:1;min-width:200px" data-c="upd" data-i="'+i+'" data-k="text" value="'+esc(u.text)+'" aria-label="Update"><button class="btn quiet" data-a="upddel" data-i="'+i+'">Remove</button></div>').join("")+'<button class="btn quiet" data-a="updadd">Add an update</button>';
+  if(snap.schools.length||snap.vendors)b+='<h3 style="margin-top:1.2rem">Taken straight from the tools on this device</h3><p class="small">'+(snap.schools.length?snap.schools.length+" schools tagged with this project in SchoolTrack, with "+snap.schools.reduce((n,s)=>n+(s.sessions||0),0)+" counted sessions.":"")+" "+(snap.vendors?snap.vendors.registered+" vendors registered, "+snap.vendors.trained+" trained.":"")+"</p>";
+  b+='<h3 style="margin-top:1.2rem">Publish</h3><label class="row" style="gap:.5rem"><input type="checkbox" style="width:22px;height:22px" data-c="govsample"'+(g.sample?" checked":"")+'>These are sample figures. Show a notice saying so.</label><div class="row" style="margin-top:.6rem">'+
+    (online?'<button class="btn primary" data-a="donorpublish">Publish to the donor page</button>':'<button class="btn primary" data-a="govdownload">Download '+pid+'.json</button>')+'<button class="btn quiet danger" data-a="govdiscard">Discard my edits on this device</button></div>'+
+    (online?'<p class="small muted">Publishing needs you to be signed in to the online store above. The donor sees the new figures as soon as they reload the page.</p>':'<p class="small muted">To publish: on GitHub, open the data folder, choose Add file, then Upload files, and upload '+pid+'.json so it replaces the old one. The donor sees the new figures a minute or two later.</p>')+hmsg("gov");
+  return tile("","Donor pages: "+DONOR_NAMES[pid],"Edit the project, targets, progress and updates. Infographics you saved for this donor page are included when you publish.",b);
+}
+function hub(){
+  H=hubLoad();
+  let h=lead("Data hub","Add your real figures, publish the donor pages, load the HSP school list and past sessions, and turn any sheet into an infographic.");
+  h+=figuresTile()+storeTile()+donorTile()+schoolsTile()+sessionsTile()+linksTile("")+builderTile();
+  for(const d of H.datasets)h+=tile("s6",esc(d.title),(d.show==="mis"?"Shown on this MIS only.":"Shown on the "+(DONOR_NAMES[d.show]||d.show)+" donor page.")+(d.source?" From "+esc(d.source)+".":""),AWIT.render(d)+'<div class="row" style="margin-top:.8rem"><button class="btn quiet" data-a="dsmove" data-id="'+esc(d.id)+'">'+(d.show==="mis"?"Add to the Govandi donor page":d.show==="govandi"?"Move to the HCLTech donor page":"Keep on this MIS only")+'</button><button class="btn quiet danger" data-a="dsdel" data-id="'+esc(d.id)+'">Delete</button></div>');
+  return h;
+}
+const HA={
+  copy(d,t){const done=()=>{const o=t.textContent;t.textContent="Copied";setTimeout(()=>t.textContent=o,1500)};if(navigator.clipboard)navigator.clipboard.writeText(d.v).then(done,()=>{});},
+  importschools(){importSchools();render()},
+  cancelschools(){hubS.schools=null;say("");render()},
+  dsset(d){hubS.ds[d.k]=d.v;render()},
+  dscancel(){hubS.ds=null;say("");render()},
+  async dssave(){if(String(hubS.ds.show).startsWith("page:")){const ds=dsBuild(),page=hubS.ds.show.slice(5);hubS.ds=null;await saveLayout(L=>L.items.push({id:"c"+Date.now().toString(36),type:"chart",page,title:ds.title,sub:ds.labelName?"By "+String(ds.labelName).toLowerCase()+".":"",ds}));say("ds",'"'+ds.title+'" is added to the page.');return render()}
+    const ds=dsBuild();H.datasets.unshift(ds);saveH();if(H[ds.show]){H[ds.show].dirty=true;saveH()}hubS.ds=null;say("ds",'"'+ds.title+'" is saved'+(ds.show!=="mis"?" and will go to the donor page when you publish it.":"."));render()},
+  dsdel(d){H.datasets=H.datasets.filter(x=>x.id!==d.id);saveH();render()},
+  dsmove(d){const x=H.datasets.find(x=>x.id===d.id);if(x){x.show=x.show==="mis"?"govandi":x.show==="govandi"?"hcltech":"mis";saveH();render()}},
+  donorpick(d){hubS.pid=d.v;say("");render()},
+  async donorload(){const pid=donorPid();say("gov");const r=await AWIT.store.load(pid,"");
+    if(!r||!r.data){say("gov","","Nothing is published for this donor page yet. Upload a filled donor template or start empty.");return render()}
+    const j=JSON.parse(JSON.stringify(r.data)),ds=(j.datasets||[]).map(x=>Object.assign({},x,{show:pid}));H.datasets=H.datasets.filter(x=>!ds.some(y=>y.id===x.id)).concat(ds);
+    delete j.datasets;delete j.tools;delete j.publishedAt;j.dirty=false;H[pid]=j;saveH();say("gov","The published page is loaded. Edit it below.");render()},
+  donornew(){const pid=donorPid();H[pid]=AWIT.donorDefault(pid);H[pid].dirty=true;saveH();say("gov","Started an empty page. Fill in the project and its indicators.");render()},
+  govdiscard(){const pid=donorPid();delete H[pid];H.datasets=H.datasets.filter(x=>x.show!==pid);saveH();say("gov","Your edits on this device are discarded. The published page is unchanged.");render()},
+  indadd(){H[donorPid()].indicators.push({comp:"",name:"",unit:"",target:0,achieved:0});donorEdit();render()},
+  inddel(d){H[donorPid()].indicators.splice(+d.i,1);donorEdit();render()},
+  updadd(){H[donorPid()].updates.unshift({date:new Date().toISOString().slice(0,10),text:""});donorEdit();render()},
+  upddel(d){H[donorPid()].updates.splice(+d.i,1);donorEdit();render()},
+  govdownload(){const pid=donorPid(),g=donorPack(pid);AWIT.store.download(pid+".json",g);say("gov",pid+".json is downloaded. Upload it to the data folder on GitHub to publish.");render()},
+  async donorpublish(){const pid=donorPid(),g=donorPack(pid),r=await AWIT.store.save(pid,g).catch(()=>({ok:false,why:"error"}));
+    if(r.ok){H[pid].dirty=false;saveH();DONORS[pid]=g;say("gov","Published. The donor page shows these figures now.")}else say("gov","",r.why==="signin"?"Sign in to the online store first, in the box above.":"The online store did not accept it. Check that you are signed in, then try again.");render()},
+  async dbin(){const e=$("#db-email"),p=$("#db-pass");say("db");try{await AWIT.store.signIn(e.value.trim(),p.value);say("db","Signed in.")}catch(err){say("db","",err.message)}render()},
+  dbout(){AWIT.store.signOut();say("db","Signed out.");render()},
+  figcancel(){hubS.fig=null;say("");render()},
+  figmode(d){hubS.fig.mode=d.v;render()},
+  async figsave(){const f=hubS.fig;hubS.fig=null;hubS.ed=null;await saveFigures(mergeFigures(AWIT.get(FIGKEY)||REAL,f.parsed,f.mode==="replace"),"fig")},
+  async figclear(){if(!hubS.confirmClear){hubS.confirmClear=true;say("figlist","","Press the button again to remove all real figures and go back to the sample.");return render()}
+    hubS.confirmClear=false;try{localStorage.removeItem(FIGKEY)}catch(e){}if(AWIT.store.configured()&&AWIT.store.session())await AWIT.store.save("mis",{rows:[],social:[],targets:[],outcomes:[],updatedAt:new Date().toISOString()});location.reload()},
+  figjson(){AWIT.store.download("mis.json",figBase());say("figlist","mis.json is downloaded. Upload it to the data folder on GitHub so every device shows these figures.");render()},
+  figexport(){exportFigures()},
+  edopen(){const b=figBase();hubS.ed={tab:"reach",filter:"",dirty:false,data:{rows:b.rows||[],social:b.social||[],targets:b.targets||[],outcomes:b.outcomes||[]}};say("");render()},
+  edtab(d){hubS.ed.tab=d.v;render()},
+  edadd(){const e=hubS.ed,T=ED[e.tab],x=T.blank();if(e.filter&&"p"in x)x.p=e.filter;e.data[T.key].push(x);e.dirty=true;render()},
+  eddel(d){const e=hubS.ed;e.data[ED[e.tab].key].splice(+d.i,1);e.dirty=true;render()},
+  edclose(){hubS.ed=null;say("");render()},
+  async edsave(){const e=hubS.ed,errs=[];
+    e.data.rows.forEach((r,i)=>{if(!r.state||!periodOf(r.period)||!(r.people>=0))errs.push("Reach row "+(i+1)+": needs a state, a year such as 2025 or 2024-25, and people reached.");else r.period=periodOf(r.period)});
+    e.data.social.forEach((s,i)=>{if(!monthOf(s.month)||!(s.reach>=0))errs.push("Social media row "+(i+1)+": needs a month such as 2026-07 and people reached.");else s.month=monthOf(s.month)});
+    e.data.targets.forEach((t,i)=>{if(!periodOf(t.year)||!(t.target>0))errs.push("Target row "+(i+1)+": needs a year and a target.");else t.year=periodOf(t.year)});
+    e.data.outcomes.forEach((o,i)=>{if(!o.measure)errs.push("Outcome row "+(i+1)+": needs a measure.")});
+    if(errs.length){say("ed","",errs.slice(0,6).join(" "));return render()}
+    const R=figBase();Object.assign(R,e.data);hubS.ed=null;await saveFigures(R,"fig")},
+  editpage(){ui.edit=true;say("");render()},
+  editdone(){ui.edit=false;say("");render()},
+  async hidetile(d){await saveLayout(L=>{if(!L.hidden.includes(d.id))L.hidden.push(d.id)})},
+  async showtile(d){await saveLayout(L=>{L.hidden=L.hidden.filter(x=>x!==d.id)})},
+  async hidekpi(d){await saveLayout(L=>{if(!L.hiddenKpis.includes(d.id))L.hiddenKpis.push(d.id)})},
+  async showkpi(d){await saveLayout(L=>{L.hiddenKpis=L.hiddenKpis.filter(x=>x!==d.id)})},
+  async delitem(d){await saveLayout(L=>{L.items=L.items.filter(x=>x.id!==d.id)})},
+  async addkpi(){const v=$("#ek-value").value.trim(),l=$("#ek-label").value.trim();if(!v||!l){say("edit","","Enter the number and what it is.");return render()}const page=current().sub||"overview";await saveLayout(L=>L.items.push({id:"k"+Date.now().toString(36),type:"kpi",page,value:v,label:l}))},
+  async addnote(){const t=$("#en-title").value.trim(),x=$("#en-text").value.trim();if(!t||!x){say("edit","","Enter a title and the text.");return render()}const page=current().sub||"overview";await saveLayout(L=>L.items.push({id:"n"+Date.now().toString(36),type:"note",page,title:t,text:x}))},
+  importsessions(){importSessions();render()},
+  cancelsessions(){hubS.sess=null;say("");render()}
+};
+document.addEventListener("input",e=>{const t=e.target,c=t.dataset.c;
+  if(c==="dstitle"){hubS.ds.title=t.value;const p=$("#ds-ptitle");if(p)p.textContent=t.value||"Untitled"}
+  if(c==="ind"){const r=H[donorPid()].indicators[+t.dataset.i],k=t.dataset.k;r[k]=k==="target"||k==="achieved"?(toNum(t.value)||0):t.value;donorEdit()}
+  if(c==="ed"){const e=hubS.ed,T=ED[e.tab],col=T.cols.find(x=>x[0]===t.dataset.k),row=e.data[T.key][+t.dataset.i];row[t.dataset.k]=col[2]==="num"?(t.value.trim()===""?null:toNum(t.value)):t.value;e.dirty=true}
+  if(c==="proj"){H[donorPid()].project[t.dataset.k]=t.value;donorEdit()}
+  if(c==="upd"){H[donorPid()].updates[+t.dataset.i][t.dataset.k]=t.value;donorEdit()}});
+document.addEventListener("change",async e=>{const t=e.target,c=t.dataset.c;
+  if(c==="schoolfile"&&t.files[0]){say("schools");try{const sh=await readBook(t.files[0]),rows=pickSheet(sh,/udise/);const m=rows.length>1?mapSchools(rows):{error:"The sheet has no rows under its first row."};if(m.error){hubS.schools=null;say("schools","",m.error)}else hubS.schools=m}catch(err){hubS.schools=null;say("schools","",err.message||"That file could not be read.")}render()}
+  if(c==="dsfile"&&t.files[0]){say("ds");try{const sheets=await readBook(t.files[0]),names=Object.keys(sheets).filter(n=>sheets[n].length>1);if(!names.length)throw new Error("The file has no sheet with rows under a header row.");
+      const d={file:t.files[0].name,sheets,title:t.files[0].name.replace(/\.[^.]+$/,""),type:"bar",show:REAL?"page:"+(ui.lastPage||"overview"):"mis",agg:"sum"};for(const n of Object.keys(sheets))if(!names.includes(n))delete sheets[n];dsSheet(d,names[0]);hubS.ds=d}
+    catch(err){hubS.ds=null;say("ds","",err.message||"That file could not be read.")}render()}
+  if(c==="dsshow"){hubS.ds.show=t.value}
+  if(c==="edfilter"){hubS.ed.filter=t.value;render()}
+  if(c==="dssheet"){dsSheet(hubS.ds,t.value);render()}
+  if(c==="dslabel"){const d=hubS.ds;d.label=+t.value;d.values=d.values.filter(i=>i!==d.label);render()}
+  if(c==="dsval"){const d=hubS.ds,i=+t.dataset.i;d.values=t.checked?d.values.concat(i).sort((a,b)=>a-b):d.values.filter(x=>x!==i);render()}
+  if(c==="govsample"){H[donorPid()].sample=t.checked;donorEdit()}
+  if(c==="figfile"&&t.files[0]){say("fig");try{const p=parseFigures(await readBook(t.files[0]));if(p.error){hubS.fig=null;say("fig","",p.error)}else hubS.fig={file:t.files[0].name,parsed:p,mode:REAL?"add":"replace"}}catch(err){hubS.fig=null;say("fig","",err.message||"That file could not be read.")}render()}
+  if(c==="donorfile"&&t.files[0]){const pid=donorPid();say("gov");try{const g=parseDonor(await readBook(t.files[0]),pid);g.dirty=true;H[pid]=g;saveH();say("gov","Loaded "+g.indicators.length+" indicators and "+g.updates.length+" updates from the file. Check them below, then publish.")}catch(err){say("gov","",err.message||"That file could not be read.")}render()}
+  if(c==="sessfile"&&t.files[0]){say("sess");try{const sh=await readBook(t.files[0]),rows=pickSheet(sh,/activity/);const m=rows.length>1?parseSessions(rows):{error:"The sheet has no rows under its first row."};if(m.error){hubS.sess=null;say("sess","",m.error)}else hubS.sess=m}catch(err){hubS.sess=null;say("sess","",err.message||"That file could not be read.")}render()}});
+
+
+/* ---------- real figures for the MIS: yearly totals; social media month by month ---------- */
+const FIGKEY="awit.real.mis";
+const PROGS=[["soc",/social/],["as",/arogya\s*school/],["hsp",/\bhsp\b|healthy\s*school/],["sfvt",/vendor|sfvt|street/],["out",/outreach|women|adolesc/],["bot",/whatsapp|challenge|\bbot\b/],["mdb",/m\s*-?\s*diab/],["city",/arogya\s*city|\bcity\b|pledge/]];
+const PNAME={hsp:"HSP",as:"Arogya Schools",sfvt:"Street Food Vendor Training",out:"Nutrition outreach",bot:"WhatsApp challenge",mdb:"mDiabetes",city:"Arogya City"};
+const progOf=t=>{const x=String(t||"").toLowerCase();for(const[k,re]of PROGS)if(re.test(x))return k;return null};
+const MON3=["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"];
+function monthOf(v){const t=String(v||"").trim().toLowerCase();let m;
+  if((m=/^(\d{4})[-\/.](\d{1,2})(?:[-\/.]\d{1,2})?/.exec(t))&&+m[2]>=1&&+m[2]<=12)return m[1]+"-"+m[2].padStart(2,"0");
+  if((m=/^([a-z]{3})[a-z]*[\s\-',]+(\d{2,4})$/.exec(t))&&MON3.includes(m[1])){let y=+m[2];if(y<100)y+=2000;return y+"-"+String(MON3.indexOf(m[1])+1).padStart(2,"0")}
+  if((m=/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/.exec(t))&&+m[1]<=12){let y=+m[3];if(y<100)y+=2000;return y+"-"+m[1].padStart(2,"0")}
+  return null}
+function dateOf(v){const t=String(v||"").trim();let m;
+  if(m=/^(\d{4})-(\d{1,2})-(\d{1,2})/.exec(t))return m[1]+"-"+m[2].padStart(2,"0")+"-"+m[3].padStart(2,"0");
+  if((m=/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/.exec(t))&&+m[1]<=12){let y=+m[3];if(y<100)y+=2000;return y+"-"+m[1].padStart(2,"0")+"-"+m[2].padStart(2,"0")}
+  return null}
+/* a year such as 2025, or a school year such as 2024-25 */
+function periodOf(v){const t=String(v||"").trim();let m;
+  if(m=/^(\d{4})\s*[-\/–]\s*(\d{2,4})$/.exec(t))return m[1]+"-"+m[2].slice(-2);
+  if(m=/^(\d{4})(\.0+)?$/.exec(t))return m[1];
+  return null}
+const countOf=(t,p)=>/total|cumul|so far|running/i.test(String(t||""))?"total":String(t||"").trim()?"added":p==="city"?"total":"added";
+const cols=(head,res)=>{const h=(head||[]).map(x=>String(x).trim().toLowerCase());return res.map(re=>h.findIndex(x=>re.test(x)))};
+const cell=(r,i)=>i<0||r[i]==null?"":String(r[i]).trim();
+const numOrNull=v=>{if(v===""||v==null)return null;const n=toNum(v);return n==null?NaN:n};
+function parseFigures(sheets){
+  const names=Object.keys(sheets),find=re=>names.find(n=>re.test(n.toLowerCase()));
+  const out={rows:[],social:[],targets:[],outcomes:[],errs:[],skipped:0};
+  const rs=find(/reach/);
+  if(rs&&sheets[rs].length>1){const R=sheets[rs];
+    const[iP,iS,iD,iPa,iY,iE,iC,iPe,iW,iSi,iSe,iN,iM]=cols(R[0],[/^program/,/^state/,/district|city|location/,/partner/,/^year|period/,/edition|campaign/,/counting|type/,/people|reached/,/women|girls|female/,/school|site|stall|pledgemaker/,/session/,/note/,/^month/]);
+    if(iP<0||(iY<0&&iM<0)||iPe<0)return{error:'The "Reach" sheet needs Program, Year and People reached columns in its first row. Download the new template.'};
+    R.slice(1).forEach((r,n)=>{const row=n+2;if(/^example/i.test(cell(r,iN))||/^example/i.test(cell(r,iP))){out.skipped++;return}if(!r.some(c=>String(c).trim()))return;
+      const p=progOf(cell(r,iP)),period=iY>=0?periodOf(cell(r,iY)):(monthOf(cell(r,iM))||"").slice(0,4)||null,people=numOrNull(cell(r,iPe)),women=numOrNull(cell(r,iW)),sites=numOrNull(cell(r,iSi)),sessions=numOrNull(cell(r,iSe));
+      const bad=!p?'the program "'+cell(r,iP)+'" is not in the list':p==="soc"?"social media goes in the Social media sheet":!period?'the year "'+cell(r,iY)+'" should look like 2025, or 2024-25 for a school year':!cell(r,iS)?"the state is missing":people===null||isNaN(people)||people<0?"people reached is missing or is not a number":[women,sites,sessions].some(x=>x!==null&&(isNaN(x)||x<0))?"a number column has text in it":women!==null&&women>people?"women and girls is more than people reached":"";
+      if(bad){out.errs.push("Reach, row "+row+": "+bad+".");return}
+      out.rows.push({p,state:cell(r,iS),district:cell(r,iD),partner:cell(r,iPa),period,edition:cell(r,iE),counting:countOf(cell(r,iC),p),people,women,sites,sessions,notes:cell(r,iN)})})}
+  const ss=find(/social/);
+  if(ss&&sheets[ss].length>1){const S=sheets[ss],[a,b,c,d,e,f]=cols(S[0],[/month/,/platform/,/people|reach/,/engag/,/follow/,/note/]);
+    S.slice(1).forEach((r,n)=>{if(/^example/i.test(cell(r,f))||/example/i.test(cell(r,b)))return;if(!r.some(x=>String(x).trim()))return;const month=monthOf(cell(r,a)),reach=numOrNull(cell(r,c)),eng=numOrNull(cell(r,d)),fol=numOrNull(cell(r,e));
+      if(!month||reach===null||isNaN(reach)||[eng,fol].some(x=>x!==null&&isNaN(x))){out.errs.push("Social media, row "+(n+2)+": needs a month such as 2026-07 and a number for people reached.");return}
+      out.social.push({month,platform:cell(r,b)||"All platforms",reach,engagements:eng,followers:fol,notes:cell(r,f)})})}
+  const ts=find(/target/);if(ts&&sheets[ts].length>1){const T=sheets[ts],[a,b,c]=cols(T[0],[/program/,/year/,/target/]);
+    T.slice(1).forEach((r,n)=>{if(/example/i.test(r.join(" ")))return;if(!cell(r,a)&&!cell(r,c))return;const p=progOf(cell(r,a)),y=periodOf(cell(r,b)),t=toNum(cell(r,c));
+      if(!p||p==="soc"||!y||!(t>0)){out.errs.push("Targets, row "+(n+2)+": needs a program, a year such as 2026, and a target number.");return}out.targets.push({p,year:y,target:t})})}
+  const os=find(/outcome/);if(os&&sheets[os].length>1){const O=sheets[os],[a,b,c,d,e]=cols(O[0],[/program/,/measure|indicator/,/before|baseline/,/after|endline/,/district/]);
+    O.slice(1).forEach((r,n)=>{if(/example/i.test(r.join(" ")))return;if(!cell(r,a)&&!cell(r,b))return;const p=progOf(cell(r,a)),m=cell(r,b),bf=toNum(cell(r,c)),af=toNum(cell(r,d));
+      if(!p||!m||bf==null||af==null){out.errs.push("Outcomes, row "+(n+2)+": needs a program, a measure, and both before and after numbers.");return}out.outcomes.push({p,measure:m,before:bf,after:af,district:cell(r,e)})})}
+  if(!rs&&!ss)return{error:'The file needs a "Reach" sheet (and a "Social media" sheet for monthly social numbers). Download the template and fill it.'};
+  if(!out.rows.length&&!out.social.length&&!out.errs.length)return{error:"There are no rows to add. The grey example rows are skipped on purpose."};
+  return out;
+}
+const rowKey=r=>[r.p,r.state,r.district,r.partner,r.period,r.edition,r.counting].map(x=>String(x||"").toLowerCase().trim()).join("|");
+const socKey=s=>s.month+"|"+String(s.platform||"").toLowerCase();
+function mergeFigures(base,add,replace){
+  const R=replace||!base?{rows:[],social:[],targets:[],outcomes:[],layout:base&&base.layout}:JSON.parse(JSON.stringify(base));["rows","social","targets","outcomes"].forEach(k=>R[k]=R[k]||[]);
+  const mrg=(list,adds,key)=>{const m=new Map(list.map(x=>[key(x),x]));for(const x of adds||[])m.set(key(x),x);return[...m.values()]};
+  R.rows=mrg(R.rows,add.rows,rowKey);R.social=mrg(R.social,add.social,socKey);R.targets=mrg(R.targets,add.targets,x=>x.p+"|"+x.year);R.outcomes=mrg(R.outcomes,add.outcomes,x=>x.p+"|"+x.measure.toLowerCase()+"|"+String(x.district||"").toLowerCase());
+  return R;
+}
+const figBase=()=>JSON.parse(JSON.stringify(AWIT.get(FIGKEY)||REAL||{rows:[],social:[],targets:[],outcomes:[]}));
+async function saveFigures(R,at){
+  R.updatedAt=new Date().toISOString();R.v=2;
+  if(!AWIT.set(FIGKEY,R)){say(at,"","This browser could not save the figures.");return render()}
+  let res;try{res=await AWIT.store.save("mis",R)}catch(e){res={ok:false,why:"error"}}
+  if(!applyReal(R)){location.reload();return}
+  say(at,res.ok?"Saved online. Everyone who opens the MIS now sees this.":res.why==="signin"?"Saved on this device. Sign in to the online store in the Data hub to share it with everyone.":res.why==="nostore"?"Saved on this device. To show it on other devices, download mis.json in the Data hub and upload it to the data folder on GitHub.":"Saved on this device, but the online store did not accept it. Check that you are signed in.");
   render();
 }
-function ring(pc,color){const f=Math.max(0,Math.min(100,pc));
-  return'<svg viewBox="0 0 42 42" role="img" aria-label="'+Math.round(pc)+' percent of target"><circle cx="21" cy="21" r="15.915" fill="none" stroke="var(--rule2)" stroke-width="5"/><circle cx="21" cy="21" r="15.915" fill="none" stroke="'+color+'" stroke-width="5" stroke-linecap="round" stroke-dasharray="'+f+" "+(100-f)+'" stroke-dashoffset="25"/><text x="21" y="23.6" text-anchor="middle" style="font-size:8px;font-weight:700;fill:var(--ink);font-family:var(--display)">'+Math.round(pc)+"%</text></svg>"}
-function render(){
-  const app=document.getElementById("app");
-  if(!DATA){app.innerHTML='<div class="hero"><h1>Project progress</h1><p class="tag">No progress has been published for this project yet.</p></div>';return}
-  const p=DATA.project,inds=(DATA.indicators||[]).filter(r=>r.name),comps=[...new Set(inds.map(r=>r.comp||"Other"))],col=c=>PAL[comps.indexOf(c)%PAL.length];
-  const s=new Date(p.start).getTime(),e=new Date(p.end).getTime(),now=Date.now(),el=Math.max(0,Math.min(1,(now-s)/(e-s)));
-  const months=Math.round((e-s)/2629800000),mNow=Math.min(months,Math.max(1,Math.ceil((now-s)/2629800000)));
-  document.getElementById("asof").textContent=local?"Preview on this device":pubAt?"Data as of "+fmtDate(pubAt):"";
-  let h='<div class="hero"><h1>'+esc(p.name)+'</h1><p class="tag">'+esc(p.tagline)+'</p><div class="meta"><span>'+esc(p.place)+"</span><span>Supported by "+esc(p.funder)+"</span><span>"+fmtMonth(s)+" to "+fmtMonth(e)+"</span></div>"+
-   '<div class="period"><div class="track"><div class="fill" style="width:'+el*100+'%"></div></div><div class="ends small muted"><span>'+(now<s?"Starts "+fmtDate(s):now>e?"Project period complete":"Month "+mNow+" of "+months)+"</span><span>"+Math.round(el*100)+"% of the project period has passed</span></div></div>"+
-   (local?'<p class="banner">You are seeing your unpublished edits from this device. '+(pubAt?"The funder sees the file published on "+fmtDate(pubAt)+".":"Nothing is published for the funder yet.")+"</p>":"")+
-   (DATA.sample?'<p class="banner">These figures are samples for demonstration. They are not actual project progress.</p>':"")+"</div>";
-  h+='<div class="grid">';
-  for(const c of comps){const r=inds.find(x=>(x.comp||"Other")===c&&x.target>0)||inds.find(x=>(x.comp||"Other")===c);
-    h+='<section class="tile s3 ring" style="--pc:'+col(c)+'"><h2>'+esc(c)+"</h2>"+(r.target>0?ring(r.achieved/r.target*100,col(c))+'<b class="num">'+nf(r.achieved)+" of "+nf(r.target)+"</b>":'<b class="num" style="margin:2.2rem 0 .4rem;font-size:2.4rem">'+nf(r.achieved)+"</b>")+'<span class="muted">'+esc(r.name)+"</span></section>"}
-  for(const c of comps){const list=inds.filter(x=>(x.comp||"Other")===c);
-    h+='<section class="tile s6 comp" style="--pc:'+col(c)+'"><h2>'+esc(c)+"</h2>"+list.map(r=>r.target>0?
-      '<div class="ind"><div class="top"><span>'+esc(r.name)+'</span><strong class="num">'+nf(r.achieved)+" of "+nf(r.target)+" "+esc(r.unit||"")+'</strong></div><div class="track"><div class="fill" style="width:'+Math.min(100,r.achieved/r.target*100)+'%"></div></div><p class="small muted num">'+Math.round(r.achieved/r.target*100)+"% of target</p></div>":
-      '<div class="ind"><div class="top"><span>'+esc(r.name)+'</span><span class="big num">'+nf(r.achieved)+' <span class="small muted" style="font-family:var(--body);font-weight:400">'+esc(r.unit||"")+"</span></span></div></div>").join("")+"</section>"}
-  const t=DATA.tools||{};
-  if(t.schools&&t.schools.length){h+='<section class="tile"><h2>Healthy Schools: activity by activity</h2><p class="sub">Each tick is one of the 10 program activities delivered to a class.</p><div class="scroll"><table class="reg"><thead><tr><th style="text-align:left;padding-left:.6rem">School and class</th>'+[1,2,3,4,5,6,7,8,9,10].map(a=>"<th>"+a+"</th>").join("")+"</tr></thead><tbody>"+
-    t.schools.map(sc=>sc.classes.map(c=>'<tr><td class="c">'+esc(sc.name)+", "+esc(c.id)+' <span class="muted small num">'+c.enrol+" students</span></td>"+c.acts.map(a=>'<td class="'+a+'">'+(a==="v"?"\u2713":a==="p"?"\u2026":"")+"</td>").join("")+"</tr>").join("")).join("")+
-    '</tbody></table></div><p class="small muted" style="margin-top:.6rem">\u2713 delivered, \u2026 delivered and being reviewed. '+t.schools.reduce((n,x)=>n+(x.sessions||0),0)+" sessions so far, reaching "+nf(t.schools.reduce((n,x)=>n+x.reach,0))+" of "+nf(t.schools.reduce((n,x)=>n+x.enrol,0))+" enrolled students.</p></section>"}
-  if(t.vendors){const v=t.vendors,steps=[["Registered at their stall",v.registered],["Came to the training",v.attended],["Screened for blood pressure and sugar",v.screened],["Completed training",v.trained],["First stall visit",v.visit1||0],["Second stall visit",v.visit2||0],["Third stall visit",v.visit3||0]];
-    h+=AWIT.tile("s6","Street food vendors: step by step","Each vendor is registered at their own stall and followed through training and three stall visits.",AWIT.ch.funnel(steps.map(x=>({label:x[0],value:x[1]})),{w:540,color:PAL[1]}))}
-  for(const d of DATA.datasets||[])h+=AWIT.tile("s6",esc(d.title),d.labelName?"By "+esc(String(d.labelName).toLowerCase())+".":"",AWIT.render(d,{w:540}));
-  const ups=(DATA.updates||[]).filter(u=>u.text).sort((a,b)=>String(b.date).localeCompare(String(a.date)));
-  if(ups.length)h+='<section class="tile"><h2>Progress updates</h2>'+ups.map(u=>'<div class="upd"><span class="muted num">'+(u.date?new Date(u.date).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"}):"")+"</span><span>"+esc(u.text)+"</span></div>").join("")+"</section>";
-  h+='</div><p class="foot">Prepared by Arogya World India Trust for '+esc(p.funder)+". "+(pubAt?"Last published on "+fmtDate(pubAt)+".":"")+"</p>";
-  app.innerHTML=h;
+async function saveLayout(fn){const R=figBase();R.layout=R.layout||{hidden:[],hiddenKpis:[],items:[]};["hidden","hiddenKpis","items"].forEach(k=>R.layout[k]=R.layout[k]||[]);fn(R.layout);await saveFigures(R,"edit")}
+function exportFigures(){
+  const R=figBase();if(!window.XLSX)return;const wb=XLSX.utils.book_new(),bl=v=>v==null?"":v;
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([["Program","State","District (optional)","Partner (optional)","Year","Edition or campaign (optional)","Counting","People reached","Women and girls (optional)","Schools or sites (optional)","Sessions held (optional)","Notes"]].concat(R.rows.slice().sort((a,b)=>String(a.period).localeCompare(String(b.period))).map(r=>[PNAME[r.p],r.state,r.district,r.partner,r.period,r.edition||"",r.counting==="total"?"Total so far":"Added in this year",r.people,bl(r.women),bl(r.sites),bl(r.sessions),r.notes||""]))),"Reach");
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([["Month (YYYY-MM)","Platform","People reached","Engagements (optional)","Followers at month end (optional)","Notes"]].concat(R.social.slice().sort((a,b)=>a.month.localeCompare(b.month)).map(s=>[s.month,s.platform,s.reach,bl(s.engagements),bl(s.followers),s.notes||""]))),"Social media");
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([["Program","Year","Target (people)"]].concat(R.targets.map(t=>[PNAME[t.p],t.year,t.target]))),"Targets");
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([["Program","Measure","Before (%)","After (%)","District (optional)"]].concat(R.outcomes.map(o=>[PNAME[o.p],o.measure,o.before,o.after,o.district||""]))),"Outcomes");
+  XLSX.writeFile(wb,"AWIT-program-figures-"+new Date().toISOString().slice(0,10)+".xlsx");
 }
-awitGate("funder:"+PID,"HCLTech project: progress").then(load);
-window.addEventListener("storage",()=>{if(DATA!==null||local)load()});
-document.addEventListener("visibilitychange",()=>{if(!document.hidden&&(DATA!==null))load()});
+/* the editor: every row of every sheet, editable and removable, saved together */
+const ED={reach:{key:"rows",label:"Reach",cols:[["p","Program","prog"],["state","State"],["district","District"],["partner","Partner"],["period","Year"],["edition","Edition"],["counting","Counting","count"],["people","People reached","num"],["women","Women and girls","num"],["sites","Schools or sites","num"],["sessions","Sessions","num"],["notes","Notes"]],blank:()=>({p:"hsp",state:"",district:"",partner:"",period:String(new Date().getFullYear()),edition:"",counting:"added",people:0,women:null,sites:null,sessions:null,notes:""})},
+  social:{key:"social",label:"Social media",cols:[["month","Month","month"],["platform","Platform"],["reach","People reached","num"],["engagements","Engagements","num"],["followers","Followers","num"],["notes","Notes"]],blank:()=>({month:new Date().toISOString().slice(0,7),platform:"Instagram",reach:0,engagements:null,followers:null,notes:""})},
+  targets:{key:"targets",label:"Targets",cols:[["p","Program","prog"],["year","Year"],["target","Target (people)","num"]],blank:()=>({p:"hsp",year:String(new Date().getFullYear()),target:0})},
+  outcomes:{key:"outcomes",label:"Outcomes",cols:[["p","Program","prog"],["measure","Measure"],["before","Before (%)","num"],["after","After (%)","num"],["district","District"]],blank:()=>({p:"hsp",measure:"",before:0,after:0,district:""})}};
+function editorHtml(){
+  const e=hubS.ed;if(!e)return'<div class="row" style="margin-top:1rem"><button class="btn" data-a="edopen">Edit every figure</button><span class="small muted">Change or remove any row, target or outcome, then save.</span></div>';
+  const T=ED[e.tab],list=e.data[T.key],progs=Object.keys(PNAME),idx=list.map((_,i)=>i).filter(i=>!e.filter||!list[i].p||list[i].p===e.filter);
+  const inp=(i,c,v)=>{const[k,,type]=c;
+    if(type==="prog")return'<select class="cellin" data-c="ed" data-i="'+i+'" data-k="'+k+'">'+progs.map(p=>'<option value="'+p+'"'+(p===v?" selected":"")+">"+PNAME[p]+"</option>").join("")+"</select>";
+    if(type==="count")return'<select class="cellin" data-c="ed" data-i="'+i+'" data-k="'+k+'"><option value="added"'+(v!=="total"?" selected":"")+'>Added in this year</option><option value="total"'+(v==="total"?" selected":"")+">Total so far</option></select>";
+    return'<input class="cellin" style="min-width:'+(type==="num"?"80px":"110px")+'" data-c="ed" data-i="'+i+'" data-k="'+k+'" value="'+esc(v==null?"":v)+'"'+(type==="num"?' inputmode="decimal"':"")+">"};
+  return'<div class="sheet stack tight" style="margin-top:1rem;border:1.5px solid var(--rule);border-radius:12px;padding:1rem"><div class="row" style="justify-content:space-between;flex-wrap:wrap"><div class="seg" role="group" aria-label="Which figures">'+Object.keys(ED).map(k=>'<button data-a="edtab" data-v="'+k+'" aria-pressed="'+(k===e.tab)+'">'+ED[k].label+" ("+e.data[ED[k].key].length+")</button>").join("")+"</div>"+
+    (T.cols[0][2]==="prog"?'<label class="small">Show <select data-c="edfilter"><option value="">All programs</option>'+progs.map(p=>'<option value="'+p+'"'+(e.filter===p?" selected":"")+">"+PNAME[p]+"</option>").join("")+"</select></label>":"")+"</div>"+
+    '<div class="scroll"><table><thead><tr>'+T.cols.map(c=>"<th>"+c[1]+"</th>").join("")+"<th></th></tr></thead><tbody>"+idx.map(i=>"<tr>"+T.cols.map(c=>"<td>"+inp(i,c,list[i][c[0]])+"</td>").join("")+'<td><button class="btn quiet sm danger" data-a="eddel" data-i="'+i+'">Delete</button></td></tr>').join("")+"</tbody></table></div>"+
+    (idx.length?"":'<p class="small muted">No rows here yet.</p>')+'<div class="row"><button class="btn quiet" data-a="edadd">Add a row</button></div>'+
+    '<div class="row" style="margin-top:.6rem"><button class="btn primary" data-a="edsave">Save all changes</button><button class="btn quiet" data-a="edclose">Close without saving</button>'+(e.dirty?'<span class="small" style="color:var(--warn)">Not saved yet</span>':"")+"</div>"+hmsg("ed")+"</div>";
+}
+function figuresTile(){
+  const f=hubS.fig,R=AWIT.get(FIGKEY)||REAL;
+  let b='<div class="row"><a class="btn" href="templates/AWIT-program-figures-template.xlsx" download>Download the Excel template</a><span class="btn primary filebtn">Upload a filled template<input type="file" accept=".xlsx,.csv" data-c="figfile" aria-label="Upload a filled template"></span>'+(R?'<button class="btn quiet" data-a="figexport">Download the current figures as Excel</button>':"")+"</div>";
+  b+=REAL?'<p class="note ok small" style="margin-top:.8rem">The MIS shows real figures: '+nf(RROWS.length)+" reach rows"+(SOC.length?" and "+SOC.length+" social media rows":"")+(PERIODS.length?", "+esc(PERIODS[0])+(PERIODS.length>1?" to "+esc(PERIODS.at(-1)):""):"")+". Last saved "+(REAL.updatedAt?AWIT.fmtDate(REAL.updatedAt):"")+".</p>":'<p class="note small" style="margin-top:.8rem">The MIS shows sample figures until you add real ones. Fill the template: one row for each program, state, partner and year. Social media goes month by month in its own sheet.</p>';
+  b+=hmsg("fig");
+  if(f){const p=f.parsed,progs=[...new Set(p.rows.map(r=>r.p))].map(k=>PNAME[k]),pers=[...new Set(p.rows.map(r=>r.period))].sort();
+    b+='<div class="sheet stack tight" style="margin-top:1rem;border:1.5px dashed var(--rule);border-radius:12px;padding:1rem"><h3>'+esc(f.file)+"</h3><p>"+nf(p.rows.length)+" reach rows"+(p.rows.length?" ("+esc(progs.join(", "))+"; "+esc(pers.join(", "))+")":"")+", "+p.social.length+" social media rows, "+p.targets.length+" targets, "+p.outcomes.length+" outcome measures."+(p.skipped?" Example rows were skipped.":"")+"</p>"+
+      (p.errs.length?'<div class="note bad small"><strong>'+p.errs.length+" rows have a problem and will be left out:</strong><br>"+p.errs.slice(0,12).map(esc).join("<br>")+(p.errs.length>12?"<br>and "+(p.errs.length-12)+" more.":"")+"</div>":"")+
+      (R?'<div class="seg" role="group" aria-label="How to save"><button data-a="figmode" data-v="add" aria-pressed="'+(f.mode==="add")+'">Add to the current figures</button><button data-a="figmode" data-v="replace" aria-pressed="'+(f.mode==="replace")+'">Replace all current figures</button></div><p class="small muted">Adding updates any row with the same program, state, district, partner, year and edition, and keeps the rest. Your page edits are kept either way.</p>':"")+
+      '<div class="row"><button class="btn primary" data-a="figsave"'+(p.rows.length||p.social.length?"":" disabled")+'>Save</button><button class="btn quiet" data-a="figcancel">Cancel</button></div></div>'}
+  b+=editorHtml();
+  if(R)b+='<div class="row" style="margin-top:1rem">'+(AWIT.store.configured()?"":'<button class="btn" data-a="figjson">Download mis.json</button>')+'<button class="btn quiet danger" data-a="figclear">Remove all real figures</button></div>'+hmsg("figlist");
+  return tile("","Real figures for the MIS","Every chart on the overview and program tabs is drawn from these. To hide a chart or add a number on a page, open the page and choose Edit this page.",b);
+}
+function storeTile(){
+  if(!AWIT.store.configured())return tile("","Online store","So that every device and every donor sees the same figures.",'<p>Not set up yet. Figures you save stay on this device; publish them by uploading a file to the data folder on GitHub. To set up the online store, follow "Going live" in the README: create a free Supabase project, run admin/supabase-setup.sql, and paste the two values into access.js.</p>');
+  const s=AWIT.store.session();
+  return tile("","Online store",s?"Connected.":"Connected. Sign in to publish.",s?'<p>Signed in as <strong>'+esc(s.email)+'</strong>. Figures and donor pages you save here are published at once.</p><button class="btn quiet" data-a="dbout">Sign out</button>'+hmsg("db"):
+    '<div class="two"><div class="field"><label for="db-email">Email</label><input id="db-email" type="email" autocomplete="username"></div><div class="field"><label for="db-pass">Password</label><input id="db-pass" type="password" autocomplete="current-password"></div></div><button class="btn primary" data-a="dbin">Sign in</button><p class="small muted">Accounts are created in Supabase, under Authentication, Users.</p>'+hmsg("db"));
+}
+function donorPack(pid){const g=JSON.parse(JSON.stringify(H[pid]));delete g.dirty;g.indicators=g.indicators.filter(r=>String(r.name).trim());g.updates=g.updates.filter(u=>String(u.text).trim());g.datasets=H.datasets.filter(x=>x.show===pid);g.tools=AWIT.snapshot(pid);g.publishedAt=new Date().toISOString();return g}
+function parseDonor(sheets,pid){
+  const names=Object.keys(sheets),find=re=>names.find(n=>re.test(n.toLowerCase())),g=AWIT.donorDefault(pid);g.indicators=[];g.updates=[];
+  const P=find(/project/);if(P)for(const r of sheets[P].slice(1)){const k=String(r[0]||"").toLowerCase(),v=String(r[1]||"").trim();if(!v||/^example/i.test(v))continue;
+    if(/name/.test(k))g.project.name=v;else if(/tag|line|about/.test(k))g.project.tagline=v;else if(/place|location/.test(k))g.project.place=v;else if(/funder|donor/.test(k))g.project.funder=v;else if(/start/.test(k))g.project.start=dateOf(v)||g.project.start;else if(/end/.test(k))g.project.end=dateOf(v)||g.project.end}
+  const I=find(/indicator/);if(I&&sheets[I].length){const[a,b,c,d,e]=cols(sheets[I][0],[/component|program/,/indicator/,/unit/,/target/,/achiev|reached|done/]);
+    for(const r of sheets[I].slice(1)){const name=cell(r,b);if(!name||/^example/i.test(name))continue;g.indicators.push({comp:cell(r,a),name,unit:cell(r,c),target:toNum(cell(r,d))||0,achieved:toNum(cell(r,e))||0})}}
+  const U=find(/update/);if(U)for(const r of sheets[U].slice(1)){const t=String(r[1]||"").trim();if(!t||/^example/i.test(t))continue;g.updates.push({date:dateOf(r[0])||"",text:t})}
+  if(!g.indicators.length)throw new Error('No indicators found. Fill the "Indicators" sheet of the donor template.');
+  return g;
+}
+/* ---------- HSP sessions held before SchoolTrack ---------- */
+function parseSessions(rows){
+  const[iDt,iU,iSc,iC,iA,iB,iG,iT,iCo,iN]=cols(rows[0],[/date/,/udise/,/school/,/class/,/activity/,/boys/,/girls/,/students|total|present/,/coordinator/,/note|remark/]);
+  if(iDt<0||(iU<0&&iSc<0)||iC<0||iA<0)return{error:"The sheet needs Date, UDISE (or School), Class and Activity columns in its first row."};
+  const st=AWIT.get("schooltrack.v2")||{schools:{},sessions:{}};if(!Object.keys(st.schools||{}).length)return{error:"Add the schools first, in Schools: add from Excel above. Past sessions are matched to those schools."};
+  const list=[],errs=[];
+  rows.slice(1).forEach((r,n)=>{const row=n+2;if(/^example/i.test(cell(r,iN))||/example/i.test(cell(r,iSc)))return;if(!r.some(c=>String(c).trim()))return;
+    const date=dateOf(cell(r,iDt)),u=cell(r,iU).replace(/\D/g,"");let sc=u?st.schools[u]:null;
+    if(!sc&&iSc>=0){const nm=cell(r,iSc).toLowerCase();sc=Object.values(st.schools).find(x=>x.name.toLowerCase()===nm)}
+    const cls=cell(r,iC).toUpperCase().replace(/\s/g,"").replace(/^CLASS/,""),act=parseInt(cell(r,iA),10);let boys=toNum(cell(r,iB)),girls=toNum(cell(r,iG));const tot=toNum(cell(r,iT));if(boys==null&&girls==null&&tot!=null){boys=tot;girls=0}
+    const bad=!date?"the date should look like 2026-08-14":!sc?"the school is not in the school list":!sc.classes.some(c=>c.id===cls)?"class "+cls+" is not listed for "+sc.name:!(act>=1&&act<=10)?"the activity should be a number from 1 to 10":boys==null&&girls==null?"enter the boys and girls present":"";
+    if(bad){errs.push("Row "+row+": "+bad+".");return}
+    const dup=Object.values(st.sessions||{}).some(s=>s.schoolId===sc.id&&s.classId===cls&&s.activity===act&&s.status!=="rejected")||list.some(s=>s.schoolId===sc.id&&s.classId===cls&&s.activity===act);
+    list.push({schoolId:sc.id,school:sc.name,classId:cls,activity:act,date,boys:boys||0,girls:girls||0,coord:cell(r,iCo),remarks:cell(r,iN),dup})});
+  return{list,errs};
+}
+function importSessions(){
+  const st=Object.assign({coords:[],schools:{},sessions:{},misses:{},flags:{},as:{}},AWIT.get("schooltrack.v2")||{});let n=0;
+  for(const x of hubS.sess.list){if(x.dup)continue;const sc=st.schools[x.schoolId];let c=x.coord?st.coords.find(k=>k.name.toLowerCase()===x.coord.toLowerCase()):null;
+    const t=new Date(x.date+"T10:00:00").getTime(),id="imp-"+x.schoolId+"-"+x.classId+"-"+x.activity;
+    st.sessions[id]={id,schoolId:x.schoolId,classId:x.classId,activity:x.activity,coordId:c?c.id:sc.coordId,startTs:t,endTs:t+45*6e4,distIn:null,distOut:null,noGps:true,boys:x.boys,girls:x.girls,teacherPresent:true,remarks:x.remarks,photos:[],imported:true,status:"counted",decision:"counted",decidedBy:"aw",decidedTs:Date.now(),decisionNote:"Imported from earlier records"};n++}
+  if(!AWIT.set("schooltrack.v2",st))return say("sess","","This browser could not save the sessions.");
+  hubS.sess=null;say("sess",n+" past sessions added to SchoolTrack as counted. They show in the dashboard, the coordinator app and the MIS panel on this device.");
+}
+function sessionsTile(){
+  let b='<div class="row"><a class="btn" href="templates/HSP-past-sessions-template.xlsx" download>Download the template</a><span class="btn primary filebtn">Upload past sessions<input type="file" accept=".xlsx,.csv" data-c="sessfile" aria-label="Upload past sessions"></span></div><p class="small muted">One row per session: date, UDISE, class, activity number, boys and girls present, coordinator. Add the schools first. Sessions already in SchoolTrack are skipped.</p>'+hmsg("sess");
+  const m=hubS.sess;if(m){const ok=m.list.filter(x=>!x.dup);
+    b+='<div class="scroll"><table><thead><tr><th>Date</th><th>School</th><th>Class</th><th class="n">Activity</th><th class="n">Present</th><th>Result</th></tr></thead><tbody>'+m.list.slice(0,12).map(x=>"<tr><td>"+x.date+"</td><td>"+esc(x.school)+"</td><td>"+esc(x.classId)+'</td><td class="n">'+x.activity+'</td><td class="n">'+(x.boys+x.girls)+"</td><td>"+(x.dup?'<span class="pill wait">Already in SchoolTrack</span>':'<span class="pill ok">New</span>')+"</td></tr>").join("")+"</tbody></table></div>"+
+      (m.list.length>12?'<p class="small muted">Showing the first 12 of '+m.list.length+" rows.</p>":"")+(m.errs.length?'<p class="note bad small">'+m.errs.length+" rows left out:<br>"+m.errs.slice(0,10).map(esc).join("<br>")+"</p>":"")+
+      '<div class="row"><button class="btn primary" data-a="importsessions"'+(ok.length?"":" disabled")+">Add "+ok.length+' sessions</button><button class="btn quiet" data-a="cancelsessions">Cancel</button></div>'}
+  return tile("","HSP sessions held before SchoolTrack","Bring in the sessions from the earlier Google Form or WhatsApp records, so the dashboards start from your real history.",b);
+}
+
+document.addEventListener("click",async e=>{const t=e.target.closest("[data-a]");if(!t||t.disabled)return;const a=t.dataset.a;
+  if(a==="tab"){ui.tab=t.dataset.v;render();window.scrollTo(0,0)}
+  if(a==="sub"){ui.sub[ui.tab]=t.dataset.v;render()}
+  if(a==="year"){ui.year=t.dataset.v;render()}
+  if(a==="report")programReport(t.dataset.sub);
+  if(a==="kpiimg"){const cur=current();if(cur.b.empty)return;try{AWIT.img.save(await AWIT.img.toPng(AWIT.img.kpiCard(cur.b.title,periodText(),applyLayout(cur.b,cur.sub||"overview").kpis.map(k=>[k[0],k[1]]),FOOT()),2),"key-numbers-"+(cur.sub||"overview")+".png");AWIT.flash(t,"Saved")}catch(err){AWIT.flash(t,"Could not make the image")}}
+  if(a==="rclose"){$("#report").hidden=true;$("#report").innerHTML="";document.body.style.overflow=""}
+  if(a==="rprint")window.print();
+  if(a==="rword")wordFile();
+  if(HA[a])HA[a](t.dataset,t)});
+document.addEventListener("change",e=>{const t=e.target;
+  if(t.dataset.c==="state"){ui.state=t.value;render()}
+  if(t.dataset.c==="funder"&&t.value){const id=t.value;t.value="";funderReport(id)}});
+const quiet=()=>unlocked&&$("#report").hidden&&!hubS.ds&&!hubS.schools&&!hubS.fig&&!hubS.sess&&!["INPUT","SELECT","TEXTAREA"].includes(document.activeElement.tagName);
+window.addEventListener("storage",()=>{if(quiet())render()});document.addEventListener("visibilitychange",()=>{if(!document.hidden&&quiet())render()});
+awitGate("team","Program MIS").then(async()=>{$("#app").innerHTML='<p class="muted">Loading the figures\u2026</p>';await loadReal();unlocked=true;render()});
 </script>
 </body>
 </html>
