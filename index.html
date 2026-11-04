@@ -205,9 +205,9 @@ h1.big{font-size:clamp(1.7rem,3.6vw,2.6rem);letter-spacing:-.015em}
   <p class="foot" id="foot">The charts on the program tabs use illustrative sample data, to show how the MIS will look once the tools and the bot export feed it. Panels marked Live and everything in the Data hub are real records from this device. Arogya Schools students are also Healthy Schools Program students, so totals count them once.</p>
 </div>
 <div id="report" hidden></div>
-<script src="access.js"></script>
-<script src="lib/xlsx.mini.min.js"></script>
-<script src="lib/awit.js"></script>
+<script src="access.js?v=202611041153"></script>
+<script src="lib/xlsx.mini.min.js?v=202611041153"></script>
+<script src="lib/awit.js?v=202611041153"></script>
 <script>
 "use strict";
 const {esc,compact,sum,ch,tile,kpis,rng}=AWIT;
@@ -577,10 +577,24 @@ function projects(){
   const donors=["govandi","hcltech"].map(id=>{const g=donorData(id);return g&&g.project?{id,name:g.project.name,funder:g.project.funder,donor:true}:null}).filter(Boolean);
   return REAL?donors:donors.concat(PROJECTS.filter(p=>!donors.some(d=>d.id===p.id)));
 }
+const isReal=()=>!!REAL&&!REAL.sample;
+/* sample figures in the same yearly shape as the real ones, shown until the team saves its own */
+function sampleFigures(){
+  const rows=[],add=(p,state,district,partner,period,people,women,sites,sessions,extra)=>rows.push(Object.assign({p,state,district,partner,period,edition:"",counting:"added",people,women,sites,sessions,notes:""},extra||{}));
+  [["2023",.8],["2024",1],["2025",1.15],["2026",.9]].forEach(([y,k])=>{add("hsp","Gujarat","","CINI",y,Math.round(26000*k),Math.round(12700*k),Math.round(110*k),null);add("hsp","Karnataka","","MAMTA",y,Math.round(19000*k),Math.round(9400*k),Math.round(80*k),null);if(y>="2025")add("hsp","Maharashtra","Mumbai","",y,Math.round(900*k),Math.round(460*k),2,null)});
+  add("as","Gujarat","","CINI","2025",7900,null,22,null);add("as","Karnataka","","MAMTA","2025",6100,null,18,null);
+  add("sfvt","Karnataka","Bengaluru Urban","NASVI","2024",500,290,null,null);add("sfvt","Maharashtra","Mumbai","NASVI","2026",120,70,null,null);
+  add("out","Gujarat","Vadodara","","2025",3100,3100,null,118);add("out","Maharashtra","Mumbai","","2026",420,420,null,16);
+  add("bot","Online","","Turn.io","2025",2100,1490,null,null,{edition:"Sep-Oct 2025"});add("bot","Online","","Turn.io","2026",2700,1920,null,null,{edition:"Mar-Apr 2026"});add("bot","Online","","Turn.io","2026",3000,2100,null,null,{edition:"Oct-Nov 2026"});
+  add("mdb","Maharashtra","Mumbai","","2026",1460,800,null,null);
+  add("city","Karnataka","Bengaluru","Arogya City partners","2025",61000,null,40,null,{counting:"total"});add("city","Karnataka","Bengaluru","Arogya City partners","2026",96000,null,64,null,{counting:"total"});add("city","Maharashtra","Mumbai","Arogya City partners","2026",8500,null,21,null,{counting:"total"});
+  const social=[];["2026-05","2026-06","2026-07","2026-08","2026-09","2026-10"].forEach((m,i)=>[["Instagram",30000,8800],["Facebook",18000,5400],["YouTube",6000,1900]].forEach(([pl,b,f])=>social.push({month:m,platform:pl,reach:Math.round(b*(0.85+((i*7+b/1000)%5)/10)),engagements:Math.round(b*.07),followers:f+i*120,notes:""})));
+  return{sample:true,rows,social,targets:[{p:"hsp",year:"2026",target:50000},{p:"mdb",year:"2026",target:5000}],outcomes:[{p:"hsp",measure:"Healthy eating knowledge (KAP)",before:46,after:71,district:""}]};
+}
 async function loadReal(){
   let best=AWIT.get("awit.real.mis");
   try{const on=await AWIT.store.load("mis","");if(on&&on.data&&(on.data.rows||on.data.social)&&(!best||String(on.data.updatedAt||"")>=String(best.updatedAt||"")))best=on.data}catch(e){}
-  if(best)applyReal(best);
+  if(!(best&&applyReal(best)))applyReal(sampleFigures());
   for(const id of ["govandi","hcltech"]){try{const r=await AWIT.store.load(id,"");if(r&&r.data)DONORS[id]=r.data}catch(e){}}
 }
 
@@ -588,12 +602,12 @@ async function loadReal(){
 function viewHtml(b,subKey,famKey){
   if(b.empty)return'<div class="tile"><p class="muted" style="padding:1rem 0">'+esc(b.empty)+"</p></div>";
   const page=subKey||"overview";b=applyLayout(b,page);
-  const projs=projects().filter(p=>p.donor||(famKey?p.subs.some(s=>FAM[famKey].subs.includes(s)):true)),ed=REAL&&ui.edit;
+  const projs=projects().filter(p=>p.donor||(famKey?p.subs.some(s=>FAM[famKey].subs.includes(s)):true)),ed=isReal()&&ui.edit;
   const tileHtml=t=>{const id=t[4]&&t[4].custom,body=String(t[3]),isChart=/^<svg class="chart"/.test(body);
     return tile(t[0],t[1],t[2],body+(ed&&!(t[4]&&t[4].report===false&&!id)?'<div class="row" style="margin-top:.6rem">'+(id?'<button class="btn quiet sm danger" data-a="delitem" data-id="'+esc(id)+'">Delete this '+(isChart?"chart":"box")+"</button>":'<button class="btn quiet sm" data-a="hidetile" data-id="'+esc(tileId(page,t[1]))+'">Hide this '+(isChart?"chart":"box")+"</button>")+"</div>":""))};
   return lead(b.lead[0],b.lead[1])+'<div class="actions"><button class="btn primary" data-a="report" data-sub="'+(subKey||"")+'">Generate report</button>'+
    '<select data-c="funder" aria-label="Make a funder report"><option value="">Funder report for\u2026</option>'+projs.map(p=>'<option value="'+p.id+'">'+esc(p.funder+": "+p.name)+"</option>").join("")+"</select>"+
-   '<button class="btn" data-a="kpiimg" data-sub="'+(subKey||"")+'">Save key numbers as an image</button>'+(REAL&&!ed?'<button class="btn quiet" data-a="editpage">Edit this page</button>':"")+"</div>"+
+   '<button class="btn" data-a="kpiimg" data-sub="'+(subKey||"")+'">Save key numbers as an image</button>'+(isReal()&&!ed?'<button class="btn quiet" data-a="editpage">Edit this page</button>':"")+"</div>"+
    (ed?editPanel(b,page):"")+(b.cards||"")+kpis(b.kpis.map(k=>[k[0],k[1]]))+(b.live||"")+b.tiles.map(tileHtml).join("");
 }
 const tabsNow=()=>[["overview","Organisation overview","var(--ink)"]].concat((REAL?Object.keys(FAM).filter(f=>famSubs(f).length):["hsp","my","city"]).map(f=>[f,FAM[f].name,FAM[f].c])).concat([["hub","Data hub","var(--ink)"]]);
@@ -605,8 +619,8 @@ function render(){
   $("#years").innerHTML=[["all","All time"]].concat(yrs.map(y=>[y,y])).map(([v,l])=>'<button data-a="year" data-v="'+v+'" aria-pressed="'+(ui.year===v)+'">'+l+"</button>").join("");
   const sts=[...new Set(Object.values(D).map(d=>d.st))].filter(x=>x&&x!=="Online");if(ui.state!=="all"&&!sts.includes(ui.state))ui.state="all";
   $("#states").innerHTML='<option value="all">All states</option>'+sts.map(x=>"<option"+(ui.state===x?" selected":"")+">"+esc(x)+"</option>").join("");
-  const bd=$("#badge");bd.className="pill "+(REAL?"real":"sample");bd.textContent=REAL?"Real figures"+(REAL.updatedAt?", updated "+AWIT.fmtDate(REAL.updatedAt):""):"Sample data";
-  $("#foot").textContent=REAL?"Figures entered or uploaded by the Arogya World India Trust team in the Data hub. Panels marked Live are records from the field tools on this device. Arogya Schools students are also Healthy Schools Program students, so totals count them once.":"The charts on the program tabs use illustrative sample data, to show how the MIS will look once real figures are added in the Data hub. Panels marked Live are real records from this device. Arogya Schools students are also Healthy Schools Program students, so totals count them once.";
+  const bd=$("#badge");bd.className="pill "+(isReal()?"real":"sample");bd.textContent=isReal()?"Real figures"+(REAL.updatedAt?", updated "+AWIT.fmtDate(REAL.updatedAt):""):"Sample data";
+  $("#foot").textContent=isReal()?"Figures entered or uploaded by the Arogya World India Trust team in the Data hub. Panels marked Live are records from the field tools on this device. Arogya Schools students are also Healthy Schools Program students, so totals count them once.":"The charts use illustrative sample figures, to show how the MIS looks once real figures are added in the Data hub. Panels marked Live are real records from this device. Arogya Schools students are also Healthy Schools Program students, so totals count them once.";
   $("#tabs").innerHTML=TB.map(([k,l,c])=>'<button role="tab" data-a="tab" data-v="'+k+'" aria-selected="'+(ui.tab===k)+'" style="--tc:'+c+'">'+l+"</button>").join("");
   document.querySelectorAll('[data-a="year"]').forEach(b=>b.setAttribute("aria-pressed",b.dataset.v===ui.year));
   if(ui.tab==="hub"){$("#app").innerHTML=hub();return}
@@ -615,7 +629,7 @@ function render(){
 }
 
 /* ---------- reports ---------- */
-const FOOT=()=>"Arogya World India Trust, Program MIS. "+(REAL?"":"Sample data. ")+AWIT.fmtDate(Date.now());
+const FOOT=()=>"Arogya World India Trust, Program MIS. "+(isReal()?"":"Sample data. ")+AWIT.fmtDate(Date.now());
 function chartCard(svg,title,sub){const m=/viewBox="0 0 ([\d.]+) ([\d.]+)"/.exec(svg),inner=svg.slice(svg.indexOf(">")+1,svg.lastIndexOf("</svg>")).replace(/ data-tip="[^"]*"/g,"");return AWIT.img.compose(inner,+m[1],+m[2],title,sub,FOOT())}
 async function sectionHtml(b,level){
   if(b.empty)return"";
@@ -637,8 +651,8 @@ async function openReport(title,sub,forWhom,makeBody,sample){
 }
 function withState(state,fn){const keep=ui.state;ui.state=state;try{return fn()}finally{ui.state=keep}}
 function programReport(subKey){
-  if(!subKey)return openReport("Organisation report",periodText(),"",async()=>{let h=await sectionHtml(applyLayout(REAL?rOverview():vOverview(),"overview"),"full");for(const s of subsWithData())h+=await sectionHtml(applyLayout(buildFor(s)(),s),"brief");return h},!REAL);
-  const b=applyLayout(buildFor(subKey)(),subKey);openReport(b.title+": program report",periodText(),"",()=>sectionHtml(b,"full"),!REAL);
+  if(!subKey)return openReport("Organisation report",periodText(),"",async()=>{let h=await sectionHtml(applyLayout(REAL?rOverview():vOverview(),"overview"),"full");for(const s of subsWithData())h+=await sectionHtml(applyLayout(buildFor(s)(),s),"brief");return h},!isReal());
+  const b=applyLayout(buildFor(subKey)(),subKey);openReport(b.title+": program report",periodText(),"",()=>sectionHtml(b,"full"),!isReal());
 }
 function funderReport(id){
   const p=projects().find(x=>x.id===id);if(!p)return;const g=p.donor?donorData(id):null;
@@ -655,7 +669,7 @@ function funderReport(id){
       return h},!!g.sample)}
   /* build every section while the project's state is selected, then put the page's own filter back */
   const builds=withState(p.state,()=>({sub:periodText(),list:p.subs.map(s=>buildFor(s)())}));
-  openReport(p.name+": progress report",builds.sub,p.funder,async()=>{let h="";for(const b of builds.list)h+=await sectionHtml(b,"full");return h||"<p>This project has no records in this period.</p>"},!REAL);
+  openReport(p.name+": progress report",builds.sub,p.funder,async()=>{let h="";for(const b of builds.list)h+=await sectionHtml(b,"full");return h||"<p>This project has no records in this period.</p>"},!isReal());
 }
 /* ---------- Word export: a real .docx, written here without any server ---------- */
 const CRC=(()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0}return b=>{let c=~0;for(let i=0;i<b.length;i++)c=t[(c^b[i])&255]^(c>>>8);return(~c)>>>0}})();
@@ -836,7 +850,7 @@ const HA={
   dbout(){AWIT.store.signOut();say("db","Signed out.");render()},
   figcancel(){hubS.fig=null;say("");render()},
   figmode(d){hubS.fig.mode=d.v;render()},
-  async figsave(){const f=hubS.fig;hubS.fig=null;hubS.ed=null;await saveFigures(mergeFigures(AWIT.get(FIGKEY)||REAL,f.parsed,f.mode==="replace"),"fig")},
+  async figsave(){const f=hubS.fig;hubS.fig=null;hubS.ed=null;await saveFigures(mergeFigures(AWIT.get(FIGKEY)||(isReal()?REAL:null),f.parsed,f.mode==="replace"),"fig")},
   async figclear(){if(!hubS.confirmClear){hubS.confirmClear=true;say("figlist","","Press the button again to remove all real figures and go back to the sample.");return render()}
     hubS.confirmClear=false;try{localStorage.removeItem(FIGKEY)}catch(e){}if(AWIT.store.configured()&&AWIT.store.session())await AWIT.store.save("mis",{rows:[],social:[],targets:[],outcomes:[],updatedAt:new Date().toISOString()});location.reload()},
   figjson(){AWIT.store.download("mis.json",figBase());say("figlist","mis.json is downloaded. Upload it to the data folder on GitHub so every device shows these figures.");render()},
@@ -882,7 +896,7 @@ document.addEventListener("change",async e=>{const t=e.target,c=t.dataset.c;
   if(c==="dslabel"){const d=hubS.ds;d.label=+t.value;d.values=d.values.filter(i=>i!==d.label);render()}
   if(c==="dsval"){const d=hubS.ds,i=+t.dataset.i;d.values=t.checked?d.values.concat(i).sort((a,b)=>a-b):d.values.filter(x=>x!==i);render()}
   if(c==="govsample"){H[donorPid()].sample=t.checked;donorEdit()}
-  if(c==="figfile"&&t.files[0]){say("fig");try{const p=parseFigures(await readBook(t.files[0]));if(p.error){hubS.fig=null;say("fig","",p.error)}else hubS.fig={file:t.files[0].name,parsed:p,mode:REAL?"add":"replace"}}catch(err){hubS.fig=null;say("fig","",err.message||"That file could not be read.")}render()}
+  if(c==="figfile"&&t.files[0]){say("fig");try{const p=parseFigures(await readBook(t.files[0]));if(p.error){hubS.fig=null;say("fig","",p.error)}else hubS.fig={file:t.files[0].name,parsed:p,mode:isReal()?"add":"replace"}}catch(err){hubS.fig=null;say("fig","",err.message||"That file could not be read.")}render()}
   if(c==="donorfile"&&t.files[0]){const pid=donorPid();say("gov");try{const g=parseDonor(await readBook(t.files[0]),pid);g.dirty=true;H[pid]=g;saveH();say("gov","Loaded "+g.indicators.length+" indicators and "+g.updates.length+" updates from the file. Check them below, then publish.")}catch(err){say("gov","",err.message||"That file could not be read.")}render()}
   if(c==="sessfile"&&t.files[0]){say("sess");try{const sh=await readBook(t.files[0]),rows=pickSheet(sh,/activity/);const m=rows.length>1?parseSessions(rows):{error:"The sheet has no rows under its first row."};if(m.error){hubS.sess=null;say("sess","",m.error)}else hubS.sess=m}catch(err){hubS.sess=null;say("sess","",err.message||"That file could not be read.")}render()}});
 
@@ -946,7 +960,7 @@ function mergeFigures(base,add,replace){
   R.rows=mrg(R.rows,add.rows,rowKey);R.social=mrg(R.social,add.social,socKey);R.targets=mrg(R.targets,add.targets,x=>x.p+"|"+x.year);R.outcomes=mrg(R.outcomes,add.outcomes,x=>x.p+"|"+x.measure.toLowerCase()+"|"+String(x.district||"").toLowerCase());
   return R;
 }
-const figBase=()=>JSON.parse(JSON.stringify(AWIT.get(FIGKEY)||REAL||{rows:[],social:[],targets:[],outcomes:[]}));
+const figBase=()=>JSON.parse(JSON.stringify(AWIT.get(FIGKEY)||(isReal()?REAL:null)||{rows:[],social:[],targets:[],outcomes:[]}));
 async function saveFigures(R,at){
   R.updatedAt=new Date().toISOString();R.v=2;
   if(!AWIT.set(FIGKEY,R)){say(at,"","This browser could not save the figures.");return render()}
@@ -983,9 +997,9 @@ function editorHtml(){
     '<div class="row" style="margin-top:.6rem"><button class="btn primary" data-a="edsave">Save all changes</button><button class="btn quiet" data-a="edclose">Close without saving</button>'+(e.dirty?'<span class="small" style="color:var(--warn)">Not saved yet</span>':"")+"</div>"+hmsg("ed")+"</div>";
 }
 function figuresTile(){
-  const f=hubS.fig,R=AWIT.get(FIGKEY)||REAL;
+  const f=hubS.fig,R=AWIT.get(FIGKEY)||(isReal()?REAL:null);
   let b='<div class="row"><a class="btn" href="templates/AWIT-program-figures-template.xlsx" download>Download the Excel template</a><span class="btn primary filebtn">Upload a filled template<input type="file" accept=".xlsx,.csv" data-c="figfile" aria-label="Upload a filled template"></span>'+(R?'<button class="btn quiet" data-a="figexport">Download the current figures as Excel</button>':"")+"</div>";
-  b+=REAL?'<p class="note ok small" style="margin-top:.8rem">The MIS shows real figures: '+nf(RROWS.length)+" reach rows"+(SOC.length?" and "+SOC.length+" social media rows":"")+(PERIODS.length?", "+esc(PERIODS[0])+(PERIODS.length>1?" to "+esc(PERIODS.at(-1)):""):"")+". Last saved "+(REAL.updatedAt?AWIT.fmtDate(REAL.updatedAt):"")+".</p>":'<p class="note small" style="margin-top:.8rem">The MIS shows sample figures until you add real ones. Fill the template: one row for each program, state, partner and year. Social media goes month by month in its own sheet.</p>';
+  b+=isReal()?'<p class="note ok small" style="margin-top:.8rem">The MIS shows real figures: '+nf(RROWS.length)+" reach rows"+(SOC.length?" and "+SOC.length+" social media rows":"")+(PERIODS.length?", "+esc(PERIODS[0])+(PERIODS.length>1?" to "+esc(PERIODS.at(-1)):""):"")+". Last saved "+(REAL.updatedAt?AWIT.fmtDate(REAL.updatedAt):"")+".</p>":'<p class="note small" style="margin-top:.8rem">The MIS shows sample figures until you add real ones. Fill the template: one row for each program, state, partner and year. Social media goes month by month in its own sheet.</p>';
   b+=hmsg("fig");
   if(f){const p=f.parsed,progs=[...new Set(p.rows.map(r=>r.p))].map(k=>PNAME[k]),pers=[...new Set(p.rows.map(r=>r.period))].sort();
     b+='<div class="sheet stack tight" style="margin-top:1rem;border:1.5px dashed var(--rule);border-radius:12px;padding:1rem"><h3>'+esc(f.file)+"</h3><p>"+nf(p.rows.length)+" reach rows"+(p.rows.length?" ("+esc(progs.join(", "))+"; "+esc(pers.join(", "))+")":"")+", "+p.social.length+" social media rows, "+p.targets.length+" targets, "+p.outcomes.length+" outcome measures."+(p.skipped?" Example rows were skipped.":"")+"</p>"+

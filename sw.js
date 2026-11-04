@@ -1,7 +1,7 @@
 /* Keeps the two field apps working without network. Pages are fetched fresh when there is a signal
    (a 4-second wait at most) and served from the phone when there is none. Data never passes through here:
    it is saved on the phone by the apps themselves. */
-const V="awit-field-202611020144";
+const V="awit-field-202611041153";
 const CORE=["schooltrack/field/","sfvt/field/","lib/awit.js","schooltrack/field/manifest.webmanifest","sfvt/field/manifest.webmanifest","icons/schooltrack-192.png","icons/schooltrack-512.png","icons/sfvt-192.png","icons/sfvt-512.png"];
 self.addEventListener("install",e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(CORE.map(p=>new Request(p,{cache:"reload"})))).then(()=>self.skipWaiting()))});
 self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k.startsWith("awit-field-")&&k!==V).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
