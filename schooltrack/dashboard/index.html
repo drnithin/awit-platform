@@ -209,6 +209,7 @@ const pill=st=>'<span class="pill '+STATUS[st].cls+'">'+STATUS[st].label+"</span
 function findDup(hash,selfId){if(!hash)return null;let best=null;
   for(const s of Object.values(S.sessions)){if(s.id===selfId)continue;for(const p of s.photos){if(p.kind!=="class"||!p.hash)continue;const d=AWIT.ham(hash,p.hash);if(d<=DUP_BITS&&(!best||d<best.dist))best={sid:s.id,dist:d}}}return best}
 function evaluate(s){
+  if(s.imported){s.notes=["Imported from earlier records, so there are no photos or location."];s.status=s.decision||"counted";return s}
   const sc=S.schools[s.schoolId],cl=sc&&sc.classes.find(c=>c.id===s.classId),f=[];
   if(s.sim)f.push("Demo mode: the location and the session length were simulated.");
   if(s.newAnchor)f.push("First visit: the school's location was set from this check-in.");

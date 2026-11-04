@@ -204,9 +204,9 @@ const fmtDate=t=>new Date(t).toLocaleDateString("en-IN",{day:"numeric",month:"lo
 const fmtMonth=t=>new Date(t).toLocaleDateString("en-IN",{month:"short",year:"numeric"});
 let DATA=null,local=false,pubAt=null;
 async function load(){
-  let pub=null;try{const r=await fetch("../../data/"+PID+".json",{cache:"no-store"});if(r.ok)pub=await r.json()}catch(e){}
+  let pub=null;try{const r=await AWIT.store.load(PID,"../../");if(r&&r.data)pub=r.data}catch(e){}
   const H=AWIT.get(AWIT.HUB_KEY);pubAt=pub&&pub.publishedAt;
-  if(H&&H[PID]){DATA=JSON.parse(JSON.stringify(H[PID]));DATA.datasets=(H.datasets||[]).filter(d=>d.show===PID);DATA.tools=AWIT.snapshot();local=true}
+  if(H&&H[PID]&&(H[PID].dirty||!pub)){DATA=JSON.parse(JSON.stringify(H[PID]));DATA.datasets=(H.datasets||[]).filter(d=>d.show===PID);DATA.tools=AWIT.snapshot(PID);local=true}
   else{DATA=pub;local=false}
   render();
 }
