@@ -1,0 +1,306 @@
+{
+ "project": {
+  "id": "hcltech",
+  "name": "HCLTech project preview",
+  "tagline": "How HCLTech would follow its project with Arogya World India Trust, shown with sample figures",
+  "place": "Rajasthan",
+  "funder": "HCLTech",
+  "start": "2026-04-01",
+  "end": "2028-03-31"
+ },
+ "sample": true,
+ "indicators": [
+  {
+   "comp": "Healthy Schools Program",
+   "name": "Students reached",
+   "unit": "students",
+   "target": 15000,
+   "achieved": 9200
+  },
+  {
+   "comp": "Healthy Schools Program",
+   "name": "Schools in the program",
+   "unit": "schools",
+   "target": 60,
+   "achieved": 40
+  },
+  {
+   "comp": "Healthy Schools Program",
+   "name": "Teachers trained",
+   "unit": "teachers",
+   "target": 120,
+   "achieved": 85
+  },
+  {
+   "comp": "mDiabetes",
+   "name": "People enrolled",
+   "unit": "people",
+   "target": 10000,
+   "achieved": 3400
+  },
+  {
+   "comp": "mDiabetes",
+   "name": "Still active after 12 weeks",
+   "unit": "people",
+   "target": 0,
+   "achieved": 1980
+  },
+  {
+   "comp": "mDiabetes",
+   "name": "Completed the 6 months",
+   "unit": "people",
+   "target": 0,
+   "achieved": 1150
+  },
+  {
+   "comp": "Nutrition outreach",
+   "name": "Women and adolescents reached",
+   "unit": "people",
+   "target": 5000,
+   "achieved": 2300
+  },
+  {
+   "comp": "Nutrition outreach",
+   "name": "Community sessions held",
+   "unit": "sessions",
+   "target": 200,
+   "achieved": 92
+  },
+  {
+   "comp": "Nutrition outreach",
+   "name": "Follow-up group discussions",
+   "unit": "discussions",
+   "target": 60,
+   "achieved": 30
+  }
+ ],
+ "updates": [
+  {
+   "date": "2026-10-28",
+   "text": "Sample update: mDiabetes enrolment camps held at three primary health centres; 410 people enrolled in October."
+  },
+  {
+   "date": "2026-10-10",
+   "text": "Sample update: nutrition outreach sessions running in 12 villages, with a before and after question round in each."
+  },
+  {
+   "date": "2026-09-20",
+   "text": "Sample update: all 40 schools have completed activity 3 of the Healthy Schools Program."
+  }
+ ],
+ "datasets": [
+  {
+   "id": "hcl-mdb-enrol",
+   "title": "mDiabetes: people enrolled, running total",
+   "labelName": "Month",
+   "type": "line",
+   "labels": [
+    "Apr 26",
+    "May 26",
+    "Jun 26",
+    "Jul 26",
+    "Aug 26",
+    "Sep 26",
+    "Oct 26",
+    "Nov 26"
+   ],
+   "series": [
+    {
+     "name": "People enrolled",
+     "values": [
+      0,
+      260,
+      690,
+      1210,
+      1830,
+      2480,
+      2990,
+      3400
+     ]
+    }
+   ],
+   "show": "hcltech",
+   "color": "var(--c-sfvt)"
+  },
+  {
+   "id": "hcl-mdb-funnel",
+   "title": "mDiabetes: from enrolment to completion",
+   "labelName": "Stage",
+   "type": "bar",
+   "horizontal": true,
+   "labels": [
+    "Enrolled",
+    "Received the first week's messages",
+    "Still active after 4 weeks",
+    "Still active after 12 weeks",
+    "Completed the 6 months"
+   ],
+   "series": [
+    {
+     "name": "People",
+     "values": [
+      3400,
+      3290,
+      2610,
+      1980,
+      1150
+     ]
+    }
+   ],
+   "show": "hcltech",
+   "color": "var(--c-sfvt)"
+  },
+  {
+   "id": "hcl-mdb-risk",
+   "title": "mDiabetes: diabetes risk at enrolment",
+   "labelName": "Risk score",
+   "type": "bar",
+   "labels": [
+    "Low",
+    "Moderate",
+    "High"
+   ],
+   "series": [
+    {
+     "name": "People",
+     "values": [
+      920,
+      1510,
+      970
+     ]
+    }
+   ],
+   "show": "hcltech",
+   "color": "var(--c-sfvt)"
+  },
+  {
+   "id": "hcl-out-month",
+   "title": "Nutrition outreach: people reached each month",
+   "labelName": "Month",
+   "type": "bar",
+   "labels": [
+    "Jun 26",
+    "Jul 26",
+    "Aug 26",
+    "Sep 26",
+    "Oct 26"
+   ],
+   "series": [
+    {
+     "name": "Women",
+     "values": [
+      210,
+      340,
+      420,
+      480,
+      520
+     ]
+    },
+    {
+     "name": "Adolescent girls",
+     "values": [
+      60,
+      70,
+      60,
+      70,
+      70
+     ]
+    }
+   ],
+   "show": "hcltech"
+  },
+  {
+   "id": "hcl-out-kap",
+   "title": "Nutrition outreach: knowledge before and after the session",
+   "labelName": "Question",
+   "type": "bar",
+   "labels": [
+    "Healthy plate",
+    "Oil per person",
+    "Salt per day",
+    "Hidden sugar",
+    "Anaemia foods",
+    "Label reading"
+   ],
+   "series": [
+    {
+     "name": "Before, % correct",
+     "values": [
+      48,
+      35,
+      31,
+      42,
+      52,
+      22
+     ]
+    },
+    {
+     "name": "After, % correct",
+     "values": [
+      81,
+      72,
+      69,
+      77,
+      84,
+      58
+     ]
+    }
+   ],
+   "show": "hcltech"
+  },
+  {
+   "id": "hcl-out-pledge",
+   "title": "Nutrition outreach: the change each woman chose",
+   "labelName": "Pledge",
+   "type": "bar",
+   "horizontal": true,
+   "labels": [
+    "Less oil",
+    "Fruit every day",
+    "Less sugar",
+    "Less salt",
+    "Tea away from meals",
+    "Millets twice a week"
+   ],
+   "series": [
+    {
+     "name": "Share of pledges, %",
+     "values": [
+      24,
+      19,
+      18,
+      17,
+      13,
+      9
+     ]
+    }
+   ],
+   "show": "hcltech",
+   "color": "var(--c-as)"
+  },
+  {
+   "id": "hcl-hsp-dist",
+   "title": "Healthy Schools Program: students reached, by district",
+   "labelName": "District",
+   "type": "bar",
+   "labels": [
+    "Jaipur",
+    "Udaipur",
+    "Ajmer"
+   ],
+   "series": [
+    {
+     "name": "Students",
+     "values": [
+      4100,
+      3200,
+      1900
+     ]
+    }
+   ],
+   "show": "hcltech",
+   "color": "var(--c-hsp)"
+  }
+ ],
+ "publishedAt": "2026-11-05T09:00:00Z"
+}
